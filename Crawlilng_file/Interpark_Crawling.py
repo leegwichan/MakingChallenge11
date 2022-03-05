@@ -11,6 +11,12 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 import time
 
+
+#mongoDB 저장 패키지
+from pymongo import MongoClient
+client = MongoClient('localhost',27017)
+db = client.exhibition_info
+
 # 같은 폴더에서 크롬드라이버 불러오기
 driver = webdriver.Chrome('chromedriver_window')
 # 네이버 전시회 검색결과 띄우기
@@ -26,5 +32,15 @@ for div in divs:
     a_place = div.find_element(by=By.CSS_SELECTOR, value='td:nth-child(3) > a').text
     a_place_link = div.find_element(by=By.CSS_SELECTOR, value='td:nth-child(3) > a').get_attribute("href")
     a_start_date = div.find_element(by=By.CSS_SELECTOR, value='td:nth-child(4)').text
-    print(a_title, a_ticket_link, a_image_link, a_place, a_place_link, a_start_date)
+    # print(a_title, a_ticket_link, a_image_link, a_place, a_place_link, a_start_date)
+    # 전시회 정보 mongoDB에 저장
+    doc = {
+        'title': a_title,
+        'ticket_link': a_ticket_link,
+        'image_link': a_image_link,
+        'place': a_place,
+        'place_link': a_place_link,
+        'start_date': a_start_date
+    }
+    db.exhibition_info.insert_one(doc)
 driver.close()
