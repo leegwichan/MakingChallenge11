@@ -5,16 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03f1e428-8bb4-4603-b2dd-1c9e6d8b941b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tempates/main.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tempates/map1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MakingChallenge11_git.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Crawlilng_file/Interpark_Crawling.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Crawlilng_file/chromedriver_window.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/map_test.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/push_test_file/push_tes_yoon_sik" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/push_test_file/push_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icon/Shape (Stroke)_L.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icon/Shape (Stroke)_R.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icon/Union.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icon/Vector_Heart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icon/Vector_Mark.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icon/Vector_Next.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icon/Vector_i.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/temp_img/main_map.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tempates/main.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tempates/map1.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +64,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -101,6 +109,8 @@
       <option name="presentableId" value="Default" />
       <updated>1646450843095</updated>
       <workItem from="1646450848304" duration="45485000" />
+      <workItem from="1646523584702" duration="147000" />
+      <workItem from="1646523747068" duration="826000" />
     </task>
     <servers />
   </component>
