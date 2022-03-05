@@ -1,1 +1,2 @@
 push_test
+print("hello")
