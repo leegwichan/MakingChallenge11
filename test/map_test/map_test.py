@@ -21,8 +21,7 @@ print(all_place)
 # input으로 현재 위치 받아서 설정 예정
 # zoom_start 최대 18, 최소 0
 m = folium.Map([37.5710057, 126.9747532],tiles='cartodbpositron', zoom_start=15)
-# m = folium.Map([37.5710057, 126.9747532],tiles='stamenterrain', zoom_start=15.5)
-# m = folium.Map([37.5710057, 126.9747532],tiles='stamentoner', zoom_start=15.5)
+
 
 
 
@@ -44,11 +43,13 @@ for place in all_place:
 #
 # # 즐겨찾기 전시 함수
 #
+# gallery_name2 = '대림미술관'
+#
 # gallery2 = geolocator.geocode(gallery_name2)
 # gal_latitude2 = gallery2.raw['lat']
 # gal_longitude2 = gallery2.raw['lon']
 # # 빨강 별마크 표시
-# folium.Marker(location=[gal_latitude2, gal_longitude2], popup=gallery_name, icon=folium.Icon(color='red', icon='star')).add_to(m)
+# folium.Marker(location=[gal_latitude2, gal_longitude2], popup=gallery_name2, icon=folium.Icon(color='red', icon='star')).add_to(g1)
 # # map1.html에 지도 표시
 # m.save(r'map1.html')
 
@@ -68,4 +69,12 @@ for place in all_place:
 
 
 
-
+##선택적 보여주기
+#마커코드 작성시 .add_to(m)대신 그룹 기재
+from folium import plugins
+gs = folium.FeatureGroup(name='Groups')
+m.add_child(gs)
+g1 = plugins.FeatureGroupSubGroup(gs, 'Group1')
+m.add_child(g1)
+folium.LayerControl(collapsed=False).add_to(m)
+m.save(r'map1.html')
