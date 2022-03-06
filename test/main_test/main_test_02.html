@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+            integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+            integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+            crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <title>메이킹챌린지 11기 | 전시회 조회 서비스</title>
+
+    <title>전시회 조회 서비스</title>
+
+    <meta property="og:title" content="전시회 조회 서비스">
+    <meta property="og:description" content="메이킹 챌린지 11기">
+    <meta property="og:image" content="{{ url_for('static', 'filename=ogimage.png') }}">
+
+
+    <style>
+        /*구글폰트*/
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
+
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            background: #FFFFFF;
+        }
+
+
+
+        .map-title {
+            margin-top: 30px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+
+        .cards-list-title {
+            margin-top: 40px;
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .current-position-map {
+            background-image: url("../static/temp_img/main_map.png");
+            background-size: cover;
+            background-position: center;
+            width: 780px;
+            height: 500px;
+            border-radius: 10px;
+            margin: 20px auto 30px 0px;
+        }
+
+        .wrap {
+            width: 800px;
+            margin: auto;
+        }
+
+        .show-card {
+            max-width: 250px;
+            max-height: 100%;
+            margin: 0px 16px 16px auto;
+        }
+
+
+        .list-title-font {
+            color: #000000;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .list-info-font {
+            margin-top: 10px;
+            font-size: 12px;
+            text-align: left;
+        }
+
+/* a태그 설정 */
+
+        a {
+            text-decoration-line: none;
+            /*   text-decoration-line: underline; */
+            /*   text-decoration-line: overline; */
+            /*   text-decoration-line: line-through; */
+            /*   text-decoration-line: underline line-through overline; */
+        }
+
+        a:link {
+            color: #000000;
+        }
+
+        a:visited {
+            color: #000000;
+        }
+
+        a:hover {
+            color: #000000;
+        }
+
+        a:active {
+            color: #000000
+        }
+
+        /* a태그 설정 끝 */
+
+/* 왼쪽 메뉴 설정 시작 */
+
+        .left-menu {
+            height: 100%;
+            position: fixed;
+        }
+
+
+        .left-list-menu-btn {
+            width: 150px;
+            display: block;
+            margin: 0 auto 10px auto;
+        }
+
+        .left-menu-btn {
+            top: 0px;
+            font-weight: 900;
+            font-size: 15px;
+            text-transform: uppercase !important;
+            letter-spacing: 2px;
+            color: #000;
+            cursor: hand;
+            text-align: center;
+            text-transform: capitalize;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden !important;
+            -webkit-transition: all .3s ease-in-out;
+            -moz-transition: all .3s ease-in-out;
+            -o-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+            background: transparent !important;
+            z-index: 10;
+            width: 150px;
+        }
+
+        .left-menu-btn:hover {
+            border: 1px solid #F2F3F7;
+            color: #000000 !important;
+        }
+
+        .left-menu-btn::before {
+            content: '';
+            width: 0%;
+            height: 100%;
+            display: block;
+            background: #FFFFFF;
+            position: absolute;
+            -ms-transform: skewX(-20deg);
+            -webkit-transform: skewX(-20deg);
+            transform: skewX(-20deg);
+            left: -10%;
+            opacity: 1;
+            top: 0;
+            z-index: -12;
+            -moz-transition: all .7s cubic-bezier(0.77, 0, 0.175, 1);
+            -o-transition: all .7s cubic-bezier(0.77, 0, 0.175, 1);
+            -webkit-transition: all .7s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: all .7s cubic-bezier(0.77, 0, 0.175, 1);
+            box-shadow: 2px 0px 14px rgba(0, 0, 0, .6);
+        }
+
+        .left-menu-btn::after {
+            content: '';
+            width: 0%;
+            height: 100%;
+            display: block;
+            background: #FFFFFF;
+            position: absolute;
+            -ms-transform: skewX(-20deg);
+            -webkit-transform: skewX(-20deg);
+            transform: skewX(-20deg);
+            left: -10%;
+            opacity: 0;
+            top: 0;
+            z-index: -15;
+            -webkit-transition: all .94s cubic-bezier(.2, .95, .57, .99);
+            -moz-transition: all .4s cubic-bezier(.2, .95, .57, .99);
+            -o-transition: all .4s cubic-bezier(.2, .95, .57, .99);
+            transition: all .4s cubic-bezier(.2, .95, .57, .99);
+            box-shadow: 2px 0px 14px rgba(0, 0, 0, .6);
+        }
+
+        .left-menu-btn:hover::before, .left-menu-btn:hover::before {
+            opacity: 1;
+            width: 116%;
+        }
+
+        .left-menu-btn:hover::after, .left-menu-btn:hover::after {
+            opacity: 1;
+            width: 120%;
+        }
+
+
+        :root {
+            --button-color: #000000;
+            --button-bg-color: #F2F3F7;
+            --button-hover-bg-color: #FFFFFF;
+        }
+
+        button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--button-bg-color);
+            color: var(--button-color);
+
+            margin: 0;
+            padding: 0.5rem 1rem;
+
+
+            font-size: 15px;
+            font-weight: 900;
+            text-align: center;
+            text-decoration: none;
+
+            border: none;
+            border-radius: 5px;
+
+            display: inline-block;
+            width: auto;
+
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+            cursor: pointer;
+
+            transition: 0.5s;
+        }
+
+        button:active,
+        button:hover,
+        button:focus {
+            background: var(--button-hover-bg-color);
+            outline: 0;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+        }
+
+        form {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* 왼쪽 메뉴 설정 끝 */
+
+
+        /* 레이아웃 CSS 시작 */
+
+        .container {
+            width: 1000px;
+            margin: 0px auto 0px auto;
+        }
+
+        .container div {
+            text-align: center;
+            display: table;
+        }
+
+        .container div span {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .top {
+            margin-top: 20px;
+            outline: 1px solid #FFFFFF;
+            width: 1000px;
+            height: 10px;
+            display: table;
+            background-color: #FFFFFF;
+        }
+
+        .middle {
+            margin-top: 20px;
+            width: 1000px;
+            height: 100%;
+            position: relative;
+        }
+
+        .middle-left {
+            outline: 1px solid #FFFFFF;
+            position: absolute;
+            top: 0px;
+            width: 210px;
+            height: 100%;
+            background-color: #FFFFFF;
+        }
+
+        .middle-right {
+            position: absolute;
+            top: 0px;
+            left:220px;
+            width: 780px;
+            height: 100%;
+            outline: 1px solid #FFFFFF;
+
+            background-color: #FFFFFF;
+        }
+
+        /* 레이아웃 CSS 끝 */
+
+        /*검색 박스 시작*/
+
+        .search {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 14px;
+        }
+
+        .search-img {
+            position: absolute;
+            width: 17px;
+            top: 10px;
+            right: 12px;
+            margin: 0;
+        }
+
+        /*검색 박스 끝*/
+
+
+
+    </style>
+
+    <script>
+
+        $(document).ready(function () {
+            // $('#map_html').load("map1.html", function() {
+            //     alert("로드가 되었습니다.")
+            // });
+            // $("#includedContent").load("map1.html");
+        });
+
+
+    </script>
+
+</head>
+<body>
+
+<div class="container">
+    <!-- TOP 시작 -->
+    <div class="top">
+    <!-- TOP 내용 넣는 곳 -->
+    </div>
+    <!-- TOP 끝 -->
+
+    <!-- MIDDLE -->
+    <div class="middle">
+
+        <!-- LEFT 시작 -->
+        <div class="middle-left">
+
+          <div class="left-menu">
+
+
+                <!-- 왼쪽 메뉴 시작 -->
+                <div class="container-fluid test" style="min-height: calc(100vh - 136px);">
+                    <!-- 그룹 태그로 role과 aria-multiselectable를 설정한다. -->
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <!-- 하나의 item입니다. data-parent 설청과 href 설정만 제대로 하면 문제없이 작동합니다. -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab">
+                                <button class="left-menu-btn" type="button" role="button" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapse1" aria-expanded="false">
+                                    관심 카테고리
+                                </button>
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse" role="tabpanel">
+                                <div class="panel-body">
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse1" aria-expanded="false"
+                                            onclick=window.open("https://www.naver.com",'_self')>카테고리1
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse1" aria-expanded="false"
+                                            onclick=window.open("/")>카테고리2
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse1" aria-expanded="false"
+                                            onclick=window.open("/")>카테고리3
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse1" aria-expanded="false"
+                                            onclick=window.open("/")>카테고리4
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse1" aria-expanded="false"
+                                            onclick=window.open("/")>카테고리5
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse1" aria-expanded="false"
+                                            onclick=window.open("/")>카테고리6
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse1" aria-expanded="false"
+                                            onclick=window.open("/")>카테고리7
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 하나의 Item입니다. -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab">
+                                <button class="left-menu-btn" type="button" role="button" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapse2" aria-expanded="false">
+                                    전시
+                                </button>
+                            </div>
+                            <div id="collapse2" class="panel-collapse collapse" role="tabpanel">
+                                <div class="panel-body">
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse2" aria-expanded="false"
+                                            onclick=window.open("https://www.naver.com",'_self')>전시1
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse2" aria-expanded="false"
+                                            onclick=window.open("/")>전시2
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse2" aria-expanded="false"
+                                            onclick=window.open("/")>전시3
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse2" aria-expanded="false"
+                                            onclick=window.open("/")>전시4
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse2" aria-expanded="false"
+                                            onclick=window.open("/")>전시5
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse2" aria-expanded="false"
+                                            onclick=window.open("/")>전시6
+                                    </button>
+                                    <button class="left-list-menu-btn" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse2" aria-expanded="false"
+                                            onclick=window.open("/")>전시7
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab">
+                                <button class="left-menu-btn" type="button" role="button" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapse3" aria-expanded="false">
+                                    뮤지엄
+                                </button>
+                            </div>
+                            <div id="collapse3" class="panel-collapse collapse" role="tabpanel">
+                                <div class="panel-body">
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse3" aria-expanded="false"
+                                            onclick=window.open("https://www.naver.com",'_self')>뮤지엄1
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse3" aria-expanded="false"
+                                            onclick=window.open("/")>뮤지엄2
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse3" aria-expanded="false"
+                                            onclick=window.open("/")>뮤지엄3
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse3" aria-expanded="false"
+                                            onclick=window.open("/")>뮤지엄4
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse3" aria-expanded="false"
+                                            onclick=window.open("/")>뮤지엄5
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse3" aria-expanded="false"
+                                            onclick=window.open("/")>뮤지엄6
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse3" aria-expanded="false"
+                                            onclick=window.open("/")>뮤지엄7
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab">
+                                <button class="left-menu-btn" type="button" role="button" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapse4" aria-expanded="false">
+                                    아동 체험전
+                                </button>
+                            </div>
+                            <div id="collapse4" class="panel-collapse collapse" role="tabpanel">
+                                <div class="panel-body">
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse4" aria-expanded="false"
+                                            onclick=window.open("https://www.naver.com",'_self')>체험전1
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse4" aria-expanded="false"
+                                            onclick=window.open("/")>체험전2
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse4" aria-expanded="false"
+                                            onclick=window.open("/")>체험전3
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse4" aria-expanded="false"
+                                            onclick=window.open("/")>체험전4
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse4" aria-expanded="false"
+                                            onclick=window.open("/")>체험전5
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse4" aria-expanded="false"
+                                            onclick=window.open("/")>체험전6
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse4" aria-expanded="false"
+                                            onclick=window.open("/")>체험전7
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab">
+                                <button class="left-menu-btn" type="button" role="button" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapse5" aria-expanded="false">
+                                    행사/축제
+                                </button>
+                            </div>
+                            <div id="collapse5" class="panel-collapse collapse" role="tabpanel">
+                                <div class="panel-body">
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse5" aria-expanded="false"
+                                            onclick=window.open("https://www.naver.com",'_self')>행사/축제1
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse5" aria-expanded="false"
+                                            onclick=window.open("/")>행사/축제2
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse5" aria-expanded="false"
+                                            onclick=window.open("/")>행사/축제3
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse5" aria-expanded="false"
+                                            onclick=window.open("/")>행사/축제4
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse5" aria-expanded="false"
+                                            onclick=window.open("/")>행사/축제5
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse5" aria-expanded="false"
+                                            onclick=window.open("/")>행사/축제6
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse5" aria-expanded="false"
+                                            onclick=window.open("/")>행사/축제7
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab">
+                                <button class="left-menu-btn" type="button" role="button" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapse6" aria-expanded="false">
+                                    클래스
+                                </button>
+                            </div>
+                            <div id="collapse6" class="panel-collapse collapse" role="tabpanel">
+                                <div class="panel-body">
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse6" aria-expanded="false"
+                                            onclick=window.open("https://www.naver.com",'_self')>클래스1
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse6" aria-expanded="false"
+                                            onclick=window.open("/")>클래스2
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse6" aria-expanded="false"
+                                            onclick=window.open("/")>클래스3
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse6" aria-expanded="false"
+                                            onclick=window.open("/")>클래스4
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse6" aria-expanded="false"
+                                            onclick=window.open("/")>클래스5
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse6" aria-expanded="false"
+                                            onclick=window.open("/")>클래스6
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse6" aria-expanded="false"
+                                            onclick=window.open("/")>클래스7
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab">
+                                <button class="left-menu-btn" type="button" role="button" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapse7" aria-expanded="false">
+                                    MD샵
+                                </button>
+                            </div>
+                            <div id="collapse7" class="panel-collapse collapse" role="tabpanel">
+                                <div class="panel-body">
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse7" aria-expanded="false"
+                                            onclick=window.open("https://www.naver.com",'_self')>MD샵1
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse7" aria-expanded="false"
+                                            onclick=window.open("/")>MD샵2
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse7" aria-expanded="false"
+                                            onclick=window.open("/")>MD샵3
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse7" aria-expanded="false"
+                                            onclick=window.open("/")>MD샵4
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse7" aria-expanded="false"
+                                            onclick=window.open("/")>MD샵5
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse7" aria-expanded="false"
+                                            onclick=window.open("/")>MD샵6
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse7" aria-expanded="false"
+                                            onclick=window.open("/")>MD샵7
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab">
+                                <button class="left-menu-btn" type="button" role="button" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapse8" aria-expanded="false">
+                                    개인전
+                                </button>
+                            </div>
+                            <div id="collapse8" class="panel-collapse collapse" role="tabpanel">
+                                <div class="panel-body">
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse8" aria-expanded="false"
+                                            onclick=window.open("https://www.naver.com",'_self')>개인전1
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse8" aria-expanded="false"
+                                            onclick=window.open("/")>개인전2
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse8" aria-expanded="false"
+                                            onclick=window.open("/")>개인전3
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse8" aria-expanded="false"
+                                            onclick=window.open("/")>개인전4
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse8" aria-expanded="false"
+                                            onclick=window.open("/")>개인전5
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse8" aria-expanded="false"
+                                            onclick=window.open("/")>개인전6
+                                    </button>
+                                    <button class="left-list-menu-btn" type="button" role="button"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse8" aria-expanded="false"
+                                            onclick=window.open("/")>개인전7
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 왼쪽 메뉴 끝 -->
+            </div>
+
+        </div>
+        <!-- LEFT 시작 -->
+
+        <!-- RIGHT 시작 -->
+        <div class="middle-right">
+            <div class="wrap">
+                <!-- 검색 Input 시작 -->
+                <div class="search">
+                    <input class="search-input" type="text" placeholder="검색어 입력">
+                    <img class="search-img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+                </div>
+                <!-- 검색 Input 끝-->
+                <!-- 지도 부분 -->
+                <div class="map-title">현재 위치에서 가까운 전시회</div>
+                <div class="current-position-map"></div>
+                <!-- <div id="includedContent"></div> -->
+                <!-- 지도 부분 끝 -->
+                <div class="clist-title cards-list-title">최신 전시회</div>
+
+                <!-- 전시회 리스트 -->
+                <div id="cards-box" class="card-columns">
+
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+                    <div class="card show-card">
+                        <img class="card-img-top"
+                             src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                            <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                            <p class="card-text list-info-font">지역: 서울</p>
+                            <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- 전시회 리스트 끝 -->
+        </div>
+        <!-- RIGHT 끝 -->
+
+    </div>
+    <!-- MIDDLE 끝 -->
+
+</div>
+
+</body>
+</html>
