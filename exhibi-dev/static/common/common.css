@@ -65,7 +65,6 @@ template{display:none;}
   font-style: normal;
   font-display: block;
 }
-
 i{font-family:'icon'!important;speak:never;font-style:normal;font-weight:normal;font-variant:normal;text-transform:none;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 
 .i-more:before{content:"\e900";}
@@ -78,3 +77,25 @@ i{font-family:'icon'!important;speak:never;font-style:normal;font-weight:normal;
 .i-shape_r:before{content:"\e907";}
 .i-share:before{content:"\e908";}
 /* // 아이콘 폰트 */
+
+/* Colors */
+[data-dark="false"] {
+  --blue: #004FFF;
+  --blue_F: #F7F8FA;
+  --blue_E: #ECEDF4;
+  --black: #000;
+  --white: #fff;
+}
+
+.font_blue {color: var(--blue);}
+.font_blue_F {color: var(--blue_F)}
+.font_blue_E {color: var(--blue_E)}
+.font_black {color: var(--black);}
+.font_white {color: var(--white);}
+
+.bg_blue {background-color: var(--blue);}
+.bg_blue_F {background-color: var(--blue_F);}
+.bg_blue_E {background-color: var(--blue_E)}
+.bg_black {background-color: var(--black);}
+.bg_white {background-color: var(--white);}
+/* // Colors */
