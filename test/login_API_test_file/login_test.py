@@ -59,6 +59,11 @@ def sign_up_get():
     member_list = list(db.login_info.find({}, {'_id': False}))
     return jsonify({'all_member_list': member_list})
 
+@app.route('/id_overlap', methods=['POST'])
+def overlap_get():
+    find_id_receive = request.form['find_id_give']
+    overlap_id = db.login_info.find_one({'ID':find_id_receive},{'_id':False})
+    return jsonify({'result': overlap_id['ID']})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

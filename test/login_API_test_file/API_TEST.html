@@ -67,11 +67,27 @@
                 })
             }
 
-        </script>
+            function overlap_check(id_check){
+                console.log("들어왔습니다다")
+
+               $.ajax({
+                    type: "POST",
+                    url: "/id_overlap",
+                    data: {find_id_give:id_check},
+                    success: function (response) {
+                        let overlap_id = response;
+                        console.log('response is ',response)
+                        console.log('overlap_id is ',overlap_id)
+                        if(overlap_id !== null){
+                            return false;
+                        }else{return true;}
+                        }
+                })
+            }
 
 
-        <script>
 
+        <!--      전화번호 다음 칸으로 이동      -->
         function changePhone1(){
             const phone1 = document.getElementById("phone1").value // 010
             if(phone1.length === 3){
@@ -88,6 +104,16 @@
             const phone3 = document.getElementById("phone3").value // 010
         }
 
+        <!--      주민번호 다음 칸으로 이동      -->
+        function changeRRN() {
+            const RRN = document.getElementById("RRN_1").value // 010
+            if (RRN.length === 6) {
+                document.getElementById("RRN_2").focus();
+            }
+        }
+
+
+
 
 
         let processID = -1;
@@ -101,12 +127,15 @@
         function signUpCheck(){
 
           let email = document.getElementById("E_MAIL").value
+          let id = document.getElementById("ID").value
           let name = document.getElementById("NAME").value
           let password = document.getElementById("PASSWORD").value
           let passwordCheck = document.getElementById("passwordCheck").value
           let area = document.getElementById("LOCATION").value
-          let gender = document.getElementById("gender").options.selectedIndex
+          let gender = document.getElementById("SEX").options.selectedIndex
           let check = true;
+
+          console.log(gender)
 
           // 이메일확인
           if(email.includes('@')){
@@ -114,15 +143,27 @@
             let emailServer = email.split('@')[1]
             if(emailId === "" || emailServer === ""){
               document.getElementById("emailError").innerHTML="이메일이 올바르지 않습니다."
-              check = false
+              check = false;
             }
             else{
               document.getElementById("emailError").innerHTML=""
             }
           }else{
             document.getElementById("emailError").innerHTML="이메일이 올바르지 않습니다."
-            check = false
+            check = false;
           }
+
+          //아이디 확인 및 중복 체크
+          if(id === ""){
+              document.getElementById("idError").innerHTML="아이디를 입력해주세요."
+              check = false;
+          }else{
+              let check_num = overlap_check(id);
+              if(check_num)
+              console.log('check = ',check)
+          }
+
+
 
 
           // 이름확인
@@ -148,13 +189,13 @@
             document.getElementById("passwordError").innerHTML="비밀번호를 입력해주세요."
             check = false
           }else{
-            //document.getElementById("passwordError").innerHTML=""
+            document.getElementById("passwordError").innerHTML=""
           }
           if(passwordCheck===""){
             document.getElementById("passwordCheckError").innerHTML="비밀번호를 다시 입력해주세요."
             check = false
           }else{
-            //document.getElementById("passwordCheckError").innerHTML=""
+            document.getElementById("passwordCheckError").innerHTML=""
           }
 
 
@@ -167,22 +208,30 @@
           }
 
           // 성별체크확인
+          if(gender === 0){
+            document.getElementById("genderError").innerHTML="성별을 선택해주세요."
+            check = false
+          }else{
+            document.getElementById("genderError").innerHTML=""
+          }
 
 
           if(check){
             document.getElementById("emailError").innerHTML=""
+            document.getElementById("idError").innerHTML=""
             document.getElementById("nameError").innerHTML=""
             document.getElementById("passwordError").innerHTML=""
             document.getElementById("passwordCheckError").innerHTML=""
             document.getElementById("areaError").innerHTML=""
             document.getElementById("genderError").innerHTML=""
-
-            //비동기 처리이벤트
             setTimeout(function() {
-              alert("가입이 완료되었습니다.")
-          },0);
+              sign_up()
+            },0);
+
           }
         }
+
+
 
     </script>
 
@@ -198,7 +247,7 @@
             </div>
             <div class="id">
                 <input id="ID" type="text" placeholder="아이디를 입력해 주세요.">
-
+                <div id="idError" class="error"></div>
             </div>
             <div class="name">
                 <input id="NAME"  type="text" placeholder="이름을 입력해 주세요.">
@@ -218,7 +267,7 @@
                 <input id="phone3" type="text" size="3" maxlength="4" oninput="changePhone3()">
             </div>
             <div class="RRN">
-                <input id="RRN_1" type="text" size="5" maxlength="6"> -
+                <input id="RRN_1" type="text" size="5" maxlength="6" oninput="changeRRN()"> -
                 <input id="RRN_2" type="text" size="6" maxlength="7">
             </div>
 
@@ -238,6 +287,7 @@
                   <option value="male">남자</option>
                   <option value="female">여자</option>
                 </select>
+                <div id="genderError" class="error"></div>
             </div>
 
             <div class="line">
@@ -245,7 +295,7 @@
             </div>
 
             <div class="signUp">
-                <button id="signUpButton" onclick="sign_up()">가입하기</button>
+                <button id="signUpButton" onclick="signUpCheck()">가입하기</button>
             </div>
         </div>
 
