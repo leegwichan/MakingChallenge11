@@ -1,3 +1,6 @@
+/* google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+/* // google fonts */
 /* css reset */
 html,body{position:relative;-webkit-text-size-adjust:100%;color:#333;width:100%;height:100%;}
 body{margin:0;overflow:auto;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:none;}
@@ -99,3 +102,12 @@ i{font-family:'icon'!important;speak:never;font-style:normal;font-weight:normal;
 .bg_black {background-color: var(--black);}
 .bg_white {background-color: var(--white);}
 /* // Colors */
+
+/* Font weights */
+.weight_400 {font-weight: 400;}
+.weight_500 {font-weight: 500;}
+.weight_600 {font-weight: 600;}
+.weight_700 {font-weight: 700;}
+.weight_800 {font-weight: 800;}
+.weight_900 {font-weight: 900;}
+/* // Font weights */
