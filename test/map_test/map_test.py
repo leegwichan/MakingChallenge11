@@ -13,6 +13,11 @@ exhibition_infos= list(db.exhibition_info.find({},{'_id':False}))
 all_place=[]
 for exhibition_info in exhibition_infos:
     place_info = exhibition_info['place']
+    # if (place_info.find("(") != -1 || place_info.find(")") != -1):
+    #     all_place.append(place_info)
+
+    
+    
     all_place.append(place_info)
 print(all_place)
 
@@ -29,10 +34,10 @@ m = folium.Map([37.5710057, 126.9747532],tiles='cartodbpositron', zoom_start=15)
 # def mark_exhibition():
 #
 #     return
-geolocator = Nominatim(user_agent='Exhibition')
-for place in all_place:
- target = geolocator.geocode(place)
- print(target)
+# geolocator = Nominatim(user_agent='Exhibition')
+# for place in all_place:
+#  target = geolocator.geocode(place)
+#  print(target)
 #  target_latitude = target.raw
 #  target_longitude =
 # print(gallery)
