@@ -111,3 +111,21 @@ i{font-family:'icon'!important;speak:never;font-style:normal;font-weight:normal;
 .weight_800 {font-weight: 800;}
 .weight_900 {font-weight: 900;}
 /* // Font weights */
+
+/* Button */
+.btn-point {box-shadow: 0 4px 12px rgb(0 79 255 / 40%);}
+.btn-radius {border-radius: 2em;}
+.btn-white {color:var(--black);background-color:var(--white);border-color:var(--white);}
+.btn-blue_F {background-color: var(--blue_F);}
+.btn-blue {color:var(--white);background-color:var(--blue);border-color:var(--blue);}
+.btn-blue:hover {color: var(--white);}
+/* // Button */
+
+/* InputBox */
+.form-control.form_custom::placeholder {color: transparent !important;}
+.form-control.form_custom{border-color: var(--blue_E);}
+/* // InputBox */
+
+/* card */
+.card .card-text {font-size: 12px;}
+/* // card */
