@@ -11,7 +11,7 @@ db = client.dbsparta
 # html 받아오는 부분
 @app.route('/')
 def home():
-    return render_template('API_TEST.html')
+    return render_template('sign_up.html')
 
 
 
@@ -43,14 +43,6 @@ def sign_up_post():
     }
     db.login_info.insert_one(doc)
     return jsonify({'msg': 'COMPLETE'})
-
-
-# db에 저장된 목록 받아오기 --> 로그인을 위해서
-@app.route('/login', methods=['GET'])
-def sign_up_get():
-    member_list = list(db.login_info.find({}, {'_id': False}))
-    return jsonify({'all_member_list': member_list})
-
 
 
 
