@@ -14,7 +14,10 @@ def home():
     return render_template('API_TEST.html')
 
 
+
 # api
+
+# 회원가입
 @app.route('/login', methods=['POST'])
 def sign_up_post():
     ID_receive = request.form['ID_give']
@@ -26,14 +29,6 @@ def sign_up_post():
     E_MAIL_receive = request.form['E_MAIL_give']
     LOCATION_receive = request.form['LOCATION_give']
     # BOOKMARK_receive = request.form['BOOKMARK_give']
-
-    # same_ID = list(db.login_info.find({'ID': ID_receive}))
-    # same_RRN = list(db.login_info.find({'RRN': RRN_receive}))
-    # same_E_MAIL = list(db.login_info.find({'E_MAIL': E_MAIL_receive}))
-    #
-    # if same_RRN is not None:
-    #     if same_ID is not None:
-    #         if same_E_MAIL is not None:
 
     doc = {
         'ID': ID_receive,
@@ -48,22 +43,53 @@ def sign_up_post():
     }
     db.login_info.insert_one(doc)
     return jsonify({'msg': 'COMPLETE'})
-    #
-    #         else: return jsonify({'msg': '중복된 e-mail이 존재합니다.' })
-    #     else: return jsonify({'msg': '중복된 ID가 존재합니다.' })
-    # else: return jsonify({'msg': '중복된 주민등록번호가 존재합니다.' })
 
 
+# db에 저장된 목록 받아오기 --> 로그인을 위해서
 @app.route('/login', methods=['GET'])
 def sign_up_get():
     member_list = list(db.login_info.find({}, {'_id': False}))
     return jsonify({'all_member_list': member_list})
 
+
+
+
+# 중복 확인란
 @app.route('/id_overlap', methods=['POST'])
 def overlap_get():
     find_id_receive = request.form['find_id_give']
-    overlap_id = db.login_info.find_one({'ID':find_id_receive},{'_id':False})
-    return jsonify({'result': overlap_id['ID']})
+    find_phone_receive = request.form['find_phone_give']
+    find_email_receive = request.form['find_email_give']
+    find_RRN_receive = request.form['find_RRN_give']
+
+
+    same_ID = db.login_info.find({'ID': find_id_receive},{'_id':False})
+    same_PHONE = db.login_info.find({'E_MAIL': find_phone_receive},{'_id':False})
+    same_E_MAIL = db.login_info.find({'E_MAIL': find_email_receive},{'_id':False})
+    same_RRN = db.login_info.find({'RRN': find_RRN_receive},{'_id':False})
+
+    # 중복 확인 조건문
+    if same_ID is not None:
+        ID_result = '아이디가 중복됩니다'
+    else:
+        ID_result = ''
+    if same_PHONE is not None:
+        Phone_result = '같은 전화번호가 존재합니다'
+    else:
+        Phone_result = ''
+    if same_E_MAIL is not None:
+        E_mail_result = '해당 이메일 계정이 존재합니다'
+    else:
+        E_mail_result = ''
+    if same_RRN is not None:
+        RRN_result = '이미 계정이 존재합니다(주민번호)'
+    else:
+        RRN_result = ''
+
+    return jsonify({'ID_result':ID_result, 'Phone_result':Phone_result, 'E_mail_result':E_mail_result, 'RRN_result': RRN_result})
+
+
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
