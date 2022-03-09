@@ -106,3 +106,4 @@ dist
 #ETC
 .idea/
 .DS_Store
+venv
