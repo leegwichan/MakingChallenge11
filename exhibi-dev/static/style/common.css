@@ -121,9 +121,14 @@ i{font-family:'icon'!important;speak:never;font-style:normal;font-weight:normal;
 .btn-blue:hover {color: var(--white);}
 /* // Button */
 
+/* checkbox */
+.checkbox {color:var(--black);background-color:var(--white);border-color:var(--blue_E);border-radius: 9px; margin-right: 20px;}
+.btn-checkbox[type=checkbox]:checked + .checkbox{color: var(--white); background-color: var(--blue);}
+/* //checkbox */
+
 /* InputBox */
 .form-control.form_custom::placeholder {color: transparent !important;}
-.form-control.form_custom{border-color: var(--blue_E);}
+.form-control.form_custom{border-color: var(--blue_E); border-radius: 9px;}
 /* // InputBox */
 
 /* card */
