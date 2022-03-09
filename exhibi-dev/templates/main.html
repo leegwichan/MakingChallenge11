@@ -1,11 +1,416 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" data-dark="false">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+            integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+            integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <title>메이킹챌린지 11기 | 전시회 조회 서비스</title>
+
+    <title>전시회 조회 서비스</title>
+
+    <link rel="stylesheet" href="../static/style/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/style/common.css">
+    <link rel="stylesheet" type="text/css" href="../static/style/main.css">
+    <link rel="stylesheet" href="../static/style/index.css">
+    <script src="../static/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="전시회 조회 서비스">
+    <meta property="og:description" content="메이킹 챌린지 11기">
+    <meta property="og:image" content="{{ url_for('static', 'filename=ogimage.png') }}">
+
+
+    <style></style>
+
+    <script>
+
+        $(document).ready(function () {
+
+        });
+
+        // 메인 메뉴 클릭 시작
+        $(function () {
+            $("dt").click(function () {  // .click(0를 이용해 클릭했을 때 동작
+                $(this).toggleClass("open"); // 해당태그를 토글시 오픈 / toggleClass()로 선택한 요소에 클래스(Class) 값을 넣었다 뺐다 할 수 있습니다.
+                if ($(this).hasClass("open")) // 해당 태그에 클래스이 open이 있는지 확인 / 의 hasClass() 메서드는 선택한 요소에 클래스가 있는지 확인합니다. / 열려있는 것 확인
+                    $("dt").not(this).removeClass("open"); // not(this) this가 아닌요소 선택 / removeClass() 클래스를 지운다. / 열려있는것 닫기
+            })
+        })
+        // 메인 메뉴 클릭 끝
+
+    </script>
+
 </head>
+
 <body>
-$END$
-브런치 test
+
+    <div class="container">
+
+        <div class="top"><!--헤드부분--></div>
+        <!-- MIDDLE -->
+        <div class="middle">
+
+            <!-- LEFT 시작 -->
+            <div class="middle-left">
+                <!-- 관심 카테고리 모달 열기 위한 버튼 -->
+                <!--            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
+                <!--                모달 보기 버튼-->
+                <!--            </button>-->
+                <!-- 관심 카테고리 모달 열기 위한 버튼 끝 -->
+                <!-- 모달 영역 -->
+                <div class="modal modal-center fade" id="my80sizeCenterModal" tabindex="-1" role="dialog"
+                     aria-labelledby="my80sizeCenterModalLabel">
+                    <div class="modal-dialog modal-80size modal-center" role="document">
+                        <div class="modal-content modal-80size">
+                            <div class="modal-header">
+                                <div class="modal-title weight_700 interest-title" id="myModalLabel">어떤 전시회를 보고 싶으신가요?</div>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="interest-title-sub">홈 피드에서 보고 싶은 콘텐츠를 선택해주세요.</div>
+                                <div class="interest-ceter">
+                                    <button type="button" class="interest-cate-btn weight_600">전시</button>
+                                    <button type="button" class="interest-cate-btn weight_600">뮤지엄</button>
+                                    <button type="button" class="interest-cate-btn weight_600">아동체험전</button>
+                                </div>
+                                <div class="interest-ceter">
+                                    <button type="button" class="interest-cate-btn weight_600">행사/축제</button>
+                                    <button type="button" class="interest-cate-btn weight_600">클래스</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer interest-ceter">
+                                <button type="button" class="interest-save-btn btn-blue_F weight_600">다 했어요!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 영역 끝 -->
+
+                <!-- 왼쪽 메뉴 시작 -->
+                <div class="left-menu">
+                    <dl>
+                        <div class="interest" data-target="#myModal">관심 카테고리<i class="i-more" data-toggle="modal"
+                                                                               data-target="#my80sizeCenterModal"></i>
+                        </div>
+                        <dt>전시</dt>
+                        <dd>
+                            <div class="sub-list-menu" onclick="location.href='main.html'">근접 전시회</div>
+                            <div class="sub-list-menu" onclick="location.href='main_test_04.html'">최신 전시회</div>
+                            <div class="sub-list-menu" onclick="location.href='address'">임박 전시회</div>
+                        </dd>
+                        <dt>뮤지엄</dt>
+                        <dd>
+                            <div class="sub-list-menu" onclick="location.href='address'">근접 전시회</div>
+                            <div class="sub-list-menu" onclick="location.href='address'">최신 전시회</div>
+                            <div class="sub-list-menu" onclick="location.href='address'">임박 전시회</div>
+                        </dd>
+                        <dt>아동체험전</dt>
+                        <dd>
+                            <div class="sub-list-menu" onclick="location.href='address'">근접 전시회</div>
+                            <div class="sub-list-menu" onclick="location.href='address'">최신 전시회</div>
+                            <div class="sub-list-menu" onclick="location.href='address'">임박 전시회</div>
+                        </dd>
+                        <dt>행사/축제</dt>
+                        <dd>
+                            <div class="sub-list-menu" onclick="location.href='address'">근접 전시회</div>
+                            <div class="sub-list-menu" onclick="location.href='address'">최신 전시회</div>
+                            <div class="sub-list-menu" onclick="location.href='address'">임박 전시회</div>
+                        </dd>
+                        <dt>클래스</dt>
+                        <dd>
+                            <div class="sub-list-menu" onclick="location.href='address'">근접 전시회</div>
+                            <div class="sub-list-menu" onclick="location.href='address'">최신 전시회</div>
+                            <div class="sub-list-menu" onclick="location.href='address'">임박 전시회</div>
+                        </dd>
+                    </dl>
+                </div>
+                <!-- 왼쪽 메뉴 끝 -->
+
+            </div>
+            <!-- LEFT 끝 -->
+
+            <!-- RIGHT 시작 -->
+            <div class="middle-right">
+
+                <div class="wrap">
+                    <!-- 검색 Input 시작 -->
+                    <div class="search" style="float: left;">
+                        <i class="i-search"></i>
+                        <input class="form-control search-input" type="text" placeholder="" aria-label="Disabled input example">
+                    </div>
+                    <!-- 검색 Input 끝-->
+                    <!-- 로그인 회원가입 시작 -->
+                    <div style="float: left;">
+                        <button class="btn btn-white btn-radius btn-point log-in" type="text" placeholder="">로그인</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-white btn-radius btn-blue btn-point sign-up" type="text" placeholder="">회원가입</button>
+                    </div>
+                    <!-- 로그인 회원가입 끝 -->
+                    <!-- 지도 부분 -->
+                    <div class="current-position-map"></div>
+                    <!-- 지도 부분 끝 -->
+                    <div class="weight_600 cards-list-title">최신 전시회</div>
+
+                    <!-- 전시회 리스트 -->
+                    <div id="cards-box" class="card-columns">
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                        <div class="card shadow" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text">지역: 서울</p>
+                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 전시회 리스트 끝 -->
+
+                </div>
+                <!-- RIGHT 끝 -->
+
+                <!-- 모달 상세 페이지 부분 시작 -->
+                <!--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"-->
+                <!--                        data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Toggle bottom offcanvas-->
+                <!--                </button>-->
+
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+                     aria-labelledby="offcanvasBottomLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body small">
+                        ...내용은 여기에 작성 합니다.
+                        <div class="card show-card btn btn-outline-secondary">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                                <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text list-info-font">지역: 서울</p>
+                                <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 상세 페이지 부분 끝 -->
+
+            </div>
+        </div>
+        <!-- MIDDLE 끝 -->
+
+    </div>
+
 </body>
 </html>
