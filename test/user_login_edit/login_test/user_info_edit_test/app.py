@@ -11,9 +11,17 @@ import requests
 import re
 
 
+
+# 각 html에 맞는 route가 있으니 필요에 따라 주석 제거하면서 실행해 보시면 됩니다!
+
+
+
+
 # 회원가입 부분
+
+
 '''
-html 받아오는 부분
+# html 받아오는 부분
 @app.route('/')
 def home():
     return render_template('sign_up.html')
@@ -84,8 +92,8 @@ def overlap_get():
 
     return jsonify({'ID_result':ID_result, 'Phone_result':Phone_result, 'E_mail_result':E_mail_result, 'RRN_result': RRN_result})
 
-'''
 
+'''
 
 # 로그인 부분
 '''
@@ -103,6 +111,7 @@ def sign_up_get():
 
 
 # 회원 정보 수정
+
 @app.route('/')
 def main():
     return render_template('my_info_edit.html')
@@ -111,16 +120,33 @@ def main():
 # 회원 정보 조회
 @app.route('/user_view', methods=['POST'])
 def user_view():
-    my_info_receive = request.form['my_info_give']
-    user = db.login_info.find_one({'ID':my_info_receive}, {'_id': False})
+    key_receive = request.form['key_give']
+    user_list = list(db.login_info.find({}, {'_id': False}))
+    user = user_list[int(key_receive)]
     return jsonify({'user': user})
 
 # 회원 정보 수정 api
 @app.route('/user_edit', methods=['POST'])
 def user_info_edit():
-    my_info_receive = request.form['my_info_give']
-    user = db.login_info.find_one({'ID':my_info_receive}, {'_id': False})
-    return jsonify({'user': user})
+
+    # 정보 받아오기
+    my_info_receive = request.form.get('my_info_give',False)
+    key_receive = request.form['key_give']
+
+    # 바꿀 아이디 찾기
+    user_list = list(db.login_info.find({}, {'_id': False}))
+    user = user_list[int(key_receive)]
+    user_id = user['ID']
+
+    # 찾은 아이디에 딕셔너리를 바꾸자
+    db.login_info.delete_one({'ID':user_id})
+    user = my_info_receive
+    db.login_info.insert_one(user)
+    # db.login_info.update_one({'ID':user_id},{'$set':my_info_receive})
+
+    user = user_list[int(key_receive)]
+    return jsonify({'msg': '완료되었습니다'})
+
 
 
 
