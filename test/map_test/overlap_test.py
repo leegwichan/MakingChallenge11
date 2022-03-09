@@ -32,7 +32,6 @@ full_text = f"""<div style = "text-align: center; ">{p_tags}
                     in {target_place}
                 </div>"""
 
-
 summary_info = folium.Html(f"""{full_text}""", script = True)
 popup_html = folium.Popup(summary_info,max_width=500)
             
