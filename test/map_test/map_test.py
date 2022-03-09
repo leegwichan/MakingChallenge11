@@ -21,12 +21,12 @@ m = folium.Map([37.5710057, 126.9747532],tiles='cartodbpositron', zoom_start=15)
 total_data = list(db.exhibition_info.find({},{'_id':False}))
 
 # 여러 전시 운영하는 장소 변수 : overlap_place
-overlay_check = []
+overlap_check = []
 for data in total_data:
-    overlay_check.append(data['place'])
+    overlap_check.append(data['place'])
 
 overlap_place = []
-result = Counter(overlay_check)
+result = Counter(overlap_check)
 for key, value in result.items():
     if value >= 2:
         overlap_place.append(key)
