@@ -1,0 +1,59 @@
+body{
+    background-color: #F7F8FA;
+}
+.container{
+    margin-top: 50px;
+}
+.nav-pills .nav-link.active{
+    background-color: white;
+    color: black;
+}
+.nav-link {
+    margin-bottom: 1rem;
+}
+.nav-pills .nav-link{
+    border-radius: 15px;
+}
+.protext{
+    font-size:30px;
+}
+.destext{
+    margin: 10px;
+}
+.box{
+    background-color:white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 10px 20px 20px #ECEDF4;
+}
+.info{
+    font-size: 25px;
+}
+.btn{
+    float: right;
+}
+.box-left{
+    width:430px;
+}
+.box-right{
+    /*width:442px;*/
+}
+.mb-3{
+    margin-bottom: 0px !important;
+}
+.form-control{
+    background-color: #F7F8FA;
+    border: 1px solid #ECEDF4;
+}
+.btn2{
+    background-color:white;
+    color: black;
+    border-color: white;
+    border-radius:35px;
+    margin-top: 30px;
+    margin-right: 15px;
+    padding: 10px 40px;
+}
+.cor{
+    float: left;
+}

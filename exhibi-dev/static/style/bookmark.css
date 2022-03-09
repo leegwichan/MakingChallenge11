@@ -1,0 +1,23 @@
+body{
+    background-color: #F7F8FA;
+}
+.container{
+    margin-top: 50px;
+}
+.nav-pills .nav-link.active{
+    background-color: white;
+    color: black;
+}
+.nav-link {
+    margin-bottom: 1rem;
+}
+.nav-pills .nav-link{
+    border-radius: 15px;
+}
+.marktext{
+    font-size:30px;
+    margin-bottom: 10px;
+}
+.card-columns{
+    column-count: 3;
+}
