@@ -15,7 +15,7 @@ import time
 #mongoDB 저장 패키지
 from pymongo import MongoClient
 client = MongoClient('localhost',27017)
-db = client.exhibition_info
+db = client.exhibition_project
 
 # 같은 폴더에서 크롬드라이버 불러오기
 driver = webdriver.Chrome('chromedriver_window')

@@ -36,7 +36,7 @@ print('-----------------------------------------------------------------')
 # 일부 주소 업데이트
 db.exhibition_info.update_many({'place': '여수 녹테마레'}, {'$set': {'address': '전라남도 여수시 만흥동 1226'}})
 db.exhibition_info.update_many({'place': '예술의전당 서예박물관'}, {'$set': {'address': '서울특별시 서초구 서초동 700'}})
-
+db.exhibition_info.update_many({'place': '현대백화점 미아점 10층 문화홀'}, {'$set': {'address': '서울 성북구 동소문로 315'}})
 
 # 수정된 전체 데이터 불러오기
 all_data = list(db.exhibition_info.find({},{'_id':False}))
@@ -107,8 +107,9 @@ for data in all_data:
     before_address_data = data['address']
     middle_address_data = before_address_data.replace('(중계역 3번출구, 하계역 1번출구)','').replace('7층','').replace('섬유센터빌딩 B1','').replace('종로 아트 프라자 1, 2층','').replace('A동 지하','').replace('부산문화회관 전시실','').replace('G205','').replace('4층','').replace('지하 1, 2층 HYBE INSIGHT','').replace('A동 3층','').replace('지하 1층','').replace('(정동)','').replace('서울특별시 송파구 잠실로 209 (신천동) ','')
     middle_address_data2 = middle_address_data.replace('지상2층','').replace('1층','').replace('117~123층','').replace('(선흘리 2019-3)','').replace('(5,6번 게이트)','').replace('지하1','').replace('(황지동, 문화예술회관)','').replace('용인포은아트홀','').replace('브릭캠퍼스','').replace('브이센터','').replace('여수세계박람회 국제관 D블럭 3층','').replace('쎈토이박물관','').replace('진아트','').replace(' (삼성동) 무역센터 코엑스','').replace('(중계동)','')
-    middle_address_data3 = middle_address_data2.replace('친환경식품유통센터 ','').replace('(오산동)','').replace('(신천동)','').replace('(율곡로 83)','').replace('(나운동)','').replace('(고매동)','').replace('(오산동)','').replace('(동광동3가)','').replace('(신천동)','').replace('(색달동 2629)','').replace('(광령리 100-3)','').replace('(율곡로 83)','').replace('(운양동)','').replace('','').replace('(상동)','').replace('(노형동)','').replace('(고덕동)','')
-    after_address_data = middle_address_data3.replace('서울특별시 송파구 잠실로 209 (신천동) ','').replace(' Ys Roo','').replace('숙련기술체험관','').replace(' 무역센터 코엑스','').replace('슈페리어타워 B','').replace('롯데백화점 동탄점','').replace('홍대 AK＆','').replace('호텔 은파팰리스','').replace('부산영화체험박물관','').replace('소인국테마파크 2층','').replace('부띠크모나코','').replace(' 구리문화재단','').replace(' 한국만화박물관','').strip()
+    middle_address_data3 = middle_address_data2.replace('친환경식품유통센터 ','').replace('(오산동)','').replace('(신천동)','').replace('(율곡로 83)','').replace('(나운동)','').replace('(고매동)','').replace('(오산동)','').replace('(동광동3가)','').replace('(신천동)','').replace('(색달동 2629)','').replace('(광령리 100-3)','').replace('(율곡로 83)','').replace('(운양동)','').replace('지하1층','').replace('(상동)','').replace('(노형동)','').replace('(고덕동)','')
+    middle_address_data4 = middle_address_data3.replace('(정동)','').replace('(정자동) 숙련기술체험관','').replace('(삼성동) 무역센터 코엑스','').replace('(신흑동)','').replace('(동숭동)','').replace('(정동)','').replace('(5,6번 게이트)','').replace('(남산동2가) 프렌쥬 그림자 상상 놀이터','').replace('(당동 871-1) 군포문화센터 5층 상상극장','').replace('(능동) 유니버설아트센터 루나홀','').strip()
+    after_address_data = middle_address_data4.replace('서울특별시 송파구 잠실로 209 (신천동) ','').replace(' Ys Roo','').replace('숙련기술체험관','').replace(' 무역센터 코엑스','').replace('슈페리어타워 B','').replace('롯데백화점 동탄점','').replace('홍대 AK＆','').replace('호텔 은파팰리스','').replace('부산영화체험박물관','').replace('소인국테마파크 2층','').replace('부띠크모나코','').replace(' 구리문화재단','').replace(' 한국만화박물관','').strip()
 
     search_input_btn = driver.find_element(by=By.CSS_SELECTOR, value='#searchboxinput')
     search_input_btn.clear()
@@ -203,3 +204,7 @@ for data in exception_datas:
     db.exhibition_info.update_many({'place': data[0]}, {'$set': {'longitude': data[2]}})
     print('예외 좌표정보 추가: ' + data[0] + '//' + str(data[1]) + ', '+ str(data[2]))
 
+
+missing_place_data = list(db.exhibition_info.find({'longitude':0},{'_id':False}))
+for missing_data in missing_place_data:
+    print('누락된 데이터: ',missing_data['place'],'//',missing_data['title'])
