@@ -140,8 +140,10 @@
 								INTEREST_CATEGORY_give: INTEREST_CATEGORY
 						},
 						success: function (response) {
-								alert(response["msg"]);
-								window.location.reload();
+								const overlap = response;
+								console.log('overlap is ', overlap)
+								$("#ID").val(response['ID_result']).css('color','red');
+								$("#PHONE_NUMBER").val(response['Phone_result']).css('color','red');
 						}
 				});
 			};
