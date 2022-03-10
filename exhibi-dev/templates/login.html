@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="ko" data-dark="false">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인</title>
+  <link rel="stylesheet" href="/exhibi-dev/static/style/bootstrap.min.css">
+  <link rel="stylesheet" href="/exhibi-dev/static/style/common.css">
+  <link rel="stylesheet" href="/exhibi-dev/static/style/join.css">
+  <script src="/exhibi-dev/static/js/bootstrap.min.js"></script>
+	<script src="/exhibi-dev/static/js/jquery.min.js"></script>
+</head>
+<body>
+	<div class="join_wrapper">
+		<div class="join-bg">
+			<div class="join-bg-inner" style="background-image: url(/exhibi-dev/static/imgs/join-bg.jpg);"></div>
+		</div>
+		<div class="join-side">
+			<div class="position_inner">
+				<h2 class="join-title">로그인</h2>
+				<div class="mt-4">
+					<form>
+						<div class="form-floating mb-3">
+							<input type="email" class="form-control form_custom" id="ID" placeholder="name@example.com">
+							<label for="ID">아이디(이메일)</label>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="password" class="form-control form_custom" id="PASSWORD" placeholder="Password">
+							<label for="PASSWORD">비밀번호</label>
+						</div>
+
+						<div class="login-inner">
+							<button class="btn btn-white btn-radius btn-blue btn-point weight_600 btn__submit" type="button" id="submit">로그인</button>
+							<div class="login-account mt-2">
+								<div class="login-account-find">
+									<a href="/find_id.html">아이디찾기</a>
+									<a href="/find_password.html">비밀번호찾기</a>
+								</div>
+									<a href="/exhibi-dev/templates/join.html" class="login-signup">회원가입</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
