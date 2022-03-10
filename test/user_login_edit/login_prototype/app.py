@@ -18,8 +18,10 @@ import re
 
 
 # 회원가입 부분
-'''
-html 받아오는 부분
+
+
+
+# html 받아오는 부분
 @app.route('/')
 def home():
     return render_template('sign_up.html')
@@ -27,8 +29,11 @@ def home():
 # api
 
 # 회원가입
-@app.route('/login', methods=['POST'])
+@app.route('/sign_up', methods=['POST'])
 def sign_up_post():
+
+    session_key = ''
+
     ID_receive = request.form['ID_give']
     PASSWORD_receive = request.form['PASSWORD_give']
     NAME_receive = request.form['NAME_give']
@@ -39,6 +44,11 @@ def sign_up_post():
     LOCATION_receive = request.form['LOCATION_give']
     # BOOKMARK_receive = request.form['BOOKMARK_give']
 
+    # 아이디의 아스키 코드를 key 값으로 설정
+    len_id = len(ID_receive)
+    for i in range(len_id):
+        session_key += str(ord(str((ID_receive[i]))))
+
     doc = {
         'ID': ID_receive,
         'PASSWORD': PASSWORD_receive,
@@ -48,6 +58,7 @@ def sign_up_post():
         'PHONE_NUMBER': PHONE_NUMBER_receive,
         'E_MAIL': E_MAIL_receive,
         'LOCATION': LOCATION_receive,
+        'KEY' : session_key
         # 'BOOKMARK': BOOKMARK_receive
     }
     db.login_info.insert_one(doc)
@@ -62,41 +73,41 @@ def overlap_get():
     find_id_receive = request.form['find_id_give']
     find_phone_receive = request.form['find_phone_give']
     find_email_receive = request.form['find_email_give']
-    find_RRN_receive = request.form['find_RRN_give']
+    # find_RRN_receive = request.form['find_RRN_give']
 
 
     same_ID = db.login_info.find({'ID': find_id_receive},{'_id':False})
     same_PHONE = db.login_info.find({'E_MAIL': find_phone_receive},{'_id':False})
     same_E_MAIL = db.login_info.find({'E_MAIL': find_email_receive},{'_id':False})
-    same_RRN = db.login_info.find({'RRN': find_RRN_receive},{'_id':False})
+    # same_RRN = db.login_info.find({'RRN': find_RRN_receive},{'_id':False})
 
     # 중복 확인 조건문
-    if same_ID is not None:
+    if same_ID is None:
         ID_result = '아이디가 중복됩니다'
     else:
         ID_result = ''
-    if same_PHONE is not None:
+    if same_PHONE is None:
         Phone_result = '같은 전화번호가 존재합니다'
     else:
         Phone_result = ''
-    if same_E_MAIL is not None:
+    if same_E_MAIL is None:
         E_mail_result = '해당 이메일 계정이 존재합니다'
     else:
         E_mail_result = ''
-    if same_RRN is not None:
-        RRN_result = '이미 계정이 존재합니다(주민번호)'
-    else:
-        RRN_result = ''
+    # if same_RRN is None:
+    #     RRN_result = '이미 계정이 존재합니다(주민번호)'
+    # else:
+    #     RRN_result = ''
 
-    return jsonify({'ID_result':ID_result, 'Phone_result':Phone_result, 'E_mail_result':E_mail_result, 'RRN_result': RRN_result})
+    return jsonify({'ID_result':ID_result, 'Phone_result':Phone_result, 'E_mail_result':E_mail_result})
 
-'''
+
 
 
 # 로그인 부분
-'''
-@app.route('/')
-def main():
+
+@app.route('/login_page')
+def login_page():
     return render_template('login.html')
 
 
@@ -105,14 +116,13 @@ def main():
 def sign_up_get():
     member_list = list(db.login_info.find({}, {'_id': False}))
     return jsonify({'all_member_list': member_list})
-'''
+
 
 
 # 회원 정보 수정
 
-'''
-@app.route('/')
-def main():
+@app.route('/user_edit')
+def edit_page():
     return render_template('my_info_edit.html')
 
 
@@ -127,10 +137,26 @@ def user_view():
 # 회원 정보 수정 api
 @app.route('/user_edit', methods=['POST'])
 def user_info_edit():
-    my_info_receive = request.form['my_info_give']
-    user = db.login_info.find_one({'ID':my_info_receive}, {'_id': False})
-    return jsonify({'user': user})
-'''
+
+    # 정보 받아오기
+    my_info_receive = request.form.get('my_info_give',False)
+    key_receive = request.form['key_give']
+
+    # 바꿀 아이디 찾기
+    user_list = list(db.login_info.find({}, {'_id': False}))
+    user = user_list[int(key_receive)]
+    user_id = user['ID']
+
+    # 찾은 아이디에 딕셔너리를 바꾸자
+    db.login_info.delete_one({'ID':user_id})
+    user = my_info_receive
+    db.login_info.insert_one(user)
+    # db.login_info.update_one({'ID':user_id},{'$set':my_info_receive})
+
+    user = user_list[int(key_receive)]
+    return jsonify({'msg': '완료되었습니다'})
+
+
 
 
 if __name__ == '__main__':

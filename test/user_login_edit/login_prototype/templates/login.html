@@ -38,6 +38,7 @@
                 data: {},
                 success: function (response) {
                     let member_list = response['all_member_list']
+
                     for (let i = 0; i < member_list.length; i++) {
                         let ID = member_list[i]['ID'];
                         let PASSWORD = member_list[i]['PASSWORD'];
@@ -51,7 +52,7 @@
 
                         if(ID === type_id){
                             if(PASSWORD === type_pw){
-                                sessionStorage.setItem("key",JSON.stringify(i));
+                                sessionStorage.setItem("key",JSON.stringify(member_list[i]['KEY']));
                                 let session_key = JSON.parse(sessionStorage.getItem("key"))
                                 return session_key
                                 // window.location.reload();
@@ -63,8 +64,8 @@
                     console.log('아이디가 틀렸습니다.');
                 }
             })
-        }
         console.log(JSON.parse(sessionStorage.getItem("key")));
+        }
 
     </script>
 

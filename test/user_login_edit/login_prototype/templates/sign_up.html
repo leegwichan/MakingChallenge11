@@ -21,8 +21,12 @@
 
     <script type="text/javascript">
 
+
+
         <!--    회원 가입 함수      -->
         function sign_up() {
+
+            console.log('sign up 들어왔습니다')
 
             let ID = $('#ID').val()
             let PASSWORD = $('#PASSWORD').val()
@@ -36,7 +40,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/login",
+                url: "/sign_up",
                 data: {
                     ID_give: ID,
                     PASSWORD_give: PASSWORD,
@@ -54,32 +58,9 @@
             })
         }
 
-        // 로그인 함수
-        function sign_in() {
-
-            $.ajax({
-                type: "GET",
-                url: "/login",
-                data: {},
-                success: function (response) {
-                    let member_list = response['all_member_list']
-                    for (let i = 0; i < member_list.length; i++) {
-                        let ID = member_list[i]['ID']
-                        let PASSWORD = member_list[i]['PASSWORD']
-                        let NAME = member_list[i]['NAME']
-                        let SEX = member_list[i]['SEX']
-                        let PHONE_NUMBER = member_list[i]['PHONE_NUMBER']
-                        let RRN = member_list[i]['RRN']
-                        let E_MAIL = member_list[i]['E_MAIL']
-                        let LOCATION = member_list[i]['LOCATION']
-                        // let BOOKMARK = member_list[i]['BOOKMARK']
-                    }
-                }
-            })
-        }
-
-        function overlap_check(id_check, phone_check, e_mail_check, RRN_check) {
-            console.log("들어왔습니다다")
+        // 중복 확인 체크
+        function overlap_check(id_check, phone_check, e_mail_check) {
+            console.log("들어왔습니다")
 
             $.ajax({
                 type: "POST",
@@ -88,7 +69,7 @@
                     find_id_give: id_check,
                     find_phone_give: phone_check,
                     find_email_give: e_mail_check,
-                    find_RRN_give: RRN_check
+                    // find_RRN_give: RRN_check
                 },
                 success: function (response) {
                     let overlap = response;
@@ -96,7 +77,8 @@
                     document.getElementById("idError").innerHTML = response['ID_result']
                     document.getElementById("phoneError").innerHTML = response['Phone_result']
                     document.getElementById("emailError").innerHTML = response['E_mail_result']
-                    document.getElementById("RRNError").innerHTML = response['RRN_result']
+                    // document.getElementById("RRNError").innerHTML = response['RRN_result']
+
 
                 }
             })
@@ -138,6 +120,8 @@
 
         function signUpCheck() {
 
+            console.log('signUpCheck 들어왔습니다')
+
             let email = document.getElementById("E_MAIL").value
             let id = document.getElementById("ID").value
             let name = document.getElementById("NAME").value
@@ -149,7 +133,6 @@
             let gender = document.getElementById("SEX").options.selectedIndex
             let check = true;
 
-            console.log(RRN)
 
             // 이메일확인
             if (email.includes('@')) {
@@ -225,12 +208,15 @@
             }
 
             overlap_check(id, phone,email,RRN);
-            id = document.getElementById("idError").value
-            email = document.getElementById("emailError").value
+            let id_Error = document.getElementById("idError").value
+            let email_Error = document.getElementById("emailError").value
             phone = document.getElementById("phoneError").value
             RRN = document.getElementById("RRNError").value
 
-            if(id === "" && email === ""){
+            console.log('id error ', id_Error)
+
+            if(id_Error == null && email_Error == null){
+                console.log('가입 체크 시작합니다.')
                 if (check) {
                 // document.getElementById("emailError").innerHTML = ""
                 // document.getElementById("idError").innerHTML = ""
@@ -240,8 +226,9 @@
                 // document.getElementById("areaError").innerHTML = ""
                 // document.getElementById("genderError").innerHTML = ""
                 sign_up();
+
             }
-            }
+            }else{console.log('옳지 않습니다.')}
 
 
         }

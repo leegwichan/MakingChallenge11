@@ -26,11 +26,15 @@
 
 
 
-		function user_view(session_key){
+		function user_view(){
 
             let name = $('#name').val()
             let pwd = $('#pwd').val()
             let email = $('#email').val()
+
+            let session_key = JSON.parse(sessionStorage.getItem("key"));
+
+            console.log(session_key)
 
 			// key 로 db에 저장된 인덱스를 가져옵니다.
 			$.ajax({
@@ -41,28 +45,30 @@
                     console.log('response is ',response)
 
                     let user = response['user']
-                    console.log('user is ', user)
+                    console.log('변경 전 user 는 ', user)
 
                     user['PASSWORD'] = pwd
                     user['NAME'] = name
                     user['E_MAIL'] = email
-                    console.log(user)
+                    console.log('변경 후 user 는 ==== ',user)
 
+                    user_edit(user);
                 }
             })
 
 		}
 
-        function user_edit(){
+        function user_edit(user){
 
             $.ajax({
                 type: "POST",
                 url: "/user_edit",
-                data: {my_info_give:my_info},
+                data: {my_info_give:user, key_give:JSON.parse(sessionStorage.getItem("key")) },
                 success: function (response) {
-                    console.log('response is ',response)
-                    let user_id = response['user']['ID']
-                    console.log('id is ', user_id)
+                    window.alert(response['msg'])
+
+
+
                 }
             })
 
@@ -109,7 +115,7 @@
         </table>
             <br>
             <center>
-				<button class="button" id="edit_button" onclick="user_view(1)">수정 하기</button>
+				<button class="button" id="edit_button" onclick="user_view()">수정 하기</button>
         	</center>
     </body>
 </html>
