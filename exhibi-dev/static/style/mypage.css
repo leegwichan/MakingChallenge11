@@ -8,6 +8,9 @@ body{
     background-color: white;
     color: black;
 }
+.link-dark:hover{
+    background-color: white;
+}
 .nav-link {
     margin-bottom: 1rem;
 }

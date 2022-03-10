@@ -15,6 +15,20 @@
     <link rel="stylesheet" href="../static/style/mypage.css">
 
     <title>마이페이지</title>
+    <script>
+        function submit(){
+            alert('회원정보가 저장되었습니다')
+        }
+        function withdraw(){
+            const answer = confirm('탈퇴하시겠습니까?')
+            if(answer){
+                alert('탈퇴되었습니다')
+            }
+        }
+        function logout(){
+            alert('로그아웃 되었습니다')
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -29,7 +43,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link link-dark">
+                        <a href="../templates/bookmark.html" class="nav-link link-dark">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
                             <b>북마크</b>
                         </a>
@@ -41,7 +55,7 @@
             <p class="protext"><b>My 프로필</b></p>
             <p class="destext">계정 관리와 상세 설정을 할 수 있어요.</p>
             <div class="box">
-                <p class="info"><b>계정 정보<span><button class="btn btn-blue submit" type="button">저장</button></span></b></p>
+                <p class="info"><b>계정 정보<span><button class="btn btn-blue submit" type="button" onclick="submit()">저장</button></span></b></p>
                 <hr color="#ECEDF4" noshade>
                 <table width="772px" height="250px">
                     <tr>
@@ -77,8 +91,8 @@
                 </table>
             </div>
             <div class="d-grid gap-2 d-md-block">
-                <button class="btn btn-white btn-radius btn2" type="button">로그아웃</button>
-                <button class="btn btn-white btn-radius btn2" type="button">회원탈퇴</button>
+                <button class="btn btn-white btn-radius btn2" type="button" onclick="logout()">로그아웃</button>
+                <button class="btn btn-white btn-radius btn2" type="button" onclick="withdraw()">회원탈퇴</button>
             </div>
         </div>
 
