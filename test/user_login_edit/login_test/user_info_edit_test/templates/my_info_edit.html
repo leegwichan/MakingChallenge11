@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>회원 기본 정보</title>
+	<meta charset="UTF-8">
+    <title>API LOGIN TEST</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+
+
+	<script	type="text/javascript">
+
+
+
+		function user_view(){
+
+            let name = $('#name').val()
+            let pwd = $('#pwd').val()
+            let email = $('#email').val()
+
+            let session_key = JSON.parse(sessionStorage.getItem("key"));
+
+            console.log(session_key)
+
+			// key 로 db에 저장된 인덱스를 가져옵니다.
+			$.ajax({
+                type: "POST",
+                url: "/user_view",
+                data: {key_give:session_key},
+                success: function (response) {
+                    console.log('response is ',response)
+
+                    let user = response['user']
+                    console.log('변경 전 user 는 ', user)
+
+                    user['PASSWORD'] = pwd
+                    user['NAME'] = name
+                    user['E_MAIL'] = email
+                    console.log('변경 후 user 는 ==== ',user)
+
+                    user_edit(user);
+                }
+            })
+
+		}
+
+        function user_edit(user){
+
+            $.ajax({
+                type: "POST",
+                url: "/user_edit",
+                data: {my_info_give:user, key_give:JSON.parse(sessionStorage.getItem("key")) },
+                success: function (response) {
+                    window.alert(response['msg'])
+
+
+
+                }
+            })
+
+        }
+
+
+
+
+	</script>
+
+
+    </head>
+
+
+
+
+
+    <body>
+        <table border="1" bordercolor="skyblue" width ="700" height="270" align = "center" >
+            <tr bgcolor="skyblue" align ="center">
+                <h3><td height="30" colspan = "7" span style="color:black" >회원 기본 정보 수정</h3></td>
+            </tr>
+            <tr>
+                <td align="center"><b>비밀번호:</b></td>
+                <td colspan = "7" ><input id="pwd" type="password" name="my_name" size="20" > 4~12자의 영문 대소문자와 숫자로만 입력
+            </tr>
+            <tr>
+                <td align="center"><b>비밀번호확인:</b></td>
+                <td colspan = "7" ><input type="password" name="my_name" size="20">
+            </tr>
+            <tr>
+                <td align="center"><b>메일주소:</b></td>
+                <td colspan = "7" ><input id="email" type="text" name="my_name" size="30" placeholder="예)id@domain.com">
+            </tr>
+            <tr>
+                <td align="center"><b>이름:</b></td>
+                <td colspan = "7" ><input id="name" type="text" name="my_name" size="20" placeholder="이름을 입력하세요">
+            </tr>
+
+
+
+
+
+        </table>
+            <br>
+            <center>
+				<button class="button" id="edit_button" onclick="user_view()">수정 하기</button>
+        	</center>
+    </body>
+</html>

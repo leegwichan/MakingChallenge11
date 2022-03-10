@@ -51,8 +51,10 @@
 
                         if(ID === type_id){
                             if(PASSWORD === type_pw){
-                                window.alert('로그인 되었습니다');
-                                window.location.reload();
+                                sessionStorage.setItem("key",JSON.stringify(i));
+                                let session_key = JSON.parse(sessionStorage.getItem("key"))
+                                return session_key
+                                // window.location.reload();
                             } else {
                                 return console.log('비밀번호가 틀렸습니다.');
                             }
@@ -62,7 +64,7 @@
                 }
             })
         }
-
+        console.log(JSON.parse(sessionStorage.getItem("key")));
 
     </script>
 

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API SIGN_UP TEST</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+
+
+        <!--    회원 가입 함수      -->
+        function sign_up() {
+
+            console.log('sign up 들어왔습니다')
+
+            let ID = $('#ID').val()
+            let PASSWORD = $('#PASSWORD').val()
+            let NAME = $('#NAME').val()
+            let SEX = $('#SEX option:selected').val()
+            let PHONE_NUMBER = $('#phone1').val() + $('#phone2').val() + $('#phone3').val()
+            let RRN = $('#RRN_1').val() + $('#RRN_2').val()
+            let E_MAIL = $('#E_MAIL').val()
+            let LOCATION = $('#LOCATION').val()
+            // let BOOKMARK = $('#BOOKMARK').val()
+
+            $.ajax({
+                type: "POST",
+                url: "/sign_up",
+                data: {
+                    ID_give: ID,
+                    PASSWORD_give: PASSWORD,
+                    NAME_give: NAME,
+                    SEX_give: SEX,
+                    PHONE_NUMBER_give: PHONE_NUMBER,
+                    RRN_give: RRN,
+                    E_MAIL_give: E_MAIL,
+                    LOCATION_give: LOCATION
+                },
+                success: function (response) {
+                    alert(response["msg"]);
+                    window.location.reload();
+                }
+            })
+        }
+
+        // 중복 확인 체크
+        function overlap_check(id_check, phone_check, e_mail_check) {
+            console.log("들어왔습니다")
+
+            $.ajax({
+                type: "POST",
+                url: "/id_overlap",
+                data: {
+                    find_id_give: id_check,
+                    find_phone_give: phone_check,
+                    find_email_give: e_mail_check,
+                    // find_RRN_give: RRN_check
+                },
+                success: function (response) {
+                    let overlap = response;
+                    console.log('overlap is ', overlap)
+                    document.getElementById("idError").innerHTML = response['ID_result']
+                    document.getElementById("phoneError").innerHTML = response['Phone_result']
+                    document.getElementById("emailError").innerHTML = response['E_mail_result']
+                    // document.getElementById("RRNError").innerHTML = response['RRN_result']
+
+
+                }
+            })
+        }
+
+
+        <!--      전화번호 다음 칸으로 이동      -->
+        function changePhone1() {
+            const phone1 = document.getElementById("phone1").value // 010
+            if (phone1.length === 3) {
+                document.getElementById("phone2").focus();
+            }
+        }
+
+        function changePhone2() {
+            const phone2 = document.getElementById("phone2").value // 010
+            if (phone2.length === 4) {
+                document.getElementById("phone3").focus();
+            }
+        }
+
+        function changePhone3() {
+            const phone3 = document.getElementById("phone3").value // 010
+        }
+
+        <!--      주민번호 다음 칸으로 이동      -->
+        function changeRRN() {
+            const RRN = document.getElementById("RRN_1").value // 010
+            if (RRN.length === 6) {
+                document.getElementById("RRN_2").focus();
+            }
+        }
+
+
+        let processID = -1;
+
+
+        // 가입부분 체크
+
+        function signUpCheck() {
+
+            console.log('signUpCheck 들어왔습니다')
+
+            let email = document.getElementById("E_MAIL").value
+            let id = document.getElementById("ID").value
+            let name = document.getElementById("NAME").value
+            let password = document.getElementById("PASSWORD").value
+            let passwordCheck = document.getElementById("passwordCheck").value
+            let phone = document.getElementById("phone1").value + document.getElementById("phone2").value + document.getElementById("phone3").value
+            let RRN = document.getElementById("RRN_1").value + document.getElementById("RRN_2").value
+            let area = document.getElementById("LOCATION").value
+            let gender = document.getElementById("SEX").options.selectedIndex
+            let check = true;
+
+
+            // 이메일확인
+            if (email.includes('@')) {
+                let emailId = email.split('@')[0]
+                let emailServer = email.split('@')[1]
+                if (emailId === "" || emailServer === "") {
+                    document.getElementById("emailError").innerHTML = "이메일이 올바르지 않습니다."
+                    check = false;
+                } else {
+                    document.getElementById("emailError").innerHTML = ""
+                }
+            } else {
+                document.getElementById("emailError").innerHTML = "이메일이 올바르지 않습니다."
+                check = false;
+            }
+
+            //아이디 확인 및 중복 체크
+            if (id === "") {
+                document.getElementById("idError").innerHTML = "아이디를 입력해주세요."
+                check = false;
+            } else {
+                document.getElementById("idError").innerHTML = ""
+            }
+
+
+            // 이름확인
+            if (name === "") {
+                document.getElementById("nameError").innerHTML = "이름이 올바르지 않습니다."
+                check = false
+            } else {
+                document.getElementById("nameError").innerHTML = ""
+            }
+
+
+            // 비밀번호 확인
+            if (password !== passwordCheck) {
+                document.getElementById("passwordError").innerHTML = ""
+                document.getElementById("passwordCheckError").innerHTML = "비밀번호가 동일하지 않습니다."
+                check = false
+            } else {
+                document.getElementById("passwordError").innerHTML = ""
+                document.getElementById("passwordCheckError").innerHTML = ""
+            }
+
+            if (password === "") {
+                document.getElementById("passwordError").innerHTML = "비밀번호를 입력해주세요."
+                check = false
+            } else {
+                document.getElementById("passwordError").innerHTML = ""
+            }
+            if (passwordCheck === "") {
+                document.getElementById("passwordCheckError").innerHTML = "비밀번호를 다시 입력해주세요."
+                check = false
+            } else {
+                document.getElementById("passwordCheckError").innerHTML = ""
+            }
+
+
+            // 지역선택 확인
+            if (area === "지역을 선택하세요.") {
+                document.getElementById("areaError").innerHTML = "지역을 선택해주세요."
+                check = false
+            } else {
+                document.getElementById("areaError").innerHTML = ""
+            }
+
+            // 성별체크확인
+            if (gender === 0) {
+                document.getElementById("genderError").innerHTML = "성별을 선택해주세요."
+                check = false
+            } else {
+                document.getElementById("genderError").innerHTML = ""
+            }
+
+            overlap_check(id, phone,email,RRN);
+            let id_Error = document.getElementById("idError").value
+            let email_Error = document.getElementById("emailError").value
+            phone = document.getElementById("phoneError").value
+            RRN = document.getElementById("RRNError").value
+
+            console.log('id error ', id_Error)
+
+            if(id_Error == null && email_Error == null){
+                console.log('가입 체크 시작합니다.')
+                if (check) {
+                // document.getElementById("emailError").innerHTML = ""
+                // document.getElementById("idError").innerHTML = ""
+                // document.getElementById("nameError").innerHTML = ""
+                // document.getElementById("passwordError").innerHTML = ""
+                // document.getElementById("passwordCheckError").innerHTML = ""
+                // document.getElementById("areaError").innerHTML = ""
+                // document.getElementById("genderError").innerHTML = ""
+                sign_up();
+
+            }
+            }else{console.log('옳지 않습니다.')}
+
+
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+<div class="wrapper">
+    <div class="title"><h1 style="font-size: 21px;">회원가입</h1></div>
+    <div class="email">
+        <input id="E_MAIL" type="text" placeholder="이메일을 입력해 주세요.">
+        <div id="emailError" class="error"></div>
+    </div>
+    <div class="id">
+        <input id="ID" type="text" placeholder="아이디를 입력해 주세요.">
+        <div id="idError" class="error"></div>
+    </div>
+    <div class="name">
+        <input id="NAME" type="text" placeholder="이름을 입력해 주세요.">
+        <div id="nameError" class="error"></div>
+    </div>
+    <div class="password">
+        <input id="PASSWORD" type="password" placeholder="비밀번호를 입력해 주세요.">
+        <div id="passwordError" class="error"></div>
+    </div>
+    <div class="passwordCheck">
+        <input id="passwordCheck" type="password" placeholder="비밀번호를 다시 입력해 주세요.">
+        <div id="passwordCheckError" class="error"></div>
+    </div>
+    <div class="phone">
+        <input id="phone1" type="text" size="1" maxlength="3" oninput="changePhone1()"> -
+        <input id="phone2" type="text" size="3" maxlength="4" oninput="changePhone2()"> -
+        <input id="phone3" type="text" size="3" maxlength="4" oninput="changePhone3()">
+        <div id="phoneError" class="error"></div>
+    </div>
+    <div class="RRN">
+        <input id="RRN_1" type="text" size="5" maxlength="6" oninput="changeRRN()"> -
+        <input id="RRN_2" type="text" size="6" maxlength="7">
+        <div id="RRNError" class="error"></div>
+    </div>
+
+    <div class="area">
+        <select id="LOCATION">
+            <option selected disabled>지역을 선택하세요.</option>
+            <option>서울</option>
+            <option>인천</option>
+            <option>경기</option>
+        </select>
+        <div id="areaError" class="error"></div>
+    </div>
+
+    <div class="gender">
+        <select class="form-select" id="SEX" aria-label="Default select example">
+            <option selected>성별</option>
+            <option value="male">남자</option>
+            <option value="female">여자</option>
+        </select>
+        <div id="genderError" class="error"></div>
+    </div>
+
+    <div class="line">
+        <hr>
+    </div>
+
+    <div class="signUp">
+        <button id="signUpButton" onclick="signUpCheck()">가입하기</button>
+    </div>
+</div>
+
+</body>
+</html>
