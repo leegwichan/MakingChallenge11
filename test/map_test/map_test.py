@@ -8,7 +8,7 @@ from geopy.geocoders import Nominatim
 from collections import Counter
 
 from pymongo import MongoClient
-client = MongoClient('3.91.50.100',27017,
+client = MongoClient('18.208.182.249',27017,
                      username='noE',
                      password='server_test')
 db = client.exhibition_project
