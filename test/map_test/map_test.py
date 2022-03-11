@@ -53,7 +53,7 @@ for place in overlap_place:
 
     summary_info = folium.Html(f"""{full_text}""", script = True)
     popup_html = folium.Popup(summary_info,max_width=500)
-
+    
     folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue', icon_color='lightgray',icon='cloud')).add_to(m)
 
 
