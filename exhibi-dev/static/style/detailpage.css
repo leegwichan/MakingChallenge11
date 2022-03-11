@@ -99,3 +99,18 @@ body{
 .card-columns{
     column-count: 4;
 }
+
+
+.middle-left {
+    margin-right: 180px;
+    margin-top: 30px;
+}
+
+.middle-right{
+    /*height: 100%;
+    position: fixed;*/
+}
+.right-menu{
+    /*height: 100%;
+    position: fixed;*/
+}
