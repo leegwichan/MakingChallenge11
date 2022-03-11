@@ -38,18 +38,13 @@
         }
 
         .show-card {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 260px;
+            max-height: 460px;
             margin: 0px 10px 10px auto;
-            height: 470px;
         }
 
         /* 로그인 회원가입 프로필 로그아웃 지도검색 버튼 위치 설정 시작 */
         .map-search{
-            margin-left: 120px;
-        }
-
-        .position-search {
             margin-left: 10px;
         }
 
@@ -77,13 +72,17 @@
         .search {
             position: relative;
             width: 110px;
-            display: block;
         }
 
-        .seach-position {
+        .search-input {
+            text-align: center;
+        }
+
+        .i-search {
             position: absolute;
-            top: 0px;
-            left: 110px;
+            top: 7px;
+            left: 12px;
+            margin: 0;
         }
         /*검색 박스 끝*/
 
