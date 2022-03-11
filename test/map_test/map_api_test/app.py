@@ -18,7 +18,7 @@ db = client.exhibition_project
 
 @app.route('/')
 def home():
-   return render_template('geolocation.html')
+   return render_template('main.html')
 
 @app.route('/map', methods=['POST'])
 def test_post():
@@ -85,9 +85,8 @@ def test_post():
                folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(m)
                
 
-
    m.save(r'test/map_test/map_api_test/templates/exhibition_map.html')
-   # webbrowser.open_new_tab("test/map_test/map_api_test/templates/exhibition_map.html")
+   webbrowser.open_new_tab("test/map_test/map_api_test/templates/exhibition_map.html")
    return jsonify({'msg': '현재 위치로 설정'})
 
 
