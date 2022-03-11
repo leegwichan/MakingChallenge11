@@ -107,3 +107,5 @@ dist
 .idea/
 .DS_Store
 venv
+exhibi-dev/venv
+exhibi-dev/__pycache__
