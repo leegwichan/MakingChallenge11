@@ -63,6 +63,47 @@ body{
     padding: 17px;
     border-radius: 15px;
 }
+#infoopen{
+    background-color: white;
+    margin-top: 10px;
+    display: none;
+}
+.date{
+    font-size:18px;
+    margin: 10px 0 20px 10px;
+}
+.infonum{
+    margin: 10px 0;
+}
+.space{
+    display: flex;
+    justify-content: space-around;
+}
+.num{
+    font-size:18px;
+    margin: 10px 0;
+}
+.tagtxt{
+    margin: 10px 0 10px 10px;
+}
+.tagbox{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.tag{
+    color: black;
+    background-color: var(--blue_E);
+    border-color: var(--blue_E);
+    border-radius: 9px;
+    margin-right: 20px;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    margin-top: .5rem;
+}
+.tag:hover{
+    color: var(--blue);
+}
 .tit{
     font-size: 23px;
 }
@@ -83,19 +124,17 @@ body{
     background-color: #ECEDF4;
 }
 .circle:hover{
-    color: blue;
+    color: var(--blue);
 }
 .button{
     margin-top: 10px;
     width: 420px;
     padding:10px 0;
 }
-.left-box2{
-    clear:both;
-}
 .detailstxt{
     font-size:20px;
     margin-bottom:20px;
+    width:400px;
 }
 .details{
     width:850px;
