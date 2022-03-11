@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API LOGIN TEST</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+        function sign_in() {
+
+            let type_id = $('#id').val();
+            let type_pw = $('#pw').val();
+
+            console.log('type_id is ',type_id)
+            console.log('type_pw is ',type_pw)
+
+            if(type_id === "" || type_pw===""){
+                console.log('아이디와 비밀번호를 입력해주세요');
+            }
+            $.ajax({
+                type: "GET",
+                url: "/login",
+                data: {},
+                success: function (response) {
+                    let member_list = response['all_member_list']
+
+                    for (let i = 0; i < member_list.length; i++) {
+                        let ID = member_list[i]['ID'];
+                        let PASSWORD = member_list[i]['PASSWORD'];
+                        // let NAME = member_list[i]['NAME']
+                        // let SEX = member_list[i]['SEX']
+                        // let PHONE_NUMBER = member_list[i]['PHONE_NUMBER']
+                        // let RRN = member_list[i]['RRN']
+                        // let E_MAIL = member_list[i]['E_MAIL']
+                        // let LOCATION = member_list[i]['LOCATION']
+                        // let BOOKMARK = member_list[i]['BOOKMARK']
+
+                        if(ID === type_id){
+                            if(PASSWORD === type_pw){
+                                sessionStorage.setItem("key",JSON.stringify(member_list[i]['KEY']));
+                                let session_key = JSON.parse(sessionStorage.getItem("key"))
+                                return session_key
+                                // window.location.reload();
+                            } else {
+                                return console.log('비밀번호가 틀렸습니다.');
+                            }
+                        }
+                    }
+                    console.log('아이디가 틀렸습니다.');
+                }
+            })
+        console.log(JSON.parse(sessionStorage.getItem("key")));
+        }
+
+    </script>
+
+
+</head>
+<body>
+    <div class = "login">
+        <h1 class = "title">로그인 페이지</h1>
+        <hr>
+        <p  class="id">ID: <input type="text" id = "id" /></p>
+        <p class="password">PW: <input type="text" id = "pw" /></p>
+        <p class = "button" onclick="sign_in()"><button>로그인 하기</button></p>
+        <hr>
+    </div>
+</body>
+</html>

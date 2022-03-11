@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API 아이디 찾기 TEST</title>
+
+        <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            let temp_html = `<a>당신의 아이디: ${localStorage.getItem('found_id_data')}</a>`
+            $("#show_your_id").append(temp_html)
+        });
+
+    </script>
+</head>
+<body>
+<div id="show_your_id">
+</div>
+
+</body>
+</html>

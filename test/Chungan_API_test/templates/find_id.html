@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API 아이디 찾기 TEST</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+        <!--    회원 가입 함수      -->
+        function Find_ID() {
+
+            let NAME = $('#NAME').val()
+            let SEX = $('#SEX option:selected').val()
+            let PHONE_NUMBER = $('#phone1').val() + $('#phone2').val() + $('#phone3').val()
+            let E_MAIL = $('#E_MAIL').val()
+            if (SEX == '남자'){SEX = 'male'}
+            if (SEX == '여자'){SEX = 'female'}
+
+            if (E_MAIL == '') {
+                alert(`이메일을 입력하지 않았습니다.`)
+            }else if (NAME == '') {
+                alert(`이름을 입력하지 않았습니다.`)
+            }else if (PHONE_NUMBER == '') {
+                alert(`핸드폰 번호를 입력하지 않았습니다.`)
+            }else if (SEX == '성별') {
+                alert(`성별을 선택하지 않았습니다.`)
+            }else {
+                if (NAME != '' && SEX != '성별' && PHONE_NUMBER != '' && E_MAIL != '') {
+                    $.ajax({
+                        type: "POST",                             // POST 요청
+                        url: "/find_id/downloadData",                           // app.py에서 사용한 url과 맞춰줘야함
+                        data: {
+                            NAME_give: NAME,
+                            SEX_give: SEX,
+                            PHONE_NUMBER_give: PHONE_NUMBER,
+                            E_MAIL_give: E_MAIL
+                        },          // sample_give 변수로 데이터를 넘겨줌
+                        success: function (response) {
+                            if (response["id_data_find"] == "find_OK") {
+                                alert(`당신의 ID: ${response["id_data"]}`)
+                                localStorage.setItem('found_id_data', response["id_data"])
+                                location.href="/find_id/show"
+                            } else {
+                                alert(`당신의 정보를 찾을 수 없습니다.`)
+                            }
+                        }
+                    })
+                }
+            }
+
+        }
+
+
+
+
+    </script>
+
+
+</head>
+<body>
+<div class="wrapper">
+    <div class="title"><h1 style="font-size: 21px;">아이디찾기</h1></div>
+    <div class="email">
+        <input id="E_MAIL" type="text" placeholder="이메일을 입력해 주세요.">
+        <div id="emailError" class="error"></div>
+    </div>
+    <div class="name">
+        <input id="NAME" type="text" placeholder="이름을 입력해 주세요.">
+        <div id="nameError" class="error"></div>
+    </div>
+    <div class="phone">
+        <input id="phone1" type="text" size="1" maxlength="3" oninput="changePhone1()"> -
+        <input id="phone2" type="text" size="3" maxlength="4" oninput="changePhone2()"> -
+        <input id="phone3" type="text" size="3" maxlength="4" oninput="changePhone3()">
+        <div id="phoneError" class="error"></div>
+    </div>
+
+    <div class="gender">
+        <select class="form-select" id="SEX" aria-label="Default select example">
+            <option selected>성별</option>
+            <option value="male">남자</option>
+            <option value="female">여자</option>
+        </select>
+        <div id="genderError" class="error"></div>
+    </div>
+
+    <div class="line">
+        <hr>
+    </div>
+
+    <div class="signUp">
+        <button id="signUpButton" onclick="Find_ID()">아이디찾기</button>
+    </div>
+</div>
+
+</body>
+</html>

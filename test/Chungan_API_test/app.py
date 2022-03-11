@@ -1,0 +1,275 @@
+from flask import Flask, render_template, jsonify, request
+app = Flask(__name__)
+
+from pymongo import MongoClient
+client = MongoClient('localhost', 27017)
+db = client.dbsparta
+
+# password 찾기 관련 import
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import string
+import random
+
+import requests
+import re
+
+
+
+# 각 html에 맞는 route가 있으니 필요에 따라 주석 제거하면서 실행해 보시면 됩니다!
+
+
+
+
+# 회원가입 부분
+
+
+
+# html 받아오는 부분
+@app.route('/')
+def home():
+    return render_template('sign_up.html')
+
+# api
+
+# 회원가입
+@app.route('/sign_up', methods=['POST'])
+def sign_up_post():
+
+    session_key = ''
+
+    ID_receive = request.form['ID_give']
+    PASSWORD_receive = request.form['PASSWORD_give']
+    NAME_receive = request.form['NAME_give']
+    SEX_receive = request.form['SEX_give']
+    RRN_receive = request.form['RRN_give']
+    PHONE_NUMBER_receive = request.form['PHONE_NUMBER_give']
+    E_MAIL_receive = request.form['E_MAIL_give']
+    LOCATION_receive = request.form['LOCATION_give']
+    # BOOKMARK_receive = request.form['BOOKMARK_give']
+
+    # 아이디의 아스키 코드를 key 값으로 설정
+    len_id = len(ID_receive)
+    for i in range(len_id):
+        session_key += str(ord(str((ID_receive[i]))))
+
+    doc = {
+        'ID': ID_receive,
+        'PASSWORD': PASSWORD_receive,
+        'NAME': NAME_receive,
+        'SEX': SEX_receive,
+        'RRN': RRN_receive,
+        'PHONE_NUMBER': PHONE_NUMBER_receive,
+        'E_MAIL': E_MAIL_receive,
+        'LOCATION': LOCATION_receive,
+        'KEY' : session_key
+        # 'BOOKMARK': BOOKMARK_receive
+    }
+    db.login_info.insert_one(doc)
+    return jsonify({'msg': 'COMPLETE'})
+
+
+
+
+# 중복 확인란
+@app.route('/id_overlap', methods=['POST'])
+def overlap_get():
+    find_id_receive = request.form['find_id_give']
+    find_phone_receive = request.form['find_phone_give']
+    find_email_receive = request.form['find_email_give']
+    # find_RRN_receive = request.form['find_RRN_give']
+
+
+    same_ID = db.login_info.find({'ID': find_id_receive},{'_id':False})
+    same_PHONE = db.login_info.find({'E_MAIL': find_phone_receive},{'_id':False})
+    same_E_MAIL = db.login_info.find({'E_MAIL': find_email_receive},{'_id':False})
+    # same_RRN = db.login_info.find({'RRN': find_RRN_receive},{'_id':False})
+
+    # 중복 확인 조건문
+    if same_ID is None:
+        ID_result = '아이디가 중복됩니다'
+    else:
+        ID_result = ''
+    if same_PHONE is None:
+        Phone_result = '같은 전화번호가 존재합니다'
+    else:
+        Phone_result = ''
+    if same_E_MAIL is None:
+        E_mail_result = '해당 이메일 계정이 존재합니다'
+    else:
+        E_mail_result = ''
+    # if same_RRN is None:
+    #     RRN_result = '이미 계정이 존재합니다(주민번호)'
+    # else:
+    #     RRN_result = ''
+
+    return jsonify({'ID_result':ID_result, 'Phone_result':Phone_result, 'E_mail_result':E_mail_result})
+
+
+
+
+# 로그인 부분
+
+@app.route('/login_page')
+def login_page():
+    return render_template('login.html')
+
+
+# db에 저장된 목록 받아오기 --> 로그인을 위해서
+@app.route('/login', methods=['GET'])
+def sign_up_get():
+    member_list = list(db.login_info.find({}, {'_id': False}))
+    return jsonify({'all_member_list': member_list})
+
+
+
+# 회원 정보 수정 page
+
+@app.route('/user_edit')
+def edit_page():
+    return render_template('my_info_edit.html')
+
+
+# 회원 정보 조회
+@app.route('/user_view', methods=['POST'])
+def user_view():
+    key_receive = request.form['key_give']
+    user_list = list(db.login_info.find({}, {'_id': False}))
+    user = user_list[int(key_receive)]
+    return jsonify({'user': user})
+
+# 회원 정보 수정 api
+@app.route('/user_edit', methods=['POST'])
+def user_info_edit():
+
+    # 정보 받아오기
+    my_info_receive = request.form.get('my_info_give',False)
+    key_receive = request.form['key_give']
+
+    # 바꿀 아이디 찾기
+    user_list = list(db.login_info.find({}, {'_id': False}))
+    user = user_list[int(key_receive)]
+    user_id = user['ID']
+
+    # 찾은 아이디에 딕셔너리를 바꾸자
+    db.login_info.delete_one({'ID':user_id})
+    user = my_info_receive
+    db.login_info.insert_one(user)
+    # db.login_info.update_one({'ID':user_id},{'$set':my_info_receive})
+
+    user = user_list[int(key_receive)]
+    return jsonify({'msg': '완료되었습니다'})
+
+# 아이디 찾기 page
+@app.route('/find_id')
+def Find_ID_main():
+    return render_template('find_id.html')
+
+# 아이디 찾아서 내용이 있으면, id 내용 일부를 넘김 // 내용이 없으면 없다고 넘김
+@app.route('/find_id/downloadData', methods=['POST'])     # POST 요청 (주로 DB내용을 수정,삽입 할 때 사용)
+def Find_ID():
+    NAME_receive = request.form['NAME_give']
+    SEX_receive = request.form['SEX_give']
+    PHONE_NUMBER_receive = request.form['PHONE_NUMBER_give']
+    E_MAIL_receive = request.form['E_MAIL_give']
+
+    find_data = list(db.login_info.find({'E_MAIL': E_MAIL_receive}, {'_id': False}))
+    part_id = ""
+    for id_data in find_data:
+        if id_data['NAME'] == NAME_receive and id_data['SEX'] == SEX_receive and id_data['PHONE_NUMBER'] == PHONE_NUMBER_receive:
+            found_id = id_data['ID']
+            split_id = list(found_id)
+
+            for i  in range(len(split_id)):
+                if  i % 5 == 3 or i % 5 == 4:
+                    split_id[i] = '*'
+
+            part_id = "".join(split_id)
+
+    if not part_id == "":
+        return jsonify({'id_data_find': 'find_OK', 'id_data': part_id})
+    else:
+        return jsonify({'id_data_find': 'find_FAIL'})
+
+# 아이디 찾기 결과 page
+@app.route('/find_id/show')
+def find_id_show():
+    return render_template('find_id_show.html')
+
+# 비밀번호 찾기 page
+@app.route('/find_ps')
+def find_ps_main():
+    return render_template('find_ps.html')
+
+# 비밀번호 찾는 API
+@app.route('/find_ps/downloadData', methods=['POST'])     # POST 요청 (주로 DB내용을 수정,삽입 할 때 사용)
+def Find_PS():
+    ID_receive = request.form['ID_give']
+    NAME_receive = request.form['NAME_give']
+    SEX_receive = request.form['SEX_give']
+    PHONE_NUMBER_receive = request.form['PHONE_NUMBER_give']
+    E_MAIL_receive = request.form['E_MAIL_give']
+
+    cheak_change_ps = 0
+
+    find_data = list(db.login_info.find({'E_MAIL': E_MAIL_receive}, {'_id': False}))
+    for id_data in find_data:
+        if id_data['NAME'] == NAME_receive and id_data['SEX'] == SEX_receive and id_data['PHONE_NUMBER'] == PHONE_NUMBER_receive and id_data['ID'] == ID_receive:
+
+            cheak_change_ps = 1
+
+            # 새로운 비밀번호 생성
+            new_password = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(8))
+            print(new_password)
+            # 새로운 비밀번호 DB에 저장
+            db.login_info.update_one({'ID': id_data['ID']}, {'$set': {'PASSWORD': new_password}})
+            print('업데이트 되긴함?')
+
+            recipients = [id_data['E_MAIL']]
+
+            message = MIMEMultipart();
+            message['Subject'] = '전시회 사이트 비밀번호 변경되었습니다.'
+            message['From'] = "leegwichan@naver.com"
+            message['To'] = ",".join(recipients)
+
+            content = """
+                <html>
+                <body>
+                    <h2>{title1}</h2>
+                    <p>신규 비밀번호 : {new_ps}</p>
+                    <p>로그인 하시고, 마이페이지에서 비밀번호 변경 부탁드립니다.</p>
+                </body>
+                </html>
+            """.format(
+                title1='전시회 사이트 비밀번호 변경되었습니다.',
+                new_ps = new_password
+            )
+
+            mimetext = MIMEText(content, 'html')
+            message.attach(mimetext)
+
+            email_id = 'leegwichan'
+            email_pw = 'mlpnkobji1'
+
+            server = smtplib.SMTP('smtp.naver.com', 587)
+            server.ehlo()
+            server.starttls()
+            server.login(email_id, email_pw)
+            server.sendmail(message['From'], recipients, message.as_string())
+            server.quit()
+
+    if cheak_change_ps == 1:
+        return jsonify({'ps_data_find': 'find_OK'})
+    else:
+        return jsonify({'ps_data_find': 'find_FAIL'})
+
+
+# 비밀번호 찾기 결과 page
+@app.route('/find_ps/show')
+def find_ps_show():
+    return render_template('find_ps_show.html')
+
+
+if __name__ == '__main__':
+    app.run('0.0.0.0', port=5000, debug=True)
