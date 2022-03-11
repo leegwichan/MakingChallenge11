@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- Bootstrap CSS -->
@@ -14,7 +13,7 @@
     <!-- 카드 리스트 영향 끝 -->
     <!-- JS -->
     <!-- 관심 카테고리 영향 시작 -->
-    <script src="/static/js/jquery.min.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
@@ -36,9 +35,10 @@
 
         $(document).ready(function () {
             show_list()
+            show_detail()
         });
 
-
+// 최신 전시회 리스트 시작
         function show_list() {
             $.ajax({
                 type: "GET",
@@ -79,12 +79,48 @@
                                             </div>`
 
                         $('#cards-box').append(temp_html)
+
+
+
+
+
+
+                        let temp_html_02 = `<div class="card shadow show-card" data-bs-toggle="offcanvas"
+                                                 data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                                <img class="card-img-top"
+                                                     src="${image_link}"
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title weight_600">${title}</h5>
+                                                    <p class="card-text">기간: ${start_date} ~ ${end_date}</p>
+                                                    <p class="card-text">지역: ${address_class1}</p>
+                                                    <p class="card-text">장소: ${address_class2}</p>
+                                                </div>
+                                            </div>`
+
+
+                        $('#detail').append(temp_html_02)
                     }
+                }
+            })
+        }
+// 최신 전시회 리스트 끝
+
+
+        function show_detail(ticket_link) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/show/detail',
+                data: {sample_give:'샘플데이터'},
+                success: function (response) {
+                    alert(response['msg']);
                 }
             })
         }
 
 
+
+        // 지도 검색 select 태그 추가하기기시작
         $('document').ready(function () {
             var area0 = ["시/도", "서울시", "인천시", "대전시", "광주시", "대구시", "울산시", "부산시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도"];
             var area1 = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
@@ -132,9 +168,7 @@
                 }
             });
         });
-
-
-
+// 지도 검색 select 태그 추가하기기 끝
 
         //         function show_zone() {
         //     $.ajax({
@@ -192,199 +226,206 @@
         })
         // 메인 메뉴 클릭 끝
 
+        // 모달에 값 전달 시작
+        $(document).on("click", ".open-AddBookDialog", function () {
+            var myBookId = $(this).data('id');
+            $(".modal-body #bookId").val(myBookId);
+            // As pointed out in comments,
+        // it is superfluous to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+                });
+        // 모달에 값 전달 끝
+
+
     </script>
 
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <div class="top"></div>
-        <!-- MIDDLE -->
-        <div class="middle">
+    <div class="top"></div>
+    <!-- MIDDLE -->
+    <div class="middle">
 
-            <!-- LEFT 시작 -->
-            <div class="middle-left">
-                <!-- 관심 카테고리 모달 열기 위한 버튼 -->
-                <!--            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
-                <!--                모달 보기 버튼-->
-                <!--            </button>-->
-                <!-- 관심 카테고리 모달 열기 위한 버튼 끝 -->
-                <!-- 모달 영역 -->
-                <div class="modal modal-center fade" id="my80sizeCenterModal" tabindex="-1" role="dialog"
-                     aria-labelledby="my80sizeCenterModalLabel">
-                    <div class="modal-dialog modal-80size modal-center" role="document">
-                        <div class="modal-content modal-80size">
-                            <div class="modal-header">
-                                <div class="modal-title weight_700 interest-title" id="myModalLabel">어떤 전시회를 보고 싶으신가요?</div>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true"><i class="i-close"></i></span></button>
-                            </div>
-                            <div class="modal-body interest-ceter">
-                                <div class="interest-title-sub">홈 피드에서 보고 싶은 콘텐츠를 선택해주세요.</div>
-                                <div class="interest-ceter">
-                                    <div id="ck-button">
-                                        <label>
-                                            <input type="checkbox" name="interest_01" id="interest"
-                                                   value="전시"><span>전시</span>
-                                        </label>
-                                    </div>
-                                    <div id="ck-button">
-                                        <label>
-                                            <input type="checkbox" name="interest_02" id="interest" value="뮤지엄"><span>뮤지엄</span>
-                                        </label>
-                                    </div>
-                                    <div id="ck-button">
-                                        <label>
-                                            <input type="checkbox" name="interest_03" id="interest" value="아동체험전"><span>아동체험전</span>
-                                        </label>
-                                    </div>
+        <!-- LEFT 시작 -->
+        <div class="middle-left">
+            <!-- 관심 카테고리 모달 열기 위한 버튼 -->
+            <!--            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
+            <!--                모달 보기 버튼-->
+            <!--            </button>-->
+            <!-- 관심 카테고리 모달 열기 위한 버튼 끝 -->
+            <!-- 모달 영역 -->
+            <div class="modal modal-center fade" id="my80sizeCenterModal" tabindex="-1" role="dialog"
+                 aria-labelledby="my80sizeCenterModalLabel">
+                <div class="modal-dialog modal-80size modal-center" role="document">
+                    <div class="modal-content modal-80size">
+                        <div class="modal-header">
+                            <div class="modal-title weight_700 interest-title" id="myModalLabel">어떤 전시회를 보고 싶으신가요?</div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true"><i class="i-close"></i></span></button>
+                        </div>
+                        <div class="modal-body interest-ceter">
+                            <div class="interest-title-sub">홈 피드에서 보고 싶은 콘텐츠를 선택해주세요.</div>
+                            <div class="interest-ceter">
+                                <div id="ck-button">
+                                    <label>
+                                        <input type="checkbox" name="interest_01" id="interest"
+                                               value="전시"><span>전시</span>
+                                    </label>
                                 </div>
-                                <div class="interest-ceter">
-                                    <div id="ck-button">
-                                        <label>
-                                            <input type="checkbox" name="interest_04" id="interest" value="행사/축제"><span>행사/축제</span>
-                                        </label>
-                                    </div>
-                                    <div id="ck-button">
-                                        <label>
-                                            <input type="checkbox" name="interest_05" id="interest" value="클래스"><span>클래스</span>
-                                        </label>
-                                    </div>
+                                <div id="ck-button">
+                                    <label>
+                                        <input type="checkbox" name="interest_02" id="interest"
+                                               value="뮤지엄"><span>뮤지엄</span>
+                                    </label>
+                                </div>
+                                <div id="ck-button">
+                                    <label>
+                                        <input type="checkbox" name="interest_03" id="interest" value="아동체험전"><span>아동체험전</span>
+                                    </label>
                                 </div>
                             </div>
+                            <div class="interest-ceter">
+                                <div id="ck-button">
+                                    <label>
+                                        <input type="checkbox" name="interest_04" id="interest" value="행사/축제"><span>행사/축제</span>
+                                    </label>
+                                </div>
+                                <div id="ck-button">
+                                    <label>
+                                        <input type="checkbox" name="interest_05" id="interest"
+                                               value="클래스"><span>클래스</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-                            <div class="modal-footer interest-ceter">
-                                <div>
+                        <div class="modal-footer interest-ceter">
+                            <div>
                                 <input class="interest-save-btn btn-radius" type="submit" value="다 했어요!">
-                                    </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- 모달 영역 끝 -->
-
-                <!-- 왼쪽 메뉴 시작 -->
-                <div class="left-menu">
-                    <dl>
-                        <div class="interest" data-target="#myModal">관심 카테고리<i class="i-more" data-toggle="modal"
-                                                                               data-target="#my80sizeCenterModal"></i>
-                        </div>
-                        <dt>전시</dt>
-                        <dd></dd>
-                        <dt>뮤지엄</dt>
-                        <dd></dd>
-                        <dt>아동체험전</dt>
-                        <dd></dd>
-                        <dt>행사/축제</dt>
-                        <dd></dd>
-                        <dt>클래스</dt>
-                        <dd></dd>
-                    </dl>
-                </div>
-                <!-- 왼쪽 메뉴 끝 -->
-
             </div>
-            <!-- LEFT 끝 -->
+            <!-- 모달 영역 끝 -->
 
-            <!-- RIGHT 시작 -->
-            <div class="middle-right">
-
-                <div class="wrap">
-                    <!-- 검색 Input 시작 -->
-                    <div class="search">
-                        <select style="float:left;" name="sido1" id="sido1" class="form-select"
-                                aria-label="Default select example"></select>
-                        <select name="gugun1" id="gugun1" class="form-select seach-position"
-                                aria-label="Default select example"></select>
+            <!-- 왼쪽 메뉴 시작 -->
+            <div class="left-menu">
+                <dl>
+                    <div class="interest" data-target="#myModal">관심 카테고리<i class="i-more" data-toggle="modal"
+                                                                           data-target="#my80sizeCenterModal"></i>
                     </div>
-                    <div style="float:left;">
-                        <button class="btn btn-white btn-radius map-search" type="text" placeholder="">지도 검색</button>
-                    </div>
-                    <div style="float:left;">
-                        <button class="btn btn-white btn-radius position-search" type="text" placeholder="">현재 위치 검색</button>
-                    </div>
-                    <!-- 검색 Input 끝-->
-                    <!-- 로그인 회원가입 시작 -->
-                    <div style="float:left;">
-                        <button class="btn btn-white btn-radius log-in" type="text" placeholder="">로그인</button>
-                    </div>
-                    <div>
-                        <button class="btn btn-white btn-radius btn-blue sign-up" type="text" noresize="noresize" placeholder="">회원가입</button>
-                    </div>
-                    <div style="float:left;">
-                        <button class="btn btn-white btn-radius my-pro" type="text" placeholder="">My 프로필</button>
-                    </div>
-                    <div>
-                        <button class="btn btn-white btn-radius btn-blue log-out" type="text" noresize="noresize"
-                                placeholder="">로그아웃
-                        </button>
-                    </div>
-                    <!-- 로그인 회원가입 끝 -->
-                    <!-- 지도 부분 -->
-                    <div class="current-position-map">
-<!--                        <img src="/static/temp_img/main_map.png">-->
-                        <iframe allow="fullscreen" src="https://map.kakao.com" allowfullscreen allow="autoplay; encrypted-media" style="display:block; width:800px; height: 500px" scrolling="no" align="center"></iframe>
-
-                    </div>
-                    <!-- 지도 부분 끝 -->
-                    <div class="weight_600 cards-list-title">최신 전시회</div>
-
-                    <!-- 전시회 리스트 -->
-                    <div id="cards-box" class="card-columns">
-<!--                        <div class="card shadow show-card" data-bs-toggle="offcanvas"-->
-<!--                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">-->
-<!--                            <img class="card-img-top"-->
-<!--                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"-->
-<!--                                 alt="Card image cap">-->
-<!--                            <div class="card-body">-->
-<!--                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>-->
-<!--                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>-->
-<!--                                <p class="card-text">지역: 서울</p>-->
-<!--                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>-->
-<!--                            </div>-->
-<!--                        </div>                        -->
-                    </div>
-                    <!-- 전시회 리스트 끝 -->
-
-                </div>
-                <!-- RIGHT 끝 -->
-
-                <!-- 모달 상세 페이지 부분 시작 -->
-                <!--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"-->
-                <!--                        data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Toggle bottom offcanvas-->
-                <!--                </button>-->
-
-                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
-                     aria-labelledby="offcanvasBottomLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasBottomLabel">상세페이지</h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body small">
-                        상세페이지 내용
-                        <div class="card show-card btn btn-outline-secondary">
-                            <img class="card-img-top"
-                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
-                                 alt="Card image cap">
-                            <div class="card-body">
-                                <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
-                                <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
-                                <p class="card-text list-info-font">지역: 서울</p>
-                                <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 모달 상세 페이지 부분 끝 -->
-
+                    <dt>전시</dt>
+                    <dd></dd>
+                    <dt>뮤지엄</dt>
+                    <dd></dd>
+                    <dt>아동체험전</dt>
+                    <dd></dd>
+                    <dt>행사/축제</dt>
+                    <dd></dd>
+                    <dt>클래스</dt>
+                    <dd></dd>
+                </dl>
             </div>
+            <!-- 왼쪽 메뉴 끝 -->
+
         </div>
-        <!-- MIDDLE 끝 -->
+        <!-- LEFT 끝 -->
 
+        <!-- RIGHT 시작 -->
+        <div class="middle-right">
+
+            <div class="wrap">
+                <!-- 검색 Input 시작 -->
+                <div class="search">
+                    <select style="float:left;" name="sido1" id="sido1" class="form-select"
+                            aria-label="Default select example"></select>
+                    <select name="gugun1" id="gugun1" class="form-select seach-position"
+                            aria-label="Default select example"></select>
+                </div>
+                <div style="float:left;">
+                    <button class="btn btn-white btn-radius map-search" type="text" placeholder="">지도 검색</button>
+                </div>
+                <div style="float:left;">
+                    <button class="btn btn-white btn-radius position-search" type="text" placeholder="">현재 위치 검색
+                    </button>
+                </div>
+                <!-- 검색 Input 끝-->
+                <!-- 로그인 회원가입 시작 -->
+                <div style="float:left;">
+                    <button class="btn btn-white btn-radius log-in" type="text" placeholder="">로그인</button>
+                </div>
+                <div>
+                    <button class="btn btn-white btn-radius btn-blue sign-up" type="text" noresize="noresize"
+                            placeholder="">회원가입
+                    </button>
+                </div>
+                <div style="float:left;">
+                    <button class="btn btn-white btn-radius my-pro" type="text" placeholder="">My 프로필</button>
+                </div>
+                <div>
+                    <button class="btn btn-white btn-radius btn-blue log-out" type="text" noresize="noresize"
+                            placeholder="">로그아웃
+                    </button>
+                </div>
+                <!-- 로그인 회원가입 끝 -->
+                <!-- 지도 부분 -->
+                <div class="current-position-map">
+                    <!--                        <img src="/static/temp_img/main_map.png">-->
+                    <iframe allow="fullscreen" src="https://map.kakao.com" allowfullscreen
+                            allow="autoplay; encrypted-media" style="display:block; width:800px; height: 500px"
+                            scrolling="no" align="center"></iframe>
+                </div>
+                <!-- 지도 부분 끝 -->
+                <div class="weight_600 cards-list-title">최신 전시회</div>
+
+                <!-- 전시회 리스트 -->
+                <div id="cards-box" class="card-columns">
+                    <!--                        <div class="card shadow show-card" data-bs-toggle="offcanvas"-->
+                    <!--                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">-->
+                    <!--                            <img class="card-img-top"-->
+                    <!--                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"-->
+                    <!--                                 alt="Card image cap">-->
+                    <!--                            <div class="card-body">-->
+                    <!--                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>-->
+                    <!--                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>-->
+                    <!--                                <p class="card-text">지역: 서울</p>-->
+                    <!--                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>-->
+                    <!--                            </div>-->
+                    <!--                        </div>                        -->
+                </div>
+                <!-- 전시회 리스트 끝 -->
+
+            </div>
+            <!-- RIGHT 끝 -->
+
+            <!-- 모달 상세 페이지 부분 시작 -->
+            <!--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"-->
+            <!--                        data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Toggle bottom offcanvas-->
+            <!--                </button>-->
+
+            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+                 aria-labelledby="offcanvasBottomLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">상세페이지</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body small" id="detail">
+                    상세페이지 내용
+
+                </div>
+            </div>
+            <!-- 모달 상세 페이지 부분 끝 -->
+
+        </div>
     </div>
+    <!-- MIDDLE 끝 -->
+
+</div>
 
 </body>
 </html>
