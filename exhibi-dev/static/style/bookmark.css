@@ -4,23 +4,26 @@ body{
 .container{
     margin-top: 50px;
 }
-.nav-pills .nav-link.active{
+dl {
+    margin: 0px auto 60px;
+    width: 170px; /* 전체 메뉴 사이즈 */
+}
+.active{
+    background: #FFFFFF;
+    border-radius: 2em;
+    color: #000000;
+    margin-top: 20px;
+}
+.deact:hover{
     background-color: white;
-    color: black;
-}
-.nav-link {
-    margin-bottom: 1rem;
-}
-.nav-pills .nav-link{
-    border-radius: 15px;
-}
-.link-dark:hover{
-    background-color: white;
+    border-radius: 2em;
+    color: #000000;
 }
 .marktext{
     font-size:30px;
     margin-bottom: 10px;
 }
+
 .card-columns{
     column-count: 3;
 }

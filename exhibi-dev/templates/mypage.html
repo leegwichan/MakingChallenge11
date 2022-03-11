@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="../static/style/common.css">
     <link rel="stylesheet" href="../static/style/index.css">
     <link rel="stylesheet" href="../static/style/mypage.css">
+    <link rel="stylesheet" href="../static/style/main.css">
+    <script src="/exhibi-dev/static/js/jquery.min.js"></script>
 
     <title>마이페이지</title>
     <script>
@@ -28,74 +30,166 @@
         function logout(){
             alert('로그아웃 되었습니다')
         }
+        function edit(){
+            alert('수정되었습니다')
+        }
+
+        /*비밀번호 검증 */
+        function passwordRegexr(){
+            const pw = document.getElementById("NEWPASSWORD").value; //비밀번호
+            const pw2 = document.getElementById("NEWPASSWORD2").value; // 확인 비밀번호
+
+            const passwordReg = /^.*(?=.{8,10})(?=.*[a-zA-Z])(?=.*?[A-Z])(?=.*\d)(?=.+?[\W|_])[a-zA-Z0-9!@#$%^&*()-_+={}\|\\\/]+$/gim;
+            if(!passwordReg.test(pw)){
+                alert('8~20자 이내 대/소문자,숫자,특수문자 조합으로 입력해주세요.');
+            } else{
+                alert('비밀번호가 변경되었습니다')
+            }
+        }
+
+        /*새 비밀번호와 비밀번호 확인*/
+        function newpasswordcheck(){
+            const pw = document.getElementById("NEWPASSWORD").value; //비밀번호
+            const pw2 = document.getElementById("NEWPASSWORD2").value; // 확인 비밀번호
+            if( pw  !=  pw2) {
+                document.getElementById("newcheck").style.display = 'block';
+            } else{
+                document.getElementById("newcheck").style.display = 'none';
+            }
+        }
+
+        /* 휴대폰번호에 "-" 자동 입력되는 이벤트 */
+        $(document).on("keyup", "#PHONE_NUMBER", function() {
+            $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+        });
+
     </script>
 </head>
 <body>
 <div class="container">
-    <div class="row no-gutters">
-        <div class="col-6 col-md-3">
-            <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 237px;">
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link active" aria-current="page">
-                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                            <b>My 프로필</b>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../templates/bookmark.html" class="nav-link link-dark">
-                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-                            <b>북마크</b>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-9">
-            <p class="protext"><b>My 프로필</b></p>
-            <p class="destext">계정 관리와 상세 설정을 할 수 있어요.</p>
-            <div class="box">
-                <p class="info"><b>계정 정보<span><button class="btn btn-blue submit" type="button" onclick="submit()">저장</button></span></b></p>
-                <hr color="#ECEDF4" noshade>
-                <table width="772px" height="250px">
-                    <tr>
-                        <td class="box-left"><b>이름</b></td>
-                        <td class="box-right">
-                            <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="box-left"><b>로그인 계정</b></td>
-                        <td>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-blue submit" type="button">수정</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="box-left"><b>휴대전화</b></td>
-                        <td class="box-right">
-                            <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>관심 카테고리</b></td>
-                        <td><button class="btn btn-blue submit cor" type="button">카테고리 선택</button></td>
 
-                    </tr>
-                </table>
-            </div>
-            <div class="d-grid gap-2 d-md-block">
-                <button class="btn btn-white btn-radius btn2" type="button" onclick="logout()">로그아웃</button>
-                <button class="btn btn-white btn-radius btn2" type="button" onclick="withdraw()">회원탈퇴</button>
+    <div class="top"><!--헤드부분--></div>
+    <!-- MIDDLE -->
+    <div class="middle">
+
+        <!-- LEFT 시작 -->
+        <div class="middle-left">
+            <div class="left-menu">
+                <dl>
+                    <dt class="active">My 프로필</dt>
+                    <a href="../templates/bookmark.html">
+                        <dt class="deact">북마크</dt>
+                    </a>
+                </dl>
             </div>
         </div>
 
+        <div class="middle-right">
+
+            <div class="wrap">
+                <p class="protext"><b>My 프로필</b></p>
+                <p class="destext">계정 관리와 상세 설정을 할 수 있어요.</p>
+                <div class="box">
+                    <p class="info"><b>계정 정보<span><button class="btn btn-blue submit" type="button" onclick="submit()">저장</button></span></b></p>
+                    <hr color="#ECEDF4" noshade>
+                    <table width="772px" height="250px">
+                        <tr>
+                            <td class="box-left"><b>이름</b></td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" aria-describedby="button-addon2" value="이름 가져오기">
+                                    <button class="btn btn-blue submit" type="button" onclick="edit()">수정</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="box-left"><b>로그인 계정</b></td>
+                            <td class="box-right">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" readonly>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="box-left"><b>휴대전화</b></td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="PHONE_NUMBER" aria-describedby="button-addon2" value="전화번호 가져오기" >
+                                    <button class="btn btn-blue submit" type="button" onclick="edit()">수정</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cate"><b>관심 카테고리</b></td>
+                            <td>
+                                <div class="mt-4">
+                                    <div class="form_check">
+                                        <div class="mt-1">
+                                            <input type="checkbox" class="btn-check btn-checkbox" id="exhibition" value="전시">
+                                            <label class="btn checkbox" for="exhibition">전시</label>
+
+                                            <input type="checkbox" class="btn-check btn-checkbox" id="museum" value="뮤지엄">
+                                            <label class="btn checkbox" for="museum">뮤지엄</label>
+
+                                            <input type="checkbox" class="btn-check btn-checkbox" id="event" value="행사/축제">
+                                            <label class="btn checkbox" for="event">행사/축제</label>
+                                        </div>
+                                        <div class="mt-2">
+                                            <input type="checkbox" class="btn-check btn-checkbox" id="class" value="클래스">
+                                            <label class="btn checkbox" for="class">클래스</label>
+
+                                            <input type="checkbox" class="btn-check btn-checkbox" id="experience" value="아동체험전">
+                                            <label class="btn checkbox" for="experience">아동체험전</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="wrap box2">
+                <div class="box box2">
+                    <table width="772px" height="max-content">
+                        <tr>
+                            <td class="box-left"><b>기존 비밀번호</b></td>
+                            <td class="box-right">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="box-left"><b>새 비밀번호</b></td>
+                            <td class="box-right">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="password" class="form-control" id="NEWPASSWORD" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="box-left"><b>새 비밀번호 확인</b></td>
+                            <td class="box-right">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="password" class="form-control" id="NEWPASSWORD2" onkeyup="newpasswordcheck()" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+
+                                </div>
+                                <p id="newcheck">새 비밀번호와 비밀번호 확인이 일치하지 않습니다.</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="submit">
+                        <button class="btn btn-blue" type="button" onclick="passwordRegexr()">확인</button>
+                    </div>
+
+                </div>
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-white btn-radius btn2" type="button" onclick="withdraw()">회원탈퇴</button>
+                    <button class="btn btn-white btn-radius btn2" type="button" onclick="logout()">로그아웃</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!-- Optional JavaScript -->
