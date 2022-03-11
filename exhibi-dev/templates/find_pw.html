@@ -29,12 +29,16 @@
 							<label for="NAME">이름</label>
 						</div>
 						<div class="form-floating mb-3">
-							<input type="password" class="form-control form_custom" id="PHONE_NUMBER" placeholder="휴대폰번호">
-							<label for="PHONE_NUMBER">휴대폰번호</label>
+							<input type="text" class="form-control form_custom" id="PHONE_NUMBER" placeholder="휴대폰번호">
+							<label for="PHONE_NUMBER">휴대폰번호 ('-'없이 입력해주세요)</label>
 						</div>
-						<div class="form-floating mb-3">
-							<input type="password" class="form-control form_custom" id="SEX" placeholder="성별">
-							<label for="SEX">성별</label>
+
+						<div class="input-group form-floating mb-3">
+							<select class="form-select form-select form_custom" id="SEX">
+								<option selected>성별</option>
+								<option value="남자">남자</option>
+								<option value="여자">여자</option>
+							</select>
 						</div>
 
 						<div class="login-inner">
@@ -45,5 +49,60 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		(function(){
+			function find_pw() {
+					let ID = $('#ID').val()
+					let NAME = $('#NAME').val()
+					let SEX = $('#SEX option:selected').val()
+					let PHONE_NUMBER = $('#PHONE_NUMBER').val()
+					let E_MAIL = $('#E_MAIL').val()
+					if (SEX == '남자'){SEX = 'male'}
+					if (SEX == '여자'){SEX = 'female'}
+
+				if (ID == '') {
+					alert(`아이디를 입력하지 않았습니다.`)
+				}else if (E_MAIL == '') {
+					alert(`이메일을 입력하지 않았습니다.`)
+				}else if (NAME == '') {
+					alert(`이름을 입력하지 않았습니다.`)
+				}else if (PHONE_NUMBER == '') {
+					alert(`핸드폰 번호를 입력하지 않았습니다.`)
+				}else if (SEX == '성별') {
+					alert(`성별을 선택하지 않았습니다.`)
+				}else {
+					if (NAME != '' && SEX != '성별' && PHONE_NUMBER != '' && E_MAIL != '' && ID != '') {
+						$.ajax({
+							type: "POST",                             // POST 요청
+							url: "/find_ps/downloadData",             // app.py에서 사용한 url과 맞춰줘야함
+							data: {
+								NAME_give: NAME,
+								SEX_give: SEX,
+								PHONE_NUMBER_give: PHONE_NUMBER,
+								E_MAIL_give: E_MAIL,
+								ID_give : ID
+							},          // sample_give 변수로 데이터를 넘겨줌
+							success: function (response) {
+								if (response["ps_data_find"] == "find_OK") {
+									location.href="/find_ps/show"
+								} else {
+									alert(`당신의 정보를 찾을 수 없습니다.`)
+								}
+							}
+						});
+					}
+				}
+			};
+
+			/*  휴대폰번호에 "-" 자동 입력됨 */
+			function phoneDacu() {
+				$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+			};
+			/* // 휴대폰번호에 "-" 자동 입력됨 */
+
+			$(document).on("keyup", "#PHONE_NUMBER", phoneDacu)
+			$('#submit').on('click', find_pw);
+		})();
+		</script>
 </body>
-</html>
+</html>	

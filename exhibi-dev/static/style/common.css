@@ -129,9 +129,12 @@ i{font-family:'icon'!important;speak:never;font-style:normal;font-weight:normal;
 /* InputBox */
 .form-control.form_custom::placeholder {color: transparent !important;}
 .form-control.form_custom{border-color: var(--blue_E); border-radius: 9px;}
+.form-select.form_custom{line-height: 58px; padding-top: 0 !important;}
 /* // InputBox */
 
 /* card */
+.card4_inner {display: grid; grid-template-columns: repeat(4,288px);grid-gap: 20px;}
+.card3_inner {display: grid; grid-template-columns: repeat(3,288px);grid-gap: 20px;}
 .card .card-text {font-size: 12px;}
 .card.shadow {box-shadow: 10px 20px 20px 0 rgb(92 95 112 / 8%) !important; transform: translateZ(0); border-radius: 0.8em; overflow: hidden; transition: all .15s;}
 .card.shadow:hover{box-shadow:10px 20px 30px 0 rgb(92 95 112 / 16%);transform:translate3d(0,-4px,0);}

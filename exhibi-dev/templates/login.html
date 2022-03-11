@@ -44,5 +44,58 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+	(function(){
+		function sign_in() {
+			let type_id = $('#ID').val();
+			let type_pw = $('#PASSWORD').val();
+
+			console.log('type_id is ',type_id)
+			console.log('type_pw is ',type_pw)
+
+			if(type_id === ""){
+				alert('아이디를 입력해주세요');
+			}else if(type_pw === ""){
+				alert('비밀번호를 입력해주세요');
+			}
+				$.ajax({
+					type: "GET",
+					url: "/login",
+					data: {},
+					success: function (response) {
+						let member_list = response['all_member_list']
+
+						for (let i = 0; i < member_list.length; i++) {
+							let ID = member_list[i]['ID'];
+							let PASSWORD = member_list[i]['PASSWORD'];
+							// let NAME = member_list[i]['NAME']
+							// let SEX = member_list[i]['SEX']
+							// let PHONE_NUMBER = member_list[i]['PHONE_NUMBER']
+							// let RRN = member_list[i]['RRN']
+							// let E_MAIL = member_list[i]['E_MAIL']
+							// let LOCATION = member_list[i]['LOCATION']
+							// let BOOKMARK = member_list[i]['BOOKMARK']
+
+							if(ID === type_id){
+								if(PASSWORD === type_pw){
+									sessionStorage.setItem("key",JSON.stringify(member_list[i]['KEY']));
+									let session_key = JSON.parse(sessionStorage.getItem("key"))
+									return session_key
+									// window.location.reload();
+								} else {
+									return console.log('비밀번호가 틀렸습니다.');
+								}
+							}
+						};
+						console.log('아이디가 틀렸습니다.');
+					}
+				});
+				console.log(JSON.parse(sessionStorage.getItem("key")));
+		};
+
+		$('#submit').on('click', sign_in);
+	})();
+	</script>
 </body>
 </html>
