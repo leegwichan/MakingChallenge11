@@ -1,13 +1,13 @@
         body {
             background-color: #F2F3F7;
-            overflow-X: hidden;
+            overflow: auto;
         }
 
         .iframebox {
+            max-width: 100%;
             position: relative;
             width: 100%;
             height: 500px;
-            /*padding-bottom: 56.25%;*/
         }
 
         .iframebox iframe {
@@ -17,17 +17,21 @@
         }
 
         .cards-list-title {
-            margin-top: 40px;
+            margin-top: 550px;
             margin-bottom: 20px;
+
         }
 
         .cards-list-box {
-            max-width: 100%;
-            width: 100%;
+            position: absolute;
+            max-width: 1282px;
+            width: 71%;
         }
 
         .current-position-map {
-            width: 100%;
+            position: absolute;
+            max-width: 1282px;
+            width: 71%;
             height: 500px;
             border-radius: 0.8em;
             margin: 20px auto 30px 0px;
@@ -37,11 +41,11 @@
             display: block;
             text-align: center;
             overflow: hidden;
+            margin-left: 0;
         }
 
         .wrap {
-            width: 100%;
-            margin: auto;
+            max-width: 100%;
         }
 
         .show-card {
@@ -49,10 +53,17 @@
             max-height: 530px;
             width: 300px;
             height: 530px;
-            margin: 0px auto 10px auto;
+            margin-bottom: 20px;
+            margin-left: 2px;
         }
 
         /* 로그인 회원가입 프로필 로그아웃 지도검색 버튼 위치 설정 시작 */
+        .header-postion {
+            max-width: 1282px;
+            width: 100%;
+            height: 70px;
+        }
+
         .map-search{
             position: relative;
             top: 0px;
@@ -73,26 +84,30 @@
 
         .sign-up {
             position: relative;
-            left: 817px;
-            top: 0px;
+            left: 804px;
+            top: -1px;
         }
 
         .my-pro {
             position: relative;
-            left: 990px;
+            left: 978px;
             top: 5px;
         }
 
         .log-in {
             position: relative;
-            left: 807px;
-            top: 0px;
+            left: 794px;
+            top: -1px;
         }
 
         .log-out{
-            position:relative;
-            left:1000px;
+            position: relative;
+            left:988px;
             top:5px;
+        }
+
+        .float-left {
+            float:left;
         }
 
 
@@ -118,8 +133,9 @@
 
         /* 오른쪽 프레임 위치 설정 시작 */
         .middle-right {
-            width: 100%;
-            margin-left: 350px;
+            max-width: 100%;
+            width: 99%;
+            margin-left: 250px;
             margin-top: 30px;
         }
         /* 오른쪽 프레임 위치 설정 끝 */
@@ -127,11 +143,11 @@
         /* 관심 카테고리 아이콘 설정 시작*/
         .i-more {
             cursor: pointer;
-            margin-left: 100px;
+            margin-left: 50px;
         }
 
         .interest { /* 관심 카테고리 */
-            max-width: 300px;
+            max-width: 200px;
             background: #F2F3F7;
             color: #000000;
             font-weight: 600;
@@ -145,8 +161,10 @@
 
         /* 왼쪽 메뉴 설정 시작 */
         .left-menu {
+            width: 260px;
             height: 100%;
             position: fixed;
+            margin-left: 0;
         }
 
         dl {
@@ -223,13 +241,13 @@
             margin: 10px;
             background-color: #F2F3F7;
             border-radius: 10px;
-            width: 260px;
+            width: 200px;
             height: 50px;
             float:left;
         }
 
         .menu-button label {
-            width: 260px;
+            width: 200px;
             height: 50px;
         }
 
@@ -247,7 +265,7 @@
             background-color: #FFFFFF;
             color: #000000;
             border-radius: 10px;
-            width: 260px;
+            width: 200px;
             height: 50px;
         }
 
