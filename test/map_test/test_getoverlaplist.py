@@ -14,8 +14,8 @@ client = MongoClient('3.91.50.100',27017,
 db = client.exhibition_project
 
 total_data = list(db.exhibition_info.find({},{'_id':False}))
-# 타이틀, 장소, 위도, 경도
 
+# 7일차에 정리함
 
 overlay_check = []
 for data in total_data:
@@ -33,14 +33,3 @@ for data in total_data:
         if(data['place'] in overlap_place):
             print(data['place'])
 
-
-# for data in total_data:
-#     if "latitude" in data:
-#         # print(data['place'])
-#         # print("---------")
-
-#         if():
-#             print(data['place'])
-#             print("---------")
-#             # 중복값이 1개 이상
-#              1 < data.values().
