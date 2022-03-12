@@ -1,0 +1,31 @@
+body{
+    background-color: #F7F8FA;
+}
+.container{
+    margin-top: 50px;
+}
+dl {
+    margin: 0px auto 60px;
+    width: 170px; /* 전체 메뉴 사이즈 */
+}
+.active{
+    background: #FFFFFF;
+    border-radius: 2em;
+    color: #000000;
+    margin-top: 20px;
+}
+.deact:hover{
+    background-color: white;
+    border-radius: 2em;
+    color: #000000;
+}
+.marktext{
+    font-size:30px;
+    margin-bottom: 10px;
+}
+
+.card-columns{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

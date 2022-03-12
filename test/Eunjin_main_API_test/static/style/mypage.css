@@ -1,0 +1,84 @@
+body{
+    background-color: #F7F8FA;
+}
+.container{
+    margin-top: 50px;
+}
+dl {
+    margin: 0px auto 60px;
+    width: 170px; /* 전체 메뉴 사이즈 */
+}
+.active{
+    background: #FFFFFF;
+    border-radius: 2em;
+    color: #000000;
+    margin-bottom: 20px;
+}
+.deact:hover{
+    background-color: white;
+    border-radius: 2em;
+    color: #000000;
+}
+.protext{
+    font-size:30px;
+}
+.destext{
+    margin: 10px 0px;
+}
+.box{
+    background-color:white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 10px 20px 20px #ECEDF4;
+}
+.info{
+    font-size: 25px;
+}
+.btn{
+    float: right;
+}
+.submit{
+    display: flex;
+    justify-content: flex-end;
+}
+.box-left{
+    width:430px;
+}
+.mb-3{
+    margin-top: 0.4rem !important;
+}
+.form-control{
+    background-color: #F7F8FA;
+    border: 1px solid #ECEDF4;
+}
+.cate{
+    vertical-align: top;
+    padding-top:0.9rem;
+}
+.mt-4{
+    margin-top: 0.4rem !important;
+}
+.checkbox{
+    float:left;
+}
+.btn2{
+    background-color:white;
+    color: black;
+    border-color: white;
+    border-radius:35px;
+    padding: 10px 40px;
+    margin: 30px 15px 30px 0px;
+}
+.box2{
+    margin-top: 30px;
+    height:max-content;
+}
+#newcheck{
+    font-size: 12px;
+    color: red;
+    display: none;
+}
+.d-md-block{
+    display: flex !important;
+    justify-content: flex-end;
+}

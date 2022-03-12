@@ -5,8 +5,7 @@
 from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
-import codecs
-import webbrowser
+# import webbrowser
 import folium
 from geopy.geocoders import Nominatim
 from collections import Counter
