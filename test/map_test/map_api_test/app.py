@@ -5,6 +5,7 @@
 from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
+import codecs
 import webbrowser
 import folium
 from geopy.geocoders import Nominatim
@@ -18,9 +19,9 @@ db = client.exhibition_project
 
 @app.route('/')
 def home():
-   return render_template('main.html')
+   return render_template('geolocation.html')
 
-@app.route('/map', methods=['POST'])
+@app.route('/exhibi_map', methods=['POST'])
 def test_post():
    latitude_receive = request.form['latitude_give']
    longitude_receive = request.form['longitude_give']
@@ -84,11 +85,10 @@ def test_post():
                
                folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(m)
                
-
-   m.save(r'test/map_test/map_api_test/templates/exhibition_map.html')
-   webbrowser.open_new_tab("test/map_test/map_api_test/templates/exhibition_map.html")
-   return jsonify({'msg': '현재 위치로 설정'})
-
+   m.save(r'C:/Users/82104/Desktop/220308/test/map_test/map_api_test/templates/exhibition_map.html')
+   # webbrowser.open_new_tab('C:/Users/82104/Desktop/220308/test/map_test/map_api_test/templates/exhibition_map.html')
+   # m.save(r'sftp://ubuntu@18.208.182.249/home/ubuntu/MakingChallenge11/exhibi-dev/templates/exhibition_map.html')
+   return jsonify({'result':'success'})
 
 
 if __name__ == '__main__':  

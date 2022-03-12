@@ -43,10 +43,13 @@
         // 지도용 좌표 전달
         $.ajax({
           type: "POST",
-          url: "/map",
+          url: "/exhibi_map",
           data: { latitude_give: latitude, longitude_give: longitude },
           success: function (response) {
-            console.log(response['msg'])
+            if (response['result'] == 'success'){
+              console.log("성공")
+              window.location.reload();
+            }   
           }
         })
       }
@@ -64,7 +67,6 @@
 
     }
 
-
   </script>
 
 
@@ -77,6 +79,10 @@
     <p id="status"></p>
     <a id="map-link" target="_blank"></a>
   </div>
+ 
+  <iframe style="width: 1500px;" src="http://credical.shop/exhibi_map" frameborder="0"></iframe>
+
+
 </body>
 
 </html>
