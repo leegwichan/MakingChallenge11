@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="ko" data-dark="false">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="../static/style/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/style/common.css">
+    <link rel="stylesheet" href="../static/style/index.css">
+    <link rel="stylesheet" href="../static/style/mypage.css">
+    <link rel="stylesheet" href="../static/style/main.css">
+<!--    <script src="/exhibi-dev/static/js/jquery.min.js"></script>-->
+
+
+
+    <title>마이페이지</title>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            judge_keydata()})
+
+
+        function judge_keydata(){
+            if (localStorage.getItem("exhibition_userkey") == null){
+                alert('로그인 후 이용가능합니다.')
+                location.href="/"
+            }else {
+                let user_key = localStorage.getItem("exhibition_userkey")
+                load_data(user_key)
+            }
+        }
+
+
+        function load_data(user_key){
+            $.ajax({
+                type: "POST",                             // POST 요청
+                url: "/mypage/basicdata",            // app.py에서 사용한 url과 맞춰줘야함
+                data: {userkey_give: user_key},          // sample_give 변수로 데이터를 넘겨줌
+                success: function (response) {
+                    if (response['Okay'] == 'find_fail') {
+                        alert('ERROR!')
+                        localStorage.removeItem("exhibition_userkey");
+                        location.href="./"
+
+                    } else if(response['Okay'] == 'find_success') {
+                        let user_name = response['name_give']
+                        let user_ID = response['ID_give']
+                        let user_phone_num = response['phone_num_give']
+                        let user_category = response['class_give']
+
+                        if (user_category.includes('exhibition')){
+                            var exhibition_checked = 'checked '
+                        }else {
+                            var exhibition_checked = ''
+                        }
+                        if (user_category.includes('museum')){
+                            var museum_checked = 'checked '
+                        }else {
+                            var museum_checked = ''
+                        }
+                        if (user_category.includes('childs_experience')){
+                            var childs_experience_checked = 'checked '
+                        }else {
+                            var childs_experience_checked = ''
+                        }
+                        if (user_category.includes('class')){
+                            var class_checked = 'checked '
+                        }else {
+                            var class_checked = ''
+                        }
+                        if (user_category.includes('event/festival')){
+                            var event_checked = 'checked '
+                        }else {
+                            var event_checked = ''
+                        }
+
+
+                        let temp_html = `<p class="info"><b>계정 정보<span><button class="btn btn-blue submit" type="button" onclick="submit()">저장</button></span></b></p>
+                                        <hr color="#ECEDF4" noshade>
+                                        <table width="772px" height="250px">
+                                            <tr>
+                                                <td class="box-left"><b>이름</b></td>
+                                                <td>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" id="NAME" aria-describedby="button-addon2" value="${user_name}">
+                                                        <button class="btn btn-blue submit" type="button" onclick="edit()">수정</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="box-left"><b>로그인 계정</b></td>
+                                                <td class="box-right">
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" readonly value="${user_ID}">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="box-left"><b>휴대전화</b></td>
+                                                <td>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" id="PHONE_NUMBER" aria-describedby="button-addon2" value="${user_phone_num}" >
+                                                        <button class="btn btn-blue submit" type="button" onclick="edit()">수정</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cate"><b>관심 카테고리</b></td>
+                                                <td>
+                                                    <div class="mt-4">
+                                                        <div class="form_check">
+                                                            <div class="mt-1">
+                                                                <input type="checkbox" ${exhibition_checked}class="btn-check btn-checkbox" id="exhibition" name='CATEGORY' value="exhibition">
+                                                                <label class="btn checkbox" for="exhibition">전시</label>
+
+                                                                <input type="checkbox" ${museum_checked}class="btn-check btn-checkbox" id="museum" name='CATEGORY' value="museum">
+                                                                <label class="btn checkbox" for="museum">뮤지엄</label>
+
+                                                                <input type="checkbox" ${childs_experience_checked}class="btn-check btn-checkbox" id="event" name='CATEGORY' value="event/festival">
+                                                                <label class="btn checkbox" for="event">행사/축제</label>
+                                                            </div>
+                                                            <div class="mt-2">
+                                                                <input type="checkbox" ${class_checked}class="btn-check btn-checkbox" id="class" name='CATEGORY' value="class">
+                                                                <label class="btn checkbox" for="class">클래스</label>
+
+                                                                <input type="checkbox" ${event_checked}class="btn-check btn-checkbox" id="experience" name='CATEGORY' value="childs_experience">
+                                                                <label class="btn checkbox" for="experience">아동체험전</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>`
+
+                        $("#user_fix_data").append(temp_html)
+                    }
+                }
+            })
+        }
+
+
+
+        function submit() {
+            let user_key = localStorage.getItem("exhibition_userkey")
+            let changed_name = $('#NAME').val()
+            let changed_phone = $('#PHONE_NUMBER').val()
+            let changed_exhibition = document.getElementsByName("CATEGORY")[0].checked
+            let changed_museum = document.getElementsByName("CATEGORY")[1].checked
+            let changed_event = document.getElementsByName("CATEGORY")[2].checked
+            let changed_class = document.getElementsByName("CATEGORY")[3].checked
+            let changed_childs_experience = document.getElementsByName("CATEGORY")[4].checked
+
+            $.ajax({
+                type: "POST",                             // POST 요청
+                url: "/mypage/savedata",                  // app.py에서 사용한 url과 맞춰줘야함
+                data: {key_give: user_key,
+                    name_give: changed_name,
+                    phone_give: changed_phone,
+                    exhibition_give: changed_exhibition,
+                    museum_give: changed_museum,
+                    event_give: changed_event,
+                    class_give: changed_class,
+                    childs_experience_give: changed_childs_experience},          // sample_give 변수로 데이터를 넘겨줌
+                success: function (response) {
+                    alert(response["msg"]);               // msg값으로 app.py에서 넘긴 데이터 확인
+                    window.location.reload();             // 새로고침 실시
+                }
+            })
+        }
+
+        function edit(){
+            alert('수정되었습니다')
+        }
+
+        // 비밀번호 변경
+        function passwordRegexr(){
+            const exist_pw = document.getElementById("EXISTPASSWORD").value; //기존 비밀번호
+            const new_pw = document.getElementById("NEWPASSWORD").value; //비밀번호
+            const new_pw2 = document.getElementById("NEWPASSWORD2").value; // 확인 비밀번호
+            let user_key = localStorage.getItem("exhibition_userkey")
+
+            const passwordReg = /^.*(?=.{8,10})(?=.*[a-zA-Z])(?=.*?[A-Z])(?=.*\d)(?=.+?[\W|_])[a-zA-Z0-9!@#$%^&*()-_+={}\|\\\/]+$/gim;
+            if(!passwordReg.test(new_pw)){
+                alert('8~20자 이내 대/소문자,숫자,특수문자 조합으로 입력해주세요.');
+            } else if(new_pw != new_pw2) {
+                alert('새 비밀번호 확인이 유효하지 않습니다.')
+            } else if(new_pw == exist_pw) {
+                alert('기존 비밀번호와 새 비밀번호가 일치합니다.')
+            } else {
+                $.ajax({
+                    type: "POST",                             // POST 요청
+                    url: "/mypage/saveps",                    // app.py에서 사용한 url과 맞춰줘야함
+                    data: {key_give: user_key,
+                            exist_password_give: exist_pw,
+                            new_password_give: new_pw},
+                    success: function (response) {
+
+                        if(response["msg"] == 'MATCH_SUCCESS'){
+                            alert('비밀번호가 변경되었습니다.');               // msg값으로 app.py에서 넘긴 데이터 확인
+                        window.location.reload();             // 새로고침 실시
+                        } else {
+                            alert('기존 비밀번호가 일치하지 않습니다.');
+                        }
+                    }
+                })
+            }
+        }
+
+        /*새 비밀번호와 비밀번호 확인*/
+        function newpasswordcheck(){
+            const pw = document.getElementById("NEWPASSWORD").value; //비밀번호
+            const pw2 = document.getElementById("NEWPASSWORD2").value; // 확인 비밀번호
+            if( pw  !=  pw2) {
+                document.getElementById("newcheck").style.display = 'block';
+            } else{
+                document.getElementById("newcheck").style.display = 'none';
+            }
+        }
+
+        // 탈퇴하기
+        function withdraw(){
+            const answer = confirm('탈퇴하시겠습니까?')
+            if(answer){
+                let user_key = localStorage.getItem("exhibition_userkey")
+
+                $.ajax({
+                    type: "POST",
+                    url: "/mypage/cancel_membership",
+                    data: {key_give: user_key},
+                    success: function (response) {
+                        localStorage.removeItem("exhibition_userkey");
+                        alert(response["msg"]);
+                        location.href="./"
+                    }
+                })
+            }
+        }
+
+        function logout(){
+            localStorage.removeItem("exhibition_userkey");
+            alert('로그아웃 되었습니다')
+            location.href="./"
+        }
+
+        /* 휴대폰번호에 "-" 자동 입력되는 이벤트 */
+        $(document).on("keyup", "#PHONE_NUMBER", function() {
+            $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+        });
+
+    </script>
+</head>
+<body>
+<div class="container">
+
+    <div class="top"><!--헤드부분--></div>
+    <!-- MIDDLE -->
+    <div class="middle">
+
+        <!-- LEFT 시작 -->
+        <div class="middle-left">
+            <div class="left-menu">
+                <dl>
+                    <dt class="active">My 프로필</dt>
+                    <a href="/mybookmark">
+                        <dt class="deact">북마크</dt>
+                    </a>
+                </dl>
+            </div>
+        </div>
+
+        <div class="middle-right">
+
+            <div class="wrap">
+                <p class="protext"><b>My 프로필</b></p>
+                <p class="destext">계정 관리와 상세 설정을 할 수 있어요.</p>
+                <div class="box" id="user_fix_data" >
+                </div>
+            </div>
+            <div class="wrap box2">
+                <div class="box box2">
+                    <table width="772px" height="max-content">
+                        <tr>
+                            <td class="box-left"><b>기존 비밀번호</b></td>
+                            <td class="box-right">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="password" class="form-control" id="EXISTPASSWORD" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="box-left"><b>새 비밀번호</b></td>
+                            <td class="box-right">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="password" class="form-control" id="NEWPASSWORD" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="box-left"><b>새 비밀번호 확인</b></td>
+                            <td class="box-right">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="password" class="form-control" id="NEWPASSWORD2" onkeyup="newpasswordcheck()" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+
+                                </div>
+                                <p id="newcheck">새 비밀번호와 비밀번호 확인이 일치하지 않습니다.</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="submit">
+                        <button class="btn btn-blue" type="button" onclick="passwordRegexr()">확인</button>
+                    </div>
+
+                </div>
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-white btn-radius btn2" type="button" onclick="withdraw()">회원탈퇴</button>
+                    <button class="btn btn-white btn-radius btn2" type="button" onclick="logout()">로그아웃</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

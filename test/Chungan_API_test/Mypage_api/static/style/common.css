@@ -1,0 +1,141 @@
+/* google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+/* // google fonts */
+/* css reset */
+html,body{position:relative;-webkit-text-size-adjust:100%;color:#333;width:100%;height:100%;}
+body{margin:0;overflow:auto;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:none;}
+blockquote,body,button,code,dd,div,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,input,legend,li,ol,p,pre,select,td,textarea,th,ul{margin:0;padding:0;box-sizing:border-box;}
+body,button,input,select,strong,table,textarea{font-family:"Montserrat","Noto Sans KR","맑은 고딕","Malgun Gothic","Apple SD Gothic Neo","돋움","dotum",sans-serif;font-size:16px;font-weight:400;word-break:keep-all;word-wrap:break-word;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+h1{font-size:2em;margin:.67em 0;}
+h1,h2,h3,h4,h5,h6{font-weight:inherit;font-size:inherit;}
+fieldset,iframe{border:0;padding:.35em .75em .625em;}
+img{border:0;border-style:none;vertical-align:middle;}
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block;}
+dl,li,menu,ol,ul{list-style:none;}
+address,em{font-style:normal;}
+a{color:inherit;text-decoration:none;background-color:transparent;outline:none;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;}
+a:active,a:focus,a:hover{text-decoration:none;}
+button,input,select,textarea{border:0;vertical-align:middle;background:0 0;font-family:inherit;font-size:100%;line-height:1.15;margin:0;outline:0;overflow:auto;}
+button{cursor:pointer;width:auto;overflow:visible;color:inherit;font-size:inherit;vertical-align:middle;background:0 0;border:0;}
+button[disabled="disabled"]{cursor:default;}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}
+table{border-collapse:separate;border-spacing:0;table-layout:fixed;width:100%;empty-cells:show;}
+caption,legend{visibility:hidden;font-size:0;width:0;height:0;line-height:0;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal;}
+input[type="password"]::-ms-reveal,
+input[type="text"]::-ms-clear{display:none;}
+input.disabled,input.readonly,input[disabled="disabled"],input[readonly="readonly"],select[disabled="disabled"]{background-color:#f5f5f5;cursor:default;border-color:#ddd;}
+select{vertical-align:middle;-webkit-appearance:none;-moz-appearance:none;appearance:none;border-radius:0;}
+select::-ms-expand{display:none;}
+::-webkit-input-placeholder{color:#888!important;font-weight:400;}
+::-moz-placeholder{color:#888!important;font-weight:400;}
+:-ms-input-placeholder{color:#888!important;font-weight:400!important;}
+:-moz-placeholder{color:#888!important;font-weight:400;}
+select.placeholder{color:#888!important;font-weight:400;}
+td,th{text-indent:0;}
+hr{box-sizing:content-box;height:0;overflow:visible;}
+pre{font-family:monospace;font-size:1em;}
+abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted;}
+b,strong{font-weight:bolder;}
+code,kbd,samp{font-family:monospace;font-size:1em;}
+small{font-size:80%;}
+sub{bottom:-.25em;}
+sup{top:-.5em;}
+button,input{overflow:visible;}
+button,
+select{text-transform:none;}
+[type="button"],[type="reset"],[type="submit"],button{-webkit-appearance:button;}
+[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0;}
+[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText;}
+progress{vertical-align:baseline;}
+[type="checkbox"],[type="radio"]{box-sizing:border-box;padding:0;}
+[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button{height:auto;}
+[type="search"]{-webkit-appearance:textfield;outline-offset:-2px;}
+[type="search"]::-webkit-search-decoration{-webkit-appearance:none;}
+::-webkit-file-upload-button{-webkit-appearance:button;font:inherit;}
+template{display:none;}
+[hidden]{display:none;}
+/* // css reset */
+
+/* 아이콘 폰트 */
+@font-face {
+  font-family: 'icon';
+  src:  url('/exhibi-dev/static/fonts/icon.eot?dc1z0n');
+  src:  url('/exhibi-dev/static/fonts/icon.eot?dc1z0n#iefix') format('embedded-opentype'),
+    url('/exhibi-dev/static/fonts/icon.ttf?dc1z0n') format('truetype'),
+    url('/exhibi-dev/static/fonts/icon.woff?dc1z0n') format('woff'),
+    url('/exhibi-dev/static/fonts/icon.svg?dc1z0n#icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+i{font-family:'icon'!important;speak:never;font-style:normal;font-weight:normal;font-variant:normal;text-transform:none;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+
+.i-more:before{content:"\e900";}
+.i-bookmark:before{content:"\e901";}
+.i-close:before{content:"\e902";}
+.i-info:before{content:"\e903";}
+.i-love:before{content:"\e904";}
+.i-search:before{content:"\e905";}
+.i-shape_l:before{content:"\e906";}
+.i-shape_r:before{content:"\e907";}
+.i-share:before{content:"\e908";}
+/* // 아이콘 폰트 */
+
+/* Colors */
+[data-dark="false"] {
+  --blue: #004FFF;
+  --blue_F: #F7F8FA;
+  --blue_E: #ECEDF4;
+  --black: #000;
+  --white: #fff;
+}
+
+.font_blue {color: var(--blue);}
+.font_blue_F {color: var(--blue_F)}
+.font_blue_E {color: var(--blue_E)}
+.font_black {color: var(--black);}
+.font_white {color: var(--white);}
+
+.bg_blue {background-color: var(--blue);}
+.bg_blue_F {background-color: var(--blue_F);}
+.bg_blue_E {background-color: var(--blue_E)}
+.bg_black {background-color: var(--black);}
+.bg_white {background-color: var(--white);}
+/* // Colors */
+
+/* Font weights */
+.weight_400 {font-weight: 400;}
+.weight_500 {font-weight: 500;}
+.weight_600 {font-weight: 600;}
+.weight_700 {font-weight: 700;}
+.weight_800 {font-weight: 800;}
+.weight_900 {font-weight: 900;}
+/* // Font weights */
+
+/* Button */
+.btn-point {box-shadow: 0 4px 12px rgb(0 79 255 / 40%);}
+.btn-radius {border-radius: 2em;}
+.btn-white {color:var(--black);background-color:var(--white);border-color:var(--white);}
+.btn-blue_F {background-color: var(--blue_F);}
+.btn-blue {color:var(--white);background-color:var(--blue);border-color:var(--blue);}
+.btn-blue:hover {color: var(--white);}
+/* // Button */
+
+/* checkbox */
+.checkbox {color:var(--black);background-color:var(--white);border-color:var(--blue_E);border-radius: 9px; margin-right: 20px;}
+.btn-checkbox[type=checkbox]:checked + .checkbox{color: var(--white); background-color: var(--blue);}
+/* //checkbox */
+
+/* InputBox */
+.form-control.form_custom::placeholder {color: transparent !important;}
+.form-control.form_custom{border-color: var(--blue_E); border-radius: 9px;}
+.form-select.form_custom{line-height: 58px; padding-top: 0 !important;}
+/* // InputBox */
+
+/* card */
+.card4_inner {display: grid; grid-template-columns: repeat(4,288px);grid-gap: 20px;}
+.card3_inner {display: grid; grid-template-columns: repeat(3,288px);grid-gap: 20px;}
+.card .card-text {font-size: 12px;}
+.card.shadow {box-shadow: 10px 20px 20px 0 rgb(92 95 112 / 8%) !important; transform: translateZ(0); border-radius: 0.8em; overflow: hidden; transition: all .15s;}
+.card.shadow:hover{box-shadow:10px 20px 30px 0 rgb(92 95 112 / 16%);transform:translate3d(0,-4px,0);}
+/* // card */

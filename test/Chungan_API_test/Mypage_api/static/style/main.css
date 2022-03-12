@@ -1,0 +1,318 @@
+        body {
+            background-color: #F2F3F7;
+        }
+
+        .iframebox {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+        }
+
+        .iframebox iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cards-list-title {
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .current-position-map {
+            width: 800px;
+            height: 500px;
+            border-radius: 0.8em;
+            margin: 20px auto 30px 0px;
+            border-style: solid;
+            border-width: 1px;
+            padding: 0px;
+            display: block;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .wrap {
+            width: 800px;
+            margin: auto;
+        }
+
+        .show-card {
+            max-width: 100%;
+            max-height: 100%;
+            margin: 0px 10px 10px auto;
+            height: 470px;
+        }
+
+        /* 로그인 회원가입 프로필 로그아웃 지도검색 버튼 위치 설정 시작 */
+        .map-search{
+            margin-left: 120px;
+        }
+
+        .position-search {
+            margin-left: 10px;
+        }
+
+        .sign-up {
+            margin-left: 10px;
+        }
+
+        .my-pro {
+            margin-top: 5px;
+            margin-left: 606px;
+        }
+
+        .log-in {
+            margin-left:183px;
+        }
+
+        .log-out{
+            margin-top: 5px;
+            margin-left: 10px;
+
+        }
+        /* 로그인 회원가입 프로필 로그아웃 지도검색 버튼 위치 설정 시작 */
+
+        /*검색 박스 시작*/
+        .search {
+            position: relative;
+            width: 110px;
+            display: block;
+        }
+
+        .seach-position {
+            position: absolute;
+            top: 0px;
+            left: 110px;
+        }
+        /*검색 박스 끝*/
+
+        /* 오른쪽 프레임 위치 설정 시작 */
+        .middle-right {
+            margin-left: 180px;
+            margin-top: 30px;
+        }
+        /* 오른쪽 프레임 위치 설정 끝 */
+
+        /* 관심 카테고리 아이콘 설정 시작*/
+        .i-more {
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .interest { /* 관심 카테고리 */
+            max-width: 170px;
+            background: #F2F3F7;
+            color: #000000;
+            font-weight: 600;
+            padding: 15px;
+            position: relative;
+            text-align: left;
+        }
+        /* 관심 카테고리 아이콘 설정 끝 */
+
+
+        /* 왼쪽 메뉴 설정 시작 */
+        .left-menu {
+            height: 100%;
+            position: fixed;
+        }
+
+        dl {
+            margin: 0px auto 60px;
+            max-width: 170px; /* 전체 메뉴 사이즈 */
+        }
+
+        dt { /* 메인 메뉴 */
+            background: #F2F3F7; /* 메인 메뉴 색 */
+            /*border-left:8px solid #1F2024;*/
+            border-radius: 15px;
+            color: #000000;
+            font-weight: 600;
+            padding: 15px;
+            position: relative;
+            text-align: left;
+            /*text-transform:uppercase;*/
+            transition: all .5s;
+        }
+
+        dt:before {
+            opacity: 0;
+            transition: all .4s ease-in-out;
+        }
+
+        dt:hover {
+            cursor: pointer;
+        }
+
+        dt + dd { /* 전체 높이 서브 메뉴 감추기 */
+            max-height: 0px;
+        }
+
+        dd { /*서브 리스트 */
+            background: #F2F3F7; /* 서브 배경색 */
+            color: #000000; /*서브 글씨색*/
+            margin: 0;
+            overflow: hidden;
+            padding: 1px 15px;
+            transition: all .5s; /* 서브 리스트 열리는 시간 */
+        }
+
+        dt.open { /* 오픈시 메인 메뉴 */
+            background: #FFFFFF;
+            border-radius: 15px;
+            color: #000000;
+            /*margin:-5px;*/ /* 오픈시 살짝 커지는 효과 */
+        }
+
+        dt.open + dd { /* 서브 메뉴 리스트 */
+            /*padding: 10px 10px 10px;*/
+            /*margin:0 -5px;  오픈시 살짝 커지는 효과 */
+            max-height: 0px; /* 서브 리스트 최대 길이 */
+        }
+
+        .sub-list-menu {
+            width: 140px;
+            height: 30px;
+            background-color: #F2F3F7;
+            color: #000000;
+            padding: 5px;
+            padding-left: 20px;
+        }
+
+        .sub-list-menu:hover {
+            cursor: pointer;
+            width: 140px;
+            background-color: #FFFFFF;
+            color: #000000;
+            border-radius: 2em;
+        }
+        /* 왼쪽 메뉴 설정 끝 */
+
+        /* 모달 관심 카테고리 페이지 설정 시작 */
+        .modal.modal-center {
+            text-align: center;
+        }
+
+        @media screen and (min-width: 768px) {
+            .modal.modal-center:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+            }
+        }
+
+        .modal-dialog.modal-center {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+            width: 700px;
+        }
+        /* 모달 관심 카테고리 페이지 설정 끝 */
+
+        /* 모달 상세페이지 설정 시작 */
+        .offcanvas-bottom {
+            height: 100%; /* 밑에서 올라오는 화면 비율 설정 */
+            border-top: 0;
+            border-bottom: 0;
+        }
+
+        .offcanvas-body {
+            display: flex;
+            flex-grow: 0;
+            padding: 0;
+            overflow-y: visible;
+        }
+        /* 모달 상세페이지 설정 끝 */
+
+        /* 관심 카테고리 내용 설정 시작 */
+        .interest-title {
+            font-size: 25px;
+            display: block;
+            margin-left: 80px;
+        }
+
+        .interest-title-sub {
+            text-align: center;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .interest-save-btn {
+            background-color: var(--blue);
+            color: #FFFFFF;
+            margin-left: 10px;
+            width: 300px;
+            height: 35px;
+            font-size: 12px;
+            border-radius: 2em;
+
+        }
+
+        .interest-save-btn:hover {
+            background-color: #F2F3F7;
+            color: #000000;
+        }
+
+        .interest-cate-btn {
+            margin: 10px 10px 10px 10px;
+            background-color: #F2F3F7;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #F2F3F7;
+            width: 100px;
+            height: 100px;
+            font-size: 12px;
+            border-radius: 2em;
+            font-weight: 600;
+        }
+
+        .interest-cate-btn:hover {
+            background-color: #004FFF;
+            color: #FFFFFF;
+        }
+
+        .interest-ceter {
+            display: inline-block;
+            text-align: center;
+        }
+
+        #ck-button {
+            margin: 10px;
+            background-color: #F2F3F7;
+            border-radius: 10px;
+            width: 100px;
+            height: 100px;
+            float:left;
+        }
+
+        #ck-button label {
+            width: 100px;
+            height: 100px;
+        }
+
+        #ck-button label span {
+            text-align: center;
+            padding: 40px 10px;
+            display: block;
+        }
+
+        #ck-button label input {
+            position: absolute;
+        }
+
+        #ck-button input:checked + span {
+            background-color: var(--blue);
+            color: #FFFFFF;
+            border-radius: 10px;
+            width: 100px;
+            height: 100px;
+        }
+
+        #ck-button input[id="interest"] {
+            display: none;
+        }
+
+
+        /* 관심 카테고리 내용 설정 끝 */
