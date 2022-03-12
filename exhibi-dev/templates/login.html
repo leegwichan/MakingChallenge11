@@ -79,10 +79,11 @@
 
 							if(ID === type_id){
 								if(PASSWORD === type_pw){
-									sessionStorage.setItem("key",JSON.stringify(member_list[i]['KEY']));
+									console.log(JSON.stringify(member_list[i]['KEY']), '이거 맞음?')
+									sessionStorage.setItem("session_key",JSON.stringify(member_list[i]['KEY']));
 									let session_key = JSON.parse(sessionStorage.getItem("key"))
+									location.href="/"
 									return session_key
-									// window.location.reload();
 								} else {
 									return console.log('비밀번호가 틀렸습니다.');
 								}
@@ -91,7 +92,7 @@
 						console.log('아이디가 틀렸습니다.');
 					}
 				});
-				console.log(JSON.parse(sessionStorage.getItem("key")));
+				console.log(JSON.parse(sessionStorage.getItem("session_key")));
 		};
 
 		$('#submit').on('click', sign_in);
