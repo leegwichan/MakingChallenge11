@@ -9,14 +9,22 @@
   <link rel="stylesheet" href="/static/style/join.css">
   <script src="/static/js/bootstrap.min.js"></script>
 	<script src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            let temp_html = `<h3>${sessionStorage.getItem('found_id_data')}</h3>`
+            $("#show_your_id").append(temp_html)
+        });
+
+    </script>
+
 </head>
 <body>
 	<div class="find_id_complete">
 		<div class="find_id_inner">
-			<div class="find__title">
+			<div class="find__title" id="show_your_id">
 				<h2>아이디 찾기</h2>
 				<p class="mt-3">고객님의 정보와 일치하는 아이디(이메일)입니다.</p>
-				<h3>name@example.com</h3>
 			</div>
 			
 			<div class="btn_inner mt-4">
@@ -24,7 +32,7 @@
 			</div>
 			<div class="mt-4 find_password_inner">
 				<span>비밀번호를 잊으셨나요?</span>
-				<a class="find_password" href="/templates/find_pw.html">비밀번호 찾기</a>
+				<a class="find_password" href="/login_page">비밀번호 찾기</a>
 			</div>
 		</div>
 	</div>
