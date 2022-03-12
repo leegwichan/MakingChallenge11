@@ -4,9 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <title>아이디찾기</title>
+
   <link rel="stylesheet" href="/static/style/bootstrap.min.css">
   <link rel="stylesheet" href="/static/style/common.css">
   <link rel="stylesheet" href="/static/style/join.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
 	<script src="/static/js/jquery.min.js"></script>
 </head>
@@ -51,34 +53,29 @@
 				let NAME = $('#NAME').val()
 				let SEX = $('#SEX option:selected').val()
 				let PHONE_NUMBER = $('#PHONE_NUMBER').val()
-				let E_MAIL = $('#E_MAIL').val()
 				if (SEX == '남자'){SEX = 'male'}
 				if (SEX == '여자'){SEX = 'female'}
 
-				if (E_MAIL == '') {
-						alert(`이메일을 입력하지 않았습니다.`)
-				}else if (NAME == '') {
+                if (NAME == '') {
 						alert(`이름을 입력하지 않았습니다.`)
 				}else if (PHONE_NUMBER == '') {
 						alert(`핸드폰 번호를 입력하지 않았습니다.`)
 				}else if (SEX == '성별') {
 						alert(`성별을 선택하지 않았습니다.`)
 				}else {
-						if (NAME != '' && SEX != '성별' && PHONE_NUMBER != '' && E_MAIL != '') {
+						if (NAME != '' && SEX != '성별' && PHONE_NUMBER != '') {
 								$.ajax({
 										type: "POST",                             // POST 요청
 										url: "/find_id/downloadData",             // app.py에서 사용한 url과 맞춰줘야함
 										data: {
 												NAME_give: NAME,
 												SEX_give: SEX,
-												PHONE_NUMBER_give: PHONE_NUMBER,
-												E_MAIL_give: E_MAIL
-										},          // sample_give 변수로 데이터를 넘겨줌
+												PHONE_NUMBER_give: PHONE_NUMBER
+										},
 										success: function (response) {
 												if (response["id_data_find"] == "find_OK") {
-														alert(`당신의 ID: ${response["id_data"]}`)
-														localStorage.setItem('found_id_data', response["id_data"])
-														location.href="/find_id/show"
+														sessionStorage.setItem('found_id_data', response["id_data"])
+														location.href="/find_id/complete"
 												} else {
 														alert(`당신의 정보를 찾을 수 없습니다.`)
 												}
