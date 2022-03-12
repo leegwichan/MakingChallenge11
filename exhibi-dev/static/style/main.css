@@ -42,8 +42,9 @@
         }
 
         .show-card {
-            max-width: 260px;
+            max-width: 250px;
             max-height: 500px;
+            width: 250px;
             height: 450px;
             margin: 0px 10px 10px auto;
         }
@@ -115,13 +116,14 @@
         }
 
         .interest { /* 관심 카테고리 */
-            max-width: 170px;
+            max-width: 300px;
             background: #F2F3F7;
             color: #000000;
             font-weight: 600;
             padding: 15px;
             position: relative;
             text-align: left;
+            margin-left: 20px;
         }
         /* 관심 카테고리 아이콘 설정 끝 */
 
@@ -201,6 +203,54 @@
             color: #000000;
             border-radius: 2em;
         }
+
+        #main-menu {
+            max-width: 300px;
+            background: #F2F3F7;
+            color: #000000;
+            font-weight: 600;
+            padding: 15px;
+            position: relative;
+            text-align: left;
+            margin-left: 20px;
+        }
+
+
+        .menu-button {
+            margin: 10px;
+            background-color: #F2F3F7;
+            border-radius: 10px;
+            width: 150px;
+            height: 50px;
+            float:left;
+        }
+
+        .menu-button label {
+            width: 150px;
+            height: 50px;
+        }
+
+        .menu-button label span {
+            font-weight: 600;
+            padding: 15px 25px;
+            display: block;
+        }
+
+        .menu-button label input {
+            position: absolute;
+        }
+
+        .menu-button input:checked + span {
+            background-color: #FFFFFF;
+            color: #000000;
+            border-radius: 10px;
+            width: 150px;
+            height: 50px;
+        }
+
+        .menu-button input[id="main-menu"] {
+            display: none;
+        }
         /* 왼쪽 메뉴 설정 끝 */
 
         /* 모달 관심 카테고리 페이지 설정 시작 */
@@ -261,7 +311,6 @@
             height: 35px;
             font-size: 12px;
             border-radius: 2em;
-
         }
 
         .interest-save-btn:hover {
@@ -292,7 +341,7 @@
             text-align: center;
         }
 
-        #ck-button {
+        .ck-button {
             margin: 10px;
             background-color: #F2F3F7;
             border-radius: 10px;
@@ -301,22 +350,22 @@
             float:left;
         }
 
-        #ck-button label {
+        .ck-button label {
             width: 100px;
             height: 100px;
         }
 
-        #ck-button label span {
+        .ck-button label span {
             text-align: center;
             padding: 40px 10px;
             display: block;
         }
 
-        #ck-button label input {
+        .ck-button label input {
             position: absolute;
         }
 
-        #ck-button input:checked + span {
+        .ck-button input:checked + span {
             background-color: var(--blue);
             color: #FFFFFF;
             border-radius: 10px;
@@ -324,9 +373,10 @@
             height: 100px;
         }
 
-        #ck-button input[id="interest"] {
+        .ck-button input[id="interest"] {
             display: none;
         }
-
-
         /* 관심 카테고리 내용 설정 끝 */
+
+
+
