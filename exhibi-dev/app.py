@@ -7,9 +7,6 @@ from pymongo import MongoClient
 client = MongoClient('mongodb://noE:server_test@localhost', 27017)
 db = client.dbsparta
 
-import requests
-import re
-
 
 
 # 각 html에 맞는 route가 있으니 필요에 따라 주석 제거하면서 실행해 보시면 됩니다!
