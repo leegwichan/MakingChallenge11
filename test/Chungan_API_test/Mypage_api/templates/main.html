@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ko" data-dark="false">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Bootstrap CSS -->
+    <!-- 카드 리스트 영향 시작 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <!-- 카드 리스트 영향 끝 -->
+    <!-- JS -->
+    <!-- 관심 카테고리 영향 시작 -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- 관심 카테고리 영향 끝 -->
+
+    <title>메이킹챌린지 11기 | 전시회 조회 서비스</title>
+
+    <link rel="stylesheet" href="../static/style/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/style/common.css">
+    <link rel="stylesheet" type="text/css" href="../static/style/main.css">
+    <link rel="stylesheet" href="../static/style/index.css">
+    <script src="../static/js/bootstrap.min.js"></script>
+
+
+    <style></style>
+
+    <script>
+
+        $(document).ready(function () {
+            show_list()
+        });
+
+
+        function show_list() {
+            $.ajax({
+                type: "GET",
+                url: '/api/show/list',
+                data: {},
+                success: function (response) {
+                    let show_list = response['show_list']
+
+                    for (let i = 0; i < show_list.length; i++) {
+                        let title = show_list[i]['title']
+                        let ticket_link = show_list[i]['ticket_link']
+                        let image_link = show_list[i]['image_link']
+                        let place = show_list[i]['place']
+                        let place_link = show_list[i]['place_link']
+                        let start_date = show_list[i]['start_date']
+                        let end_date = show_list[i]['end_date']
+                        let show_class = show_list[i]['class']
+                        let price = show_list[i]['price']
+                        let age_limit = show_list[i]['age_limit']
+                        let address = show_list[i]['address']
+                        let phone_num = show_list[i]['phone_num']
+                        let address_class1 = show_list[i]['address_class1']
+                        let address_class2 = show_list[i]['address_class2']
+                        let latitude = show_list[i]['latitude']
+                        let longitude = show_list[i]['longitude']
+
+                        let temp_html = `<div class="card shadow show-card" data-bs-toggle="offcanvas"
+                                                 data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                                <img class="card-img-top"
+                                                     src="${image_link}"
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title weight_600">${title}</h5>
+                                                    <p class="card-text">기간: ${start_date} ~ ${end_date}</p>
+                                                    <p class="card-text">지역: ${address_class1}</p>
+                                                    <p class="card-text">장소: ${address_class2}</p>
+                                                </div>
+                                            </div>`
+
+                        $('#cards-box').append(temp_html)
+                    }
+                }
+            })
+        }
+
+
+        $('document').ready(function () {
+            var area0 = ["시/도", "서울시", "인천시", "대전시", "광주시", "대구시", "울산시", "부산시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도"];
+            var area1 = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
+            var area2 = ["계양구", "남구", "남동구", "동구", "부평구", "서구", "연수구", "중구", "강화군", "옹진군"];
+            var area3 = ["대덕구", "동구", "서구", "유성구", "중구"];
+            var area4 = ["광산구", "남구", "동구", "북구", "서구"];
+            var area5 = ["남구", "달서구", "동구", "북구", "서구", "수성구", "중구", "달성군"];
+            var area6 = ["남구", "동구", "북구", "중구", "울주군"];
+            var area7 = ["강서구", "금정구", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구", "기장군"];
+            var area8 = ["고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시", "가평군", "양평군", "여주군", "연천군"];
+            var area9 = ["강릉시", "동해시", "삼척시", "속초시", "원주시", "춘천시", "태백시", "고성군", "양구군", "양양군", "영월군", "인제군", "정선군", "철원군", "평창군", "홍천군", "화천군", "횡성군"];
+            var area10 = ["제천시", "청주시", "충주시", "괴산군", "단양군", "보은군", "영동군", "옥천군", "음성군", "증평군", "진천군", "청원군"];
+            var area11 = ["계룡시", "공주시", "논산시", "보령시", "서산시", "아산시", "천안시", "금산군", "당진군", "부여군", "서천군", "연기군", "예산군", "청양군", "태안군", "홍성군"];
+            var area12 = ["군산시", "김제시", "남원시", "익산시", "전주시", "정읍시", "고창군", "무주군", "부안군", "순창군", "완주군", "임실군", "장수군", "진안군"];
+            var area13 = ["광양시", "나주시", "목포시", "순천시", "여수시", "강진군", "고흥군", "곡성군", "구례군", "담양군", "무안군", "보성군", "신안군", "영광군", "영암군", "완도군", "장성군", "장흥군", "진도군", "함평군", "해남군", "화순군"];
+            var area14 = ["경산시", "경주시", "구미시", "김천시", "문경시", "상주시", "안동시", "영주시", "영천시", "포항시", "고령군", "군위군", "봉화군", "성주군", "영덕군", "영양군", "예천군", "울릉군", "울진군", "의성군", "청도군", "청송군", "칠곡군"];
+            var area15 = ["거제시", "김해시", "마산시", "밀양시", "사천시", "양산시", "진주시", "진해시", "창원시", "통영시", "거창군", "고성군", "남해군", "산청군", "의령군", "창녕군", "하동군", "함안군", "함양군", "합천군"];
+            var area16 = ["서귀포시", "제주시", "남제주군", "북제주군"];
+
+
+            // 시/도 선택 박스 초기화
+
+            $("select[name^=sido]").each(function () {
+                $selsido = $(this);
+                $.each(eval(area0), function () {
+                    $selsido.append("<option value='" + this + "'>" + this + "</option>");
+                });
+                $selsido.next().append("<option value=''>구/군</option>");
+            });
+
+
+            // 시/도 선택시 구/군 설정
+
+            $("select[name^=sido]").change(function () {
+                var area = "area" + $("option", $(this)).index($("option:selected", $(this))); // 선택지역의 구군 Array
+                var $gugun = $(this).next(); // 선택영역 군구 객체
+                $("option", $gugun).remove(); // 구군 초기화
+
+                if (area == "area0")
+                    $gugun.append("<option value=''>구/군 선택</option>");
+                else {
+                    $.each(eval(area), function () {
+                        $gugun.append("<option value='" + this + "'>" + this + "</option>");
+                    });
+                }
+            });
+        });
+
+
+
+
+        //         function show_zone() {
+        //     $.ajax({
+        //         type: "GET",
+        //         url: '/api/show/zone',
+        //         data: {},
+        //         success: function (response) {
+        //             let show_list = response['show_list']
+        //             for (let i = 0; i < show_list.length; i++) {
+        //                 let address_class2 = show_list[i]['address_class1']
+        //
+        //
+        //
+        //
+        //             }
+        //         }
+        //     })
+        // }
+        //
+        //
+        //         function show_zone2() {
+        //     $.ajax({
+        //         type: "GET",
+        //         url: '/api/show/zone2',
+        //         data: {},
+        //         success: function (response) {
+        //             let show_list = response['show_list']
+        //             for (let i = 0; i < show_list.length; i++) {
+        //                 let address_class2 = show_list[i]['address_class2']
+        //             }
+        //         }
+        //     })
+        // }
+        //
+        // function test_get() {
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/test",
+        //         data: {title_give: '봄날은간다'},
+        //         success: function (response) {
+        //             alert(response['msg']);
+        //         }
+        //     })
+        //
+        // }
+
+
+        // 메인 메뉴 클릭 시작
+        $(function () {
+            $("dt").click(function () {  // .click(0를 이용해 클릭했을 때 동작
+                $(this).toggleClass("open"); // 해당태그를 토글시 오픈 / toggleClass()로 선택한 요소에 클래스(Class) 값을 넣었다 뺐다 할 수 있습니다.
+                if ($(this).hasClass("open")) // 해당 태그에 클래스이 open이 있는지 확인 / 의 hasClass() 메서드는 선택한 요소에 클래스가 있는지 확인합니다. / 열려있는 것 확인
+                    $("dt").not(this).removeClass("open"); // not(this) this가 아닌요소 선택 / removeClass() 클래스를 지운다. / 열려있는것 닫기
+            })
+        })
+        // 메인 메뉴 클릭 끝
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="top"></div>
+        <!-- MIDDLE -->
+        <div class="middle">
+
+            <!-- LEFT 시작 -->
+            <div class="middle-left">
+                <!-- 관심 카테고리 모달 열기 위한 버튼 -->
+                <!--            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
+                <!--                모달 보기 버튼-->
+                <!--            </button>-->
+                <!-- 관심 카테고리 모달 열기 위한 버튼 끝 -->
+                <!-- 모달 영역 -->
+                <div class="modal modal-center fade" id="my80sizeCenterModal" tabindex="-1" role="dialog"
+                     aria-labelledby="my80sizeCenterModalLabel">
+                    <div class="modal-dialog modal-80size modal-center" role="document">
+                        <div class="modal-content modal-80size">
+                            <div class="modal-header">
+                                <div class="modal-title weight_700 interest-title" id="myModalLabel">어떤 전시회를 보고 싶으신가요?</div>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true"><i class="i-close"></i></span></button>
+                            </div>
+                            <div class="modal-body interest-ceter">
+                                <div class="interest-title-sub">홈 피드에서 보고 싶은 콘텐츠를 선택해주세요.</div>
+                                <div class="interest-ceter">
+                                    <div id="ck-button">
+                                        <label>
+                                            <input type="checkbox" name="interest_01" id="interest"
+                                                   value="전시"><span>전시</span>
+                                        </label>
+                                    </div>
+                                    <div id="ck-button">
+                                        <label>
+                                            <input type="checkbox" name="interest_02" id="interest" value="뮤지엄"><span>뮤지엄</span>
+                                        </label>
+                                    </div>
+                                    <div id="ck-button">
+                                        <label>
+                                            <input type="checkbox" name="interest_03" id="interest" value="아동체험전"><span>아동체험전</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="interest-ceter">
+                                    <div id="ck-button">
+                                        <label>
+                                            <input type="checkbox" name="interest_04" id="interest" value="행사/축제"><span>행사/축제</span>
+                                        </label>
+                                    </div>
+                                    <div id="ck-button">
+                                        <label>
+                                            <input type="checkbox" name="interest_05" id="interest" value="클래스"><span>클래스</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer interest-ceter">
+                                <div>
+                                <input class="interest-save-btn btn-radius" type="submit" value="다 했어요!">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 영역 끝 -->
+
+                <!-- 왼쪽 메뉴 시작 -->
+                <div class="left-menu">
+                    <dl>
+                        <div class="interest" data-target="#myModal">관심 카테고리<i class="i-more" data-toggle="modal"
+                                                                               data-target="#my80sizeCenterModal"></i>
+                        </div>
+                        <dt>전시</dt>
+                        <dd></dd>
+                        <dt>뮤지엄</dt>
+                        <dd></dd>
+                        <dt>아동체험전</dt>
+                        <dd></dd>
+                        <dt>행사/축제</dt>
+                        <dd></dd>
+                        <dt>클래스</dt>
+                        <dd></dd>
+                    </dl>
+                </div>
+                <!-- 왼쪽 메뉴 끝 -->
+
+            </div>
+            <!-- LEFT 끝 -->
+
+            <!-- RIGHT 시작 -->
+            <div class="middle-right">
+
+                <div class="wrap">
+                    <!-- 검색 Input 시작 -->
+                    <div class="search">
+                        <select style="float:left;" name="sido1" id="sido1" class="form-select"
+                                aria-label="Default select example"></select>
+                        <select name="gugun1" id="gugun1" class="form-select seach-position"
+                                aria-label="Default select example"></select>
+                    </div>
+                    <div style="float:left;">
+                        <button class="btn btn-white btn-radius map-search" type="text" placeholder="">지도 검색</button>
+                    </div>
+                    <div style="float:left;">
+                        <button class="btn btn-white btn-radius position-search" type="text" placeholder="">현재 위치 검색</button>
+                    </div>
+                    <!-- 검색 Input 끝-->
+                    <!-- 로그인 회원가입 시작 -->
+                    <div style="float:left;">
+                        <button class="btn btn-white btn-radius log-in" type="text" placeholder="">로그인</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-white btn-radius btn-blue sign-up" type="text" noresize="noresize" placeholder="">회원가입</button>
+                    </div>
+                    <div style="float:left;">
+                        <button class="btn btn-white btn-radius my-pro" type="text" placeholder="" onClick="location.href='/mypage'">My 프로필</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-white btn-radius btn-blue log-out" type="text" noresize="noresize"
+                                placeholder="">로그아웃
+                        </button>
+                    </div>
+                    <!-- 로그인 회원가입 끝 -->
+                    <!-- 지도 부분 -->
+                    <div class="current-position-map">
+<!--                        <img src="/static/temp_img/main_map.png">-->
+                        <iframe allow="fullscreen" src="https://map.kakao.com" allowfullscreen allow="autoplay; encrypted-media" style="display:block; width:800px; height: 500px" scrolling="no" align="center"></iframe>
+
+                    </div>
+                    <!-- 지도 부분 끝 -->
+                    <div class="weight_600 cards-list-title">최신 전시회</div>
+
+                    <!-- 전시회 리스트 -->
+                    <div id="cards-box" class="card-columns">
+<!--                        <div class="card shadow show-card" data-bs-toggle="offcanvas"-->
+<!--                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">-->
+<!--                            <img class="card-img-top"-->
+<!--                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"-->
+<!--                                 alt="Card image cap">-->
+<!--                            <div class="card-body">-->
+<!--                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>-->
+<!--                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>-->
+<!--                                <p class="card-text">지역: 서울</p>-->
+<!--                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>-->
+<!--                            </div>-->
+<!--                        </div>                        -->
+                    </div>
+                    <!-- 전시회 리스트 끝 -->
+
+                </div>
+                <!-- RIGHT 끝 -->
+
+                <!-- 모달 상세 페이지 부분 시작 -->
+                <!--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"-->
+                <!--                        data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Toggle bottom offcanvas-->
+                <!--                </button>-->
+
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+                     aria-labelledby="offcanvasBottomLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasBottomLabel">상세페이지</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body small">
+                        상세페이지 내용
+                        <div class="card show-card btn btn-outline-secondary">
+                            <img class="card-img-top"
+                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <a target="_blank" href="#" class="card-title list-title-font">한영수 미디어전 전시회</a>
+                                <p class="card-text list-info-font">기간: 2021.09.01 ~ 2022.03.20</p>
+                                <p class="card-text list-info-font">지역: 서울</p>
+                                <p class="card-text list-info-font">장소: 롯데월드타워 서울스카이</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 상세 페이지 부분 끝 -->
+
+            </div>
+        </div>
+        <!-- MIDDLE 끝 -->
+
+    </div>
+
+</body>
+</html>

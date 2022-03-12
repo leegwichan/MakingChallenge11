@@ -1,44 +1,27 @@
 <!DOCTYPE html>
 <html lang="ko" data-dark="false">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <!-- Bootstrap CSS -->
-    <!-- 카드 리스트 영향 시작 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
-    <!-- 카드 리스트 영향 끝 -->
-    <!-- JS -->
-    <!-- 관심 카테고리 영향 시작 -->
-    <script src="../static/js/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <!-- 관심 카테고리 영향 끝 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" href="../static/style/bootstrap.min.css?ver=5">
+    <link rel="stylesheet" type="text/css" href="../static/style/common.css">
+    <link rel="stylesheet" type="text/css" href="../static/style/main.css">
+    <link rel="stylesheet" type="text/css" href="../static/style/index.css">
 
     <title>메이킹챌린지 11기 | 전시회 조회 서비스</title>
 
-    <link rel="stylesheet" href="../static/style/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../static/style/common.css">
-    <link rel="stylesheet" type="text/css" href="../static/style/main.css">
-    <link rel="stylesheet" href="../static/style/index.css">
-    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/bootstrap.min.js?ver=5"></script>
+    <script src="/static/js/jquery.min.js"></script>
 
-
-    <style></style>
 
     <script>
-
         $(document).ready(function () {
             show_list()
-            show_detail()
         });
 
-// 최신 전시회 리스트 시작
+        // 메인 최신 전시회 리스트 시작
         function show_list() {
             $.ajax({
                 type: "GET",
@@ -48,6 +31,7 @@
                     let show_list = response['show_list']
 
                     for (let i = 0; i < show_list.length; i++) {
+                        let _id = show_list[i]['_id']
                         let title = show_list[i]['title']
                         let ticket_link = show_list[i]['ticket_link']
                         let image_link = show_list[i]['image_link']
@@ -65,8 +49,9 @@
                         let latitude = show_list[i]['latitude']
                         let longitude = show_list[i]['longitude']
 
-                        let temp_html = `<div class="card shadow show-card" data-bs-toggle="offcanvas"
-                                                 data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                        let temp_html = `<div type="button" class="col" data-bs-toggle="offcanvas"
+                                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                            <div class="card shadow show-card"  onclick="show_detail('${title}')">
                                                 <img class="card-img-top"
                                                      src="${image_link}"
                                                      alt="Card image cap">
@@ -76,51 +61,71 @@
                                                     <p class="card-text">지역: ${address_class1}</p>
                                                     <p class="card-text">장소: ${address_class2}</p>
                                                 </div>
-                                            </div>`
+                                            </div>
+                                        </div>`
 
                         $('#cards-box').append(temp_html)
-
-
-
-
-
-
-                        let temp_html_02 = `<div class="card shadow show-card" data-bs-toggle="offcanvas"
-                                                 data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                                <img class="card-img-top"
-                                                     src="${image_link}"
-                                                     alt="Card image cap">
-                                                <div class="card-body">
-                                                    <h5 class="card-title weight_600">${title}</h5>
-                                                    <p class="card-text">기간: ${start_date} ~ ${end_date}</p>
-                                                    <p class="card-text">지역: ${address_class1}</p>
-                                                    <p class="card-text">장소: ${address_class2}</p>
-                                                </div>
-                                            </div>`
-
-
-                        $('#detail').append(temp_html_02)
                     }
                 }
             })
         }
-// 최신 전시회 리스트 끝
+        // 메인 최신 전시회 리스트 끝
 
-
-        function show_detail(ticket_link) {
+        // 전시회 상세 페이지 값 가져오기 시작
+        function show_detail(title) {
+            $('#detail-page').empty()
             $.ajax({
                 type: 'POST',
                 url: '/api/show/detail',
-                data: {sample_give:'샘플데이터'},
+                data: {title_give: title},
                 success: function (response) {
-                    alert(response['msg']);
+                    let target_show = response['target_show']
+
+                    let title = target_show['title']
+                    let ticket_link = target_show['ticket_link']
+                    let image_link = target_show['image_link']
+                    let place = target_show['place']
+                    let place_link = target_show['place_link']
+                    let start_date = target_show['start_date']
+                    let end_date = target_show['end_date']
+                    let show_class = target_show['class']
+                    let price = target_show['price']
+                    let age_limit = target_show['age_limit']
+                    let address = target_show['address']
+                    let phone_num = target_show['phone_num']
+                    let address_class1 = target_show['address_class1']
+                    let address_class2 = target_show['address_class2']
+                    let latitude = target_show['latitude']
+                    let longitude = target_show['longitude']
+
+                    console.log(title, ticket_link, image_link, place, place_link, start_date, end_date, show_class, price, age_limit, address, phone_num, address_class1, address_class2, latitude, longitude)
+
+                    let detail_temp_html = `<div>
+                                                제목: ${title}<br>
+                                                티켓 링크: ${ticket_link}<br>
+                                                이미지 링크: ${image_link}<br>
+                                                전시장: ${place}<br>
+                                                전시장 링크: ${place_link}<br>
+                                                시작 날짜: ${start_date}<br>
+                                                마감 날짜: ${end_date}<br>
+                                                공연 종류: ${show_class}<br>
+                                                공연 가격: ${price}<br>
+                                                이용 제한: ${age_limit}<br>
+                                                주소: ${address}<br>
+                                                전화번호: ${phone_num}<br>
+                                                지역시도: ${address_class1}<br>
+                                                지역시구: ${address_class2}<br>
+                                                위도: ${latitude}<br>
+                                                경도: ${longitude}
+                                            </div>`
+
+                    $('#detail-page').append(detail_temp_html)
                 }
             })
         }
+        // 전시회 상세 페이지 값 가져오기 끝
 
-
-
-        // 지도 검색 select 태그 추가하기기시작
+        // 지도 검색 select 태그 내용 추가하기 시작
         $('document').ready(function () {
             var area0 = ["시/도", "서울시", "인천시", "대전시", "광주시", "대구시", "울산시", "부산시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도"];
             var area1 = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
@@ -168,55 +173,9 @@
                 }
             });
         });
-// 지도 검색 select 태그 추가하기기 끝
+        // 지도 검색 select 태그 내용 추가하기 끝
 
-        //         function show_zone() {
-        //     $.ajax({
-        //         type: "GET",
-        //         url: '/api/show/zone',
-        //         data: {},
-        //         success: function (response) {
-        //             let show_list = response['show_list']
-        //             for (let i = 0; i < show_list.length; i++) {
-        //                 let address_class2 = show_list[i]['address_class1']
-        //
-        //
-        //
-        //
-        //             }
-        //         }
-        //     })
-        // }
-        //
-        //
-        //         function show_zone2() {
-        //     $.ajax({
-        //         type: "GET",
-        //         url: '/api/show/zone2',
-        //         data: {},
-        //         success: function (response) {
-        //             let show_list = response['show_list']
-        //             for (let i = 0; i < show_list.length; i++) {
-        //                 let address_class2 = show_list[i]['address_class2']
-        //             }
-        //         }
-        //     })
-        // }
-        //
-        // function test_get() {
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "/test",
-        //         data: {title_give: '봄날은간다'},
-        //         success: function (response) {
-        //             alert(response['msg']);
-        //         }
-        //     })
-        //
-        // }
-
-
-        // 메인 메뉴 클릭 시작
+        // 메인 왼쪽 메뉴 시작
         $(function () {
             $("dt").click(function () {  // .click(0를 이용해 클릭했을 때 동작
                 $(this).toggleClass("open"); // 해당태그를 토글시 오픈 / toggleClass()로 선택한 요소에 클래스(Class) 값을 넣었다 뺐다 할 수 있습니다.
@@ -224,18 +183,7 @@
                     $("dt").not(this).removeClass("open"); // not(this) this가 아닌요소 선택 / removeClass() 클래스를 지운다. / 열려있는것 닫기
             })
         })
-        // 메인 메뉴 클릭 끝
-
-        // 모달에 값 전달 시작
-        $(document).on("click", ".open-AddBookDialog", function () {
-            var myBookId = $(this).data('id');
-            $(".modal-body #bookId").val(myBookId);
-            // As pointed out in comments,
-        // it is superfluous to have to manually call the modal.
-        // $('#addBookDialog').modal('show');
-                });
-        // 모달에 값 전달 끝
-
+        // 메인 왼쪽 메뉴 끝
 
     </script>
 
@@ -257,13 +205,13 @@
             <!--            </button>-->
             <!-- 관심 카테고리 모달 열기 위한 버튼 끝 -->
             <!-- 모달 영역 -->
-            <div class="modal modal-center fade" id="my80sizeCenterModal" tabindex="-1" role="dialog"
-                 aria-labelledby="my80sizeCenterModalLabel">
-                <div class="modal-dialog modal-80size modal-center" role="document">
-                    <div class="modal-content modal-80size">
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
                         <div class="modal-header">
-                            <div class="modal-title weight_700 interest-title" id="myModalLabel">어떤 전시회를 보고 싶으신가요?</div>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            <div class="modal-title weight_700 interest-title">어떤 전시회를 보고 싶으신가요?</div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true"><i class="i-close"></i></span></button>
                         </div>
                         <div class="modal-body interest-ceter">
@@ -315,8 +263,8 @@
             <!-- 왼쪽 메뉴 시작 -->
             <div class="left-menu">
                 <dl>
-                    <div class="interest" data-target="#myModal">관심 카테고리<i class="i-more" data-toggle="modal"
-                                                                           data-target="#my80sizeCenterModal"></i>
+                    <div class="interest" data-target="#myModal">관심 카테고리<i class="i-more" data-bs-toggle="modal"
+                                                                           data-bs-target="#staticBackdrop"></i>
                     </div>
                     <dt>전시</dt>
                     <dd></dd>
@@ -340,8 +288,8 @@
 
             <div class="wrap">
                 <!-- 검색 Input 시작 -->
-                <div class="search">
-                    <select style="float:left;" name="sido1" id="sido1" class="form-select"
+                <div class="search" style="float:left;">
+                    <select name="sido1" id="sido1" class="form-select"
                             aria-label="Default select example"></select>
                     <select name="gugun1" id="gugun1" class="form-select seach-position"
                             aria-label="Default select example"></select>
@@ -354,6 +302,7 @@
                     </button>
                 </div>
                 <!-- 검색 Input 끝-->
+
                 <!-- 로그인 회원가입 시작 -->
                 <div style="float:left;">
                     <button class="btn btn-white btn-radius log-in" type="text" placeholder="">로그인</button>
@@ -372,30 +321,35 @@
                     </button>
                 </div>
                 <!-- 로그인 회원가입 끝 -->
+
                 <!-- 지도 부분 -->
-                <div class="current-position-map">
-                    <!--                        <img src="/static/temp_img/main_map.png">-->
-                    <iframe allow="fullscreen" src="https://map.kakao.com" allowfullscreen
-                            allow="autoplay; encrypted-media" style="display:block; width:800px; height: 500px"
-                            scrolling="no" align="center"></iframe>
+                <div class="current-position-map" id="map">
+                    <img src="/static/temp_img/main_map.png">
+                    <!--                    <iframe allow="fullscreen" src="exhibition_map.html" allowfullscreen-->
+                    <!--                            allow="autoplay; encrypted-media" style="display:block; width:800px; height: 500px"-->
+                    <!--                            scrolling="no" align="center"></iframe>-->
                 </div>
                 <!-- 지도 부분 끝 -->
                 <div class="weight_600 cards-list-title">최신 전시회</div>
 
                 <!-- 전시회 리스트 -->
-                <div id="cards-box" class="card-columns">
-                    <!--                        <div class="card shadow show-card" data-bs-toggle="offcanvas"-->
-                    <!--                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">-->
-                    <!--                            <img class="card-img-top"-->
-                    <!--                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"-->
-                    <!--                                 alt="Card image cap">-->
-                    <!--                            <div class="card-body">-->
-                    <!--                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>-->
-                    <!--                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>-->
-                    <!--                                <p class="card-text">지역: 서울</p>-->
-                    <!--                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>-->
-                    <!--                            </div>-->
-                    <!--                        </div>                        -->
+                <div class="cards-list-box">
+                    <div id="cards-box" class="row row-cols-1 row-cols-md-3 g-4">
+                        <div type="button" class="col" data-bs-toggle="offcanvas"
+                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                            <div class="card shadow show-card">
+                                <img class="card-img-top"
+                                     src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                    <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                    <p class="card-text">지역: 서울</p>
+                                    <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- 전시회 리스트 끝 -->
 
@@ -414,9 +368,8 @@
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                             aria-label="Close"></button>
                 </div>
-                <div class="offcanvas-body small" id="detail">
+                <div class="offcanvas-body small" id="detail-page">
                     상세페이지 내용
-
                 </div>
             </div>
             <!-- 모달 상세 페이지 부분 끝 -->

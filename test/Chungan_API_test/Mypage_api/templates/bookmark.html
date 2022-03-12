@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko" data-dark="false">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="../static/style/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/style/common.css">
+    <link rel="stylesheet" href="../static/style/index.css">
+    <link rel="stylesheet" href="../static/style/bookmark.css">
+    <link rel="stylesheet" href="../static/style/main.css">
+    <script src="/exhibi-dev/static/js/jquery.min.js"></script>
+
+    <title>북마크</title>
+
+    <script type="text/javascript">
+
+        $(document).ready(function (){
+            if (localStorage.getItem("exhibition_userkey") == null){
+                alert('로그인 후 이용가능합니다.')
+                location.href="/"
+            }
+            else {
+                let user_key = localStorage.getItem("exhibition_userkey")
+
+                $.ajax({
+                    type: "POST",                             // POST 요청
+                    url: "/mybookmark/basicdata",                           // app.py에서 사용한 url과 맞춰줘야함
+                    data: {key_give: user_key},          // sample_give 변수로 데이터를 넘겨줌
+                    success: function (response) {
+                        if(response['Okay'] == 'MATCH_SUCCESS'){
+                            for (let i=0; i<response['info'].length; i++){
+                                let image = response['info'][i]['image']
+                                let title = response['info'][i]['title']
+                                let start_date = response['info'][i]['start_date']
+                                let end_date = response['info'][i]['end_date']
+                                let place = response['info'][i]['place']
+
+                                let temp_html = `<div class="card shadow" style="width: 16.4rem;">
+                                                    <img src="${image}" class="card-img-top" alt="...">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title weight_600">${title}</h5>
+                                                        <p class="card-text">기간 : ${start_date}~${end_date}</p>
+                                                        <p class="card-text">장소 : ${place}</p>
+                                                    </div>
+                                                </div>`
+
+                                $("#bookmark_cardbox").append(temp_html)
+
+                            }
+                        } else {
+                            alert('ERROR!')
+                            localStorage.removeItem("exhibition_userkey");
+                            location.href="./"
+                        }
+                    }
+                })
+
+
+
+            }
+        })
+
+
+
+
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="top"><!--헤드부분--></div>
+    <!-- MIDDLE -->
+    <div class="middle">
+
+        <!-- LEFT 시작 -->
+        <div class="middle-left">
+            <div class="left-menu">
+                <dl>
+                    <a href="/mypage">
+                        <dt class="deact">My 프로필</dt>
+                    </a>
+                    <dt class="active">북마크</dt>
+
+                </dl>
+            </div>
+        </div>
+
+        <div class="middle-right">
+
+            <div class="wrap">
+                <p class="marktext"><b>북마크</b></p>
+
+                <div class="card-columns" id="bookmark_cardbox">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -25,7 +25,5 @@ dl {
 }
 
 .card-columns{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    column-count: 3;
 }

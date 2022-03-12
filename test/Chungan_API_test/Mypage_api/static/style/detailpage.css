@@ -1,0 +1,101 @@
+body{
+    background-color: #F7F8FA;
+}
+.top{
+    position:relative;
+    background-color: white;
+    align-content: center;
+    width:fit-content;
+    padding:0 10px 10px 10px;
+    border-radius:0 0 10px 10px;
+    justify-content: center;
+    left:45%;
+}
+.topbtn{
+    background-color: white;
+}
+.container{
+    margin-top: 50px;
+}
+.imgbox{
+    width:350px;
+    height:470px;
+    float:left;
+    margin-bottom:50px;
+    background-color: white;
+}
+.infoimg{
+    width:350px;
+    height:470px;
+    padding:28px;
+    display:inline-block;
+}
+.infobox{
+    width:520px;
+    height:470px;
+    float:left;
+    background-color: white;
+    padding:10px 0 0 10px;
+}
+.infotext{
+    font-size: 20px;
+    padding-top:15px;
+    padding-right:20px;
+    display:inline-block;
+    vertical-align:top;
+}
+.box-left{
+    width:130px;
+}
+.left-box2{
+    clear:both;
+}
+.detailstxt{
+    font-size:20px;
+    margin-bottom:20px;
+}
+.details{
+    width:870px;
+    height: fit-content;
+    margin-bottom:50px;
+}
+.right-box{
+    background-color: white;
+    margin-left: 20px;
+    height: 180px;
+    border-radius: 15px;
+    padding:20px;
+}
+.tit{
+    font-size: 23px;
+}
+.add{
+    margin:20px 0 10px 0;
+}
+.igather{
+    display: flex;
+    justify-content: space-around;
+}
+.circle{
+    width: 2.5em;
+    border-radius: 3em;
+    padding: .6em  .2em;
+    line-height: 1.25em;
+    /*border: 1px solid #333;*/
+    display: inline-block;
+    text-align: center;
+    background-color: #ECEDF4;
+}
+.button{
+    margin-left: 20px;
+    margin-top: 10px;
+    width: 420px;
+    padding:10px 0;
+}
+.plus{
+    padding:0;
+    margin-bottom:40px;
+}
+.card-columns{
+    column-count: 4;
+}
