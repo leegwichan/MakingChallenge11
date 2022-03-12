@@ -1,11 +1,13 @@
         body {
             background-color: #F2F3F7;
+            overflow-X: hidden;
         }
 
         .iframebox {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%;
+            height: 500px;
+            /*padding-bottom: 56.25%;*/
         }
 
         .iframebox iframe {
@@ -20,11 +22,12 @@
         }
 
         .cards-list-box {
-            max-width: 800px;
+            max-width: 100%;
+            width: 100%;
         }
 
         .current-position-map {
-            width: 800px;
+            width: 100%;
             height: 500px;
             border-radius: 0.8em;
             margin: 20px auto 30px 0px;
@@ -37,51 +40,62 @@
         }
 
         .wrap {
-            width: 800px;
+            width: 100%;
             margin: auto;
         }
 
         .show-card {
-            max-width: 250px;
-            max-height: 500px;
-            width: 250px;
-            height: 450px;
-            margin: 0px 10px 10px auto;
+            max-width: 300px;
+            max-height: 530px;
+            width: 300px;
+            height: 530px;
+            margin: 0px auto 10px auto;
         }
 
         /* 로그인 회원가입 프로필 로그아웃 지도검색 버튼 위치 설정 시작 */
         .map-search{
-            margin-left: 120px;
+            position: relative;
+            top: 0px;
+            left: 120px;
         }
 
         .position-search {
-            margin-left: 10px;
+            position: relative;
+            top: 0px;
+            left: 130px;
         }
 
         .seach-position {
-            position: absolute;
-            top: 0;
+            position: relative;
+            top: -38px;
             left: 113px;
         }
 
         .sign-up {
-            margin-left: 10px;
+            position: relative;
+            left: 817px;
+            top: 0px;
         }
 
         .my-pro {
-            margin-top: 5px;
-            margin-left: 606px;
+            position: relative;
+            left: 990px;
+            top: 5px;
         }
 
         .log-in {
-            margin-left:183px;
+            position: relative;
+            left: 807px;
+            top: 0px;
         }
 
         .log-out{
-            margin-top: 5px;
-            margin-left: 10px;
-
+            position:relative;
+            left:1000px;
+            top:5px;
         }
+
+
         /* 로그인 회원가입 프로필 로그아웃 지도검색 버튼 위치 설정 시작 */
 
         /*검색 박스 시작*/
@@ -104,7 +118,8 @@
 
         /* 오른쪽 프레임 위치 설정 시작 */
         .middle-right {
-            margin-left: 180px;
+            width: 100%;
+            margin-left: 350px;
             margin-top: 30px;
         }
         /* 오른쪽 프레임 위치 설정 끝 */
@@ -112,7 +127,7 @@
         /* 관심 카테고리 아이콘 설정 시작*/
         .i-more {
             cursor: pointer;
-            margin-left: 10px;
+            margin-left: 100px;
         }
 
         .interest { /* 관심 카테고리 */
@@ -136,7 +151,7 @@
 
         dl {
             margin: 0px auto 60px;
-            max-width: 170px; /* 전체 메뉴 사이즈 */
+            max-width: 260px; /* 전체 메뉴 사이즈 */
         }
 
         dt { /* 메인 메뉴 */
@@ -204,29 +219,17 @@
             border-radius: 2em;
         }
 
-        #main-menu {
-            max-width: 300px;
-            background: #F2F3F7;
-            color: #000000;
-            font-weight: 600;
-            padding: 15px;
-            position: relative;
-            text-align: left;
-            margin-left: 20px;
-        }
-
-
         .menu-button {
             margin: 10px;
             background-color: #F2F3F7;
             border-radius: 10px;
-            width: 150px;
+            width: 260px;
             height: 50px;
             float:left;
         }
 
         .menu-button label {
-            width: 150px;
+            width: 260px;
             height: 50px;
         }
 
@@ -244,7 +247,7 @@
             background-color: #FFFFFF;
             color: #000000;
             border-radius: 10px;
-            width: 150px;
+            width: 260px;
             height: 50px;
         }
 
