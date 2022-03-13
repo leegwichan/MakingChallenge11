@@ -31,12 +31,13 @@ db = client.exhibition_project
 # db.nettuts.find( { 'occupation' : { '$in' : [ "actor", "developer" ] } }, { "first" : 1, "last" : 1 } );
 # 출처: https://fors.tistory.com/403 [Code]
 
-class_receive = "exhibition"
-exhibition_list = list(db.exhibition_info.aggregate([{"$match": { "class": class_receive }},{"$sample":{ "size": 20}}]))
-for i in exhibition_list:
-    print(i)
-    print(exhibition_list.index(i))
-    print("--------")
+# class_receive = "exhibition"
+# exhibition_list = list(db.exhibition_info.aggregate([{"$match": { "class": class_receive }},{"$sample":{ "size": 20}}]))
+# for i in exhibition_list:
+#     print(i)
+#     print(exhibition_list.index(i))
+#     print("--------")
+
 
 
 

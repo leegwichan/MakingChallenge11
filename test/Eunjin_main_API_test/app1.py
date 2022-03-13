@@ -23,7 +23,7 @@ def home():
 
 
 
-## 지도 관련부분 버튼
+## 지도 관련부분 버튼 시작 ##
 
 #현재 위치 검색
 @app.route('/myposition', methods=['POST'])
@@ -106,22 +106,19 @@ def set_position():
    #새로운 db에 동시에 만족하는것 추출
    # latitude_receive = request.form['latitude_give']
    # longitude_receive = request.form['longitude_give']
-
-
    # title_receive = request.form['title_give']
    # print(title_receive)
-   return jsonify({'result':'success', 'msg': '이 요청은 지도검색 POST!'})
+   return jsonify({'msg': '이 요청은 지도검색 POST!'})
+## 지도 관련부분 버튼 끝 ##
 
 
-
-##메인페이지 로그인한 상태에서 동작
+#메인페이지 로그인한 상태에서 동작
 @app.route('/mycategory', methods=['POST'])
 def test_post():
-   key_recieve = request.form['key_give']
-   user_data = db.login_info.find_one({'key':key_recieve})
+   user_key = request.form['key_give']
+   user_data = db.login_info.find_one({'key':user_key})
    user_category = user_data["CATEGORY"]
-   return jsonify({'result':'success', 'msg': '이 요청은 POST!', "selected_catgy":user_category})
-
+   return jsonify({'msg': '이 요청은 POST!', "selected_catgy":user_category})
 
 
 # 새로고침 전시 기본 리스트업(html ajax 수정완료)
@@ -131,22 +128,24 @@ def get_list():
    return jsonify({'show_list': dumps(exhibition_list)})
 
 
-## 카테고리 관련부분 버튼
+## 카테고리 관련부분 버튼 시작 ##
 
 # 관심카테고리 속 다했어요 버튼 부분
 @app.route('/multi_s_list', methods=['POST'])
 def get_selectlist():
    class_receive = request.form['class_give']
-   class_receive = request.form['key_give']
+   key_receive = request.form['key_give']
+
+   # 새로운 리스트정보
    selected_list = list(db.exhibition_info.aggregate([{"$match": {"class":class_receive}},{"$sample":{"size": 20}}]))
-   #클라이언트에 클래스요소 검색후 반환
-   #클래서 변경부분 수정->DB저장
-   # db.users.update_one({'name':'bobby'},{'$set':{'age':19}})
-   # return jsonify({'show_list':dumps(selected_list), 'msg': '이 요청은 관심카테고리선택 POST!'})
 
+   # DB저장
+   db.login_info.update_one({'key':key_receive},{'$set':{'CATEGORY':class_receive}})
+   user_name = db.login_info.find_one({"KEY":key_receive})["NAME"]
+   msg = user_name + "님의 관심카테고리가 변경되었습니다."
 
-   key_recieve = request.form['key_give']
-   user_data = db.login_info.find_one({'key':key_recieve})
+   return jsonify({'show_list':dumps(selected_list), 'msg': msg })
+
 
 
 # 전시 카데고리 선택 리스트업 시작
@@ -156,6 +155,9 @@ def get_exhibitionlist():
    class_receive = request.args.get('class_give')
    selected_list = list(db.exhibition_info.aggregate([{"$match": {"class":class_receive}},{"$sample":{"size": 20}}]))
    return jsonify({'show_list':dumps(selected_list), 'msg': '이 요청은 전시 GET!'})
+
+## 카테고리 관련부분 버튼 끝 ##
+
 
 # @app.route('/museum_list', methods=['GET'])
 # def get_museumlist():
@@ -186,11 +188,6 @@ def get_exhibitionlist():
 #    return jsonify({'result':'success', 'msg': '이 요청은 클래스리스트 GET!'})
 
 # 전시 카데고리 선택 리스트업 끝
-
-
-
-
-
 
 
 
