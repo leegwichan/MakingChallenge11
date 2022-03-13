@@ -31,7 +31,7 @@ def home():
 
 #현재 위치 검색
 @app.route('/myposition', methods=['POST'])
-def test_post():
+def my_position():
    latitude_receive = request.form['latitude_give']
    longitude_receive = request.form['longitude_give']
    
@@ -102,7 +102,7 @@ def test_post():
 
 # 지도 검색 부분
 @app.route('/setposition', methods=['POST'])
-def test_post():
+def set_position():
    title_receive = request.form['title_give']
    print(title_receive)
    return jsonify({'result':'success', 'msg': '이 요청은 지도검색 POST!'})
@@ -114,10 +114,10 @@ def test_post():
 ## 카테고리 관련부분 버튼
 
 # 관심카테고리 속 다했어요 버튼 부분
-@app.route('/test', methods=['POST'])
-def test_post():
-   title_receive = request.form['title_give']
-   print(title_receive)
+@app.route('/select_list', methods=['POST'])
+def get_selectlist():
+   class_receive = request.form['class_give']
+   print(class_receive)
    return jsonify({'result':'success', 'msg': '이 요청은 지도검색 POST!'})
 
 
@@ -131,35 +131,35 @@ def get_list():
 # 전시 카데고리 선택 리스트업 시작
 # main.html의 inclick, value 부분 수정해주세요~ 
 @app.route('/exhibition_list', methods=['GET'])
-def test_get():
+def get_exhibitionlist():
    class_receive = request.args.get('class_give')
    print(class_receive)
    # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
    return jsonify({'result':'success', 'msg': '이 요청은 전시 GET!'})
 
 @app.route('/museum_list', methods=['GET'])
-def test_get():
+def get_museumlist():
    class_receive = request.args.get('class_give')
    print(class_receive)
    # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
    return jsonify({'result':'success', 'msg': '이 요청은 뮤지엄 GET!'})
 
 @app.route('/childs_list', methods=['GET'])
-def test_get():
+def get_childrenlist():
    class_receive = request.args.get('class_give')
    print(class_receive)
    # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
    return jsonify({'result':'success', 'msg': '이 요청은 아동체험전 GET!'})
 
 @app.route('/evenfestival_list', methods=['GET'])
-def test_get():
+def get_eflist():
    class_receive = request.args.get('class_give')
    print(class_receive)
    # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
    return jsonify({'result':'success', 'msg': '이 요청은 evenfestiva GET!'})
 
 @app.route('/class_list', methods=['GET'])
-def test_get():
+def get_classlist():
    class_receive = request.args.get('class_give')
    print(class_receive)
    # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
