@@ -16,6 +16,9 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+# JSON 직렬화 오류
+from bson.json_util import dumps
+
 
 @app.route('/')
 def home():
@@ -25,6 +28,12 @@ def home():
 @app.route('/join')
 def join_Loadpage():
     return render_template('join.html')
+
+
+@app.route('/exhibi_map')
+def map():
+    return render_template('exhibition_map.html')
+
 
 
 # 회원가입 api
@@ -99,7 +108,7 @@ def login_page():
 @app.route('/login', methods=['GET'])
 def sign_up_get():
     member_list = list(db.login_info.find({}, {'_id': False}))
-    return jsonify({'all_member_list': member_list})
+    return jsonify({'all_member_list': dumps(member_list)})
 
 
 '''

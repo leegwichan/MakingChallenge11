@@ -64,7 +64,7 @@
 					url: "/login",
 					data: {},
 					success: function (response) {
-						let member_list = response['all_member_list']
+						let member_list = JSON.parse(response['all_member_list'])
 
 						for (let i = 0; i < member_list.length; i++) {
 							let ID = member_list[i]['ID'];
@@ -77,21 +77,24 @@
 							// let LOCATION = member_list[i]['LOCATION']
 							// let BOOKMARK = member_list[i]['BOOKMARK']
 
-							if(ID === type_id){
-								if(PASSWORD === type_pw){
-									sessionStorage.setItem("key",JSON.stringify(member_list[i]['KEY']));
-									let session_key = JSON.parse(sessionStorage.getItem("key"))
-									return session_key
-									// window.location.reload();
-								} else {
-									return console.log('비밀번호가 틀렸습니다.');
-								}
-							}
-						};
-						console.log('아이디가 틀렸습니다.');
-					}
-				});
-				console.log(JSON.parse(sessionStorage.getItem("key")));
+                            if (ID === type_id) {
+                                if (PASSWORD === type_pw) {
+                                    sessionStorage.setItem("key", JSON.stringify(member_list[i]['KEY']));
+                                    let session_key = JSON.parse(sessionStorage.getItem("key"))
+                                    return window.location.href = '/';
+
+                                } else {
+                                    window.alert('비밀번호가 틀렸습니다.');
+                                    return window.location.reload();
+                                }
+                            }
+                        }
+                        ;
+                        console.log('아이디가 틀렸습니다.');
+                        return window.location.reload();
+                    }
+                });
+            console.log(JSON.parse(sessionStorage.getItem("key")));
 		};
 
 		$('#submit').on('click', sign_in);
