@@ -150,13 +150,13 @@ def Find_ID_main():
 @app.route('/find_id/downloadData', methods=['POST'])
 def Find_ID():
     NAME_receive = request.form['NAME_give']
-    SEX_receive = request.form['SEX_give']
+    # SEX_receive = request.form['SEX_give']
     PHONE_NUMBER_receive = request.form['PHONE_NUMBER_give']
 
     find_data = list(db.login_info.find({'PHONE_NUMBER': PHONE_NUMBER_receive}, {'_id': False}))
     part_id = ""
     for id_data in find_data:
-        if id_data['NAME'] == NAME_receive and id_data['SEX'] == SEX_receive and id_data['PHONE_NUMBER'] == PHONE_NUMBER_receive:
+        if id_data['NAME'] == NAME_receive and id_data['PHONE_NUMBER'] == PHONE_NUMBER_receive:
             found_id = id_data['ID']
             split_front = found_id.split('@')[0]
             split_id = list(split_front)
