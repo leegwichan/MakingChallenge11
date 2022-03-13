@@ -33,14 +33,6 @@
 							<label for="PHONE_NUMBER">휴대폰번호 ('-'없이 입력해주세요)</label>
 						</div>
 
-						<div class="input-group form-floating mb-3">
-							<select class="form-select form-select form_custom" id="SEX">
-								<option selected>성별</option>
-								<option value="남자">남자</option>
-								<option value="여자">여자</option>
-							</select>
-						</div>
-
 						<div class="login-inner">
 							<button class="btn btn-white btn-radius btn-blue btn-point weight_600 btn__submit" type="button" id="submit">전송하기</button>
 						</div>
@@ -54,10 +46,7 @@
 			function find_pw() {
 					let ID = $('#ID').val()
 					let NAME = $('#NAME').val()
-					let SEX = $('#SEX option:selected').val()
 					let PHONE_NUMBER = $('#PHONE_NUMBER').val()
-					if (SEX == '남자'){SEX = 'male'}
-					if (SEX == '여자'){SEX = 'female'}
 
 				if (ID == '') {
 					alert(`아이디를 입력하지 않았습니다.`)
@@ -65,16 +54,13 @@
 					alert(`이름을 입력하지 않았습니다.`)
 				}else if (PHONE_NUMBER == '') {
 					alert(`핸드폰 번호를 입력하지 않았습니다.`)
-				}else if (SEX == '성별') {
-					alert(`성별을 선택하지 않았습니다.`)
 				}else {
-					if (NAME != '' && SEX != '성별' && PHONE_NUMBER != '' && ID != '') {
+					if (NAME != ''&& PHONE_NUMBER != '' && ID != '') {
 						$.ajax({
 							type: "POST",                             // POST 요청
-							url: "/find_ps/downloadData",             // app.py에서 사용한 url과 맞춰줘야함
+							url: "/find_pw/downloadData",             // app.py에서 사용한 url과 맞춰줘야함
 							data: {
 								NAME_give: NAME,
-								SEX_give: SEX,
 								PHONE_NUMBER_give: PHONE_NUMBER,
 								ID_give : ID
 							},          // sample_give 변수로 데이터를 넘겨줌

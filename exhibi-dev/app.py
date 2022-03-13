@@ -41,15 +41,15 @@ def sign_up_post():
     CATEGORY_receive = request.form['INTEREST_CATEGORY_give']
     category_savedata = []
     if '전시' in CATEGORY_receive:
-        category_savedata = category_savedata + 'exhibition'
+        category_savedata.append('exhibition')
     if '뮤지엄' in CATEGORY_receive:
-        category_savedata = category_savedata + 'museum'
+        category_savedata.append('museum')
     if '아동체험전' in CATEGORY_receive:
-        category_savedata = category_savedata + 'childs_experience'
+        category_savedata.append('childs_experience')
     if '클래스' in CATEGORY_receive:
-        category_savedata = category_savedata + 'class'
+        category_savedata.append('class')
     if '행사/축제' in CATEGORY_receive:
-        category_savedata = category_savedata + 'event/festival'
+        category_savedata.append('event/festival')
 
     doc = {
 
@@ -184,18 +184,18 @@ def find_ps_main():
     return render_template('find_pw.html')
 
 # 비밀번호 찾는 API
-@app.route('/find_ps/downloadData', methods=['POST'])     # POST 요청 (주로 DB내용을 수정,삽입 할 때 사용)
+@app.route('/find_pw/downloadData', methods=['POST'])     # POST 요청 (주로 DB내용을 수정,삽입 할 때 사용)
 def Find_PS():
     ID_receive = request.form['ID_give']
     NAME_receive = request.form['NAME_give']
-    SEX_receive = request.form['SEX_give']
+    # SEX_receive = request.form['SEX_give']
     PHONE_NUMBER_receive = request.form['PHONE_NUMBER_give']
 
     cheak_change_ps = 0
 
     find_data = list(db.login_info.find({'ID': ID_receive}, {'_id': False}))
     for id_data in find_data:
-        if id_data['NAME'] == NAME_receive and id_data['SEX'] == SEX_receive and id_data['PHONE_NUMBER'] == PHONE_NUMBER_receive and id_data['ID'] == ID_receive:
+        if id_data['NAME'] == NAME_receive and id_data['PHONE_NUMBER'] == PHONE_NUMBER_receive and id_data['ID'] == ID_receive:
 
             cheak_change_ps = 1
 
