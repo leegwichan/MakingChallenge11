@@ -57,8 +57,9 @@ def sign_up_post():
         'PASSWORD': PASSWORD_receive,
         'NAME': NAME_receive,
         'PHONE_NUMBER': PHONE_NUMBER_receive,
-        'CATEGORY': CATEGORY_receive,
-        'KEY' : category_savedata
+        'CATEGORY': category_savedata,
+        'KEY' : session_key,
+        'BOOKMARK' : []
 
     }
     db.login_info.insert_one(doc)
