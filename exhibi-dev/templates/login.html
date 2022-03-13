@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html lang="ko" data-dark="false">
 <head>
-  <meta charset="UTF-8">
-  <title>로그인</title>
-  <link rel="stylesheet" href="/static/style/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/style/common.css">
-  <link rel="stylesheet" href="/static/style/join.css">
-  <script src="/static/js/bootstrap.min.js"></script>
-	<script src="/static/js/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>전시회</title>
+    <link rel="stylesheet" href="/static/style/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/style/common.css">
+    <link rel="stylesheet" href="/static/style/join.css">
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
 </head>
 <body>
 	<div class="join_wrapper">
@@ -33,10 +33,10 @@
 							<button class="btn btn-white btn-radius btn-blue btn-point weight_600 btn__submit" type="button" id="submit">로그인</button>
 							<div class="login-account mt-2">
 								<div class="login-account-find">
-									<a href="/find_id">아이디찾기</a>
-									<a href="/find_pw">비밀번호찾기</a>
+									<a href="/exhibi-dev/templates/find_id.html">아이디찾기</a>
+									<a href="/exhibi-dev/templates/find_pw.html">비밀번호찾기</a>
 								</div>
-									<a href="/join" class="login-signup">회원가입</a>
+									<a href="/exhibi-dev/templates/join.html" class="login-signup">회원가입</a>
 							</div>
 						</div>
 					</form>
@@ -79,10 +79,10 @@
 
 							if(ID === type_id){
 								if(PASSWORD === type_pw){
-									sessionStorage.setItem("session_key",member_list[i]['KEY']);
+									sessionStorage.setItem("key",JSON.stringify(member_list[i]['KEY']));
 									let session_key = JSON.parse(sessionStorage.getItem("key"))
-									location.href="/"
 									return session_key
+									// window.location.reload();
 								} else {
 									return console.log('비밀번호가 틀렸습니다.');
 								}
@@ -91,7 +91,7 @@
 						console.log('아이디가 틀렸습니다.');
 					}
 				});
-				console.log(JSON.parse(sessionStorage.getItem("session_key")));
+				console.log(JSON.parse(sessionStorage.getItem("key")));
 		};
 
 		$('#submit').on('click', sign_in);
