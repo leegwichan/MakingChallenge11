@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" type="text/css" href="../static/style/bootstrap.min.css?ver=5">
     <link rel="stylesheet" type="text/css" href="../static/style/common.css">
-    <link rel="stylesheet" type="text/css" href="../static/style/main.css">
+    <link rel="stylesheet" type="text/css" href="../static/style/main.css?ver=5">
     <link rel="stylesheet" type="text/css" href="../static/style/index.css">
 
     <title>메이킹챌린지 11기 | 전시회 조회 서비스</title>
@@ -17,12 +17,122 @@
 
 
     <script>
+
+
         $(document).ready(function () {
             show_list()
         });
 
+        // 지도 현재 위치(지도용 좌표 전달) 시작
+        function geoFindMe() {
+
+            const status = document.querySelector('#status');
+            const mapLink = document.querySelector('#map-link');
+
+            mapLink.href = '';
+            mapLink.textContent = '';
+
+            function success(position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                status.textContent = '';
+                mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+                mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/exhibition_map",
+                    data: {latitude_give: latitude, longitude_give: longitude},
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            console.log("성공")
+                            window.location.reload();
+                        }
+                    }
+                })
+            }
+
+            function error() {
+                status.textContent = 'Unable to retrieve your location';
+            }
+
+            if (!navigator.geolocation) {
+                status.textContent = 'Geolocation is not supported by your browser';
+            } else {
+                status.textContent = 'Locating…';
+                navigator.geolocation.getCurrentPosition(success, error);
+            }
+
+        }
+
+        // 지도 현재 위치(지도용 좌표 전달) 끝
+
+        //  리스트업용 함수 시작
+        function append_cards(response) {
+            let show_list = response['show_list'];
+
+            for (let i = 0; i < show_list.length; i++) {
+                let _id = show_list[i]['_id'];
+                let title = show_list[i]['title'];
+                let image_link = show_list[i]['image_link'];
+                let start_date = show_list[i]['start_date'];
+                let end_date = show_list[i]['end_date'];
+                let address_class1 = show_list[i]['address_class1'];
+                let address_class2 = show_list[i]['address_class2'];
+                let place = show_list[i]['place'];
+
+                let temp_html = `<div type="button" class="col" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                    <div class="card shadow show-card"  onclick="show_detail('${title}')">
+                                        <img class="card-img-top"
+                                            src="${image_link}"
+                                            alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title weight_600">${title}</h5>
+                                            <p class="card-text">기간: ${start_date} ~ ${end_date}</p>
+                                            <p class="card-text">지역: ${address_class1} ${address_class2}</p>
+                                            <p class="card-text">장소: ${place}</p>
+                                        </div>
+                                    </div>
+                                </div>`;
+                $('#cards-box').append(temp_html);
+            }
+        }
+
+        //  리스트업용 함수 끝
+
+
+        function exhibit_list(response) {
+
+            let exhibit_list = response[response]
+
+            for (let i = 0; i < exhibit_list.length; i++) {
+                let _id = exhibit_list[i]['_id']
+                let title = exhibit_list[i]['title']
+                let ticket_link = exhibit_list[i]['ticket_link']
+                let image_link = exhibit_list[i]['image_link']
+                let place = exhibit_list[i]['place']
+                let place_link = exhibit_list[i]['place_link']
+                let start_date = exhibit_list[i]['start_date']
+                let end_date = exhibit_list[i]['end_date']
+                let show_class = exhibit_list[i]['class']
+                let price = exhibit_list[i]['price']
+                let age_limit = exhibit_list[i]['age_limit']
+                let address = exhibit_list[i]['address']
+                let phone_num = exhibit_list[i]['phone_num']
+                let address_class1 = exhibit_list[i]['address_class1']
+                let address_class2 = exhibit_list[i]['address_class2']
+                let latitude = exhibit_list[i]['latitude']
+                let longitude = exhibit_list[i]['longitude']
+            }
+
+        }
+
+
         // 메인 최신 전시회 리스트 시작
         function show_list() {
+            $('#cards-box').empty()
             $.ajax({
                 type: "GET",
                 url: '/api/show/list',
@@ -65,10 +175,12 @@
                                         </div>`
 
                         $('#cards-box').append(temp_html)
+
                     }
                 }
             })
         }
+
         // 메인 최신 전시회 리스트 끝
 
         // 전시회 상세 페이지 값 가져오기 시작
@@ -123,7 +235,170 @@
                 }
             })
         }
+
         // 전시회 상세 페이지 값 가져오기 끝
+
+        // 왼쪽 메뉴 전시 리스트 가져오기 시작
+        function show_exhibit(exhibit) {
+            $('#cards-box').empty()
+            $.ajax({
+                type: 'POST',
+                url: '/api/exhibit/list',
+                data: {exhibit_give: exhibit},
+                success: function (response) {
+                    let exhibit_show = response['exhibit_show']
+
+                    for (let i = 0; i < exhibit_show.length; i++) {
+
+                        let title = exhibit_show[i]['title']
+                        let ticket_link = exhibit_show[i]['ticket_link']
+                        let image_link = exhibit_show[i]['image_link']
+                        let place = exhibit_show[i]['place']
+                        let place_link = exhibit_show[i]['place_link']
+                        let start_date = exhibit_show[i]['start_date']
+                        let end_date = exhibit_show[i]['end_date']
+                        let show_class = exhibit_show[i]['class']
+                        let price = exhibit_show[i]['price']
+                        let age_limit = exhibit_show[i]['age_limit']
+                        let address = exhibit_show[i]['address']
+                        let phone_num = exhibit_show[i]['phone_num']
+                        let address_class1 = exhibit_show[i]['address_class1']
+                        let address_class2 = exhibit_show[i]['address_class2']
+                        let latitude = exhibit_show[i]['latitude']
+                        let longitude = exhibit_show[i]['longitude']
+
+                        console.log(title, ticket_link, image_link, place, place_link, start_date, end_date, show_class, price, age_limit, address, phone_num, address_class1, address_class2, latitude, longitude)
+
+                        let exhibit_temp_html = `<div type="button" class="col" data-bs-toggle="offcanvas"
+                                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                            <div class="card shadow show-card"  onclick="show_detail('${title}')">
+                                                <img class="card-img-top"
+                                                     src="${image_link}"
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title weight_600">${title}</h5>
+                                                    <p class="card-text">기간: ${start_date} ~ ${end_date}</p>
+                                                    <p class="card-text">지역: ${address_class1}</p>
+                                                    <p class="card-text">장소: ${address_class2}</p>
+                                                </div>
+                                            </div>
+                                        </div>`
+
+                        $('#cards-box').append(exhibit_temp_html)
+                    }
+                }
+            })
+        }
+
+        // 왼쪽 메뉴 전시 리스트 가져오기 끝
+
+        // 왼쪽 메뉴 뮤지엄 리스트 가져오기 시작
+        function show_childs_experience(childs_experience) {
+            $('#cards-box').empty()
+            $.ajax({
+                type: 'POST',
+                url: '/api/childs_experience/list',
+                data: {childs_experience_give: childs_experience},
+                success: function (response) {
+                    let childs_experience_show = response['childs_experience_show']
+
+                    for (let i = 0; i < childs_experience_show.length; i++) {
+
+                        let title = childs_experience_show[i]['title']
+                        let ticket_link = childs_experience_show[i]['ticket_link']
+                        let image_link = childs_experience_show[i]['image_link']
+                        let place = childs_experience_show[i]['place']
+                        let place_link = childs_experience_show[i]['place_link']
+                        let start_date = childs_experience_show[i]['start_date']
+                        let end_date = childs_experience_show[i]['end_date']
+                        let show_class = childs_experience_show[i]['class']
+                        let price = childs_experience_show[i]['price']
+                        let age_limit = childs_experience_show[i]['age_limit']
+                        let address = childs_experience_show[i]['address']
+                        let phone_num = childs_experience_show[i]['phone_num']
+                        let address_class1 = childs_experience_show[i]['address_class1']
+                        let address_class2 = childs_experience_show[i]['address_class2']
+                        let latitude = childs_experience_show[i]['latitude']
+                        let longitude = childs_experience_show[i]['longitude']
+
+                        console.log(title, ticket_link, image_link, place, place_link, start_date, end_date, show_class, price, age_limit, address, phone_num, address_class1, address_class2, latitude, longitude)
+
+                        let childs_experience_temp_html = `<div type="button" class="col" data-bs-toggle="offcanvas"
+                                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                            <div class="card shadow show-card"  onclick="show_detail('${title}')">
+                                                <img class="card-img-top"
+                                                     src="${image_link}"
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title weight_600">${title}</h5>
+                                                    <p class="card-text">기간: ${start_date} ~ ${end_date}</p>
+                                                    <p class="card-text">지역: ${address_class1}</p>
+                                                    <p class="card-text">장소: ${address_class2}</p>
+                                                </div>
+                                            </div>
+                                        </div>`
+
+                        $('#cards-box').append(childs_experience_temp_html)
+                    }
+                }
+            })
+        }
+
+        // 왼쪽 메뉴 뮤지엄 리스트 가져오기 끝
+
+        // 왼쪽 메뉴 아동체험전 리스트 가져오기 시작
+        function show_museum(museum) {
+            $('#cards-box').empty()
+            $.ajax({
+                type: 'POST',
+                url: '/api/museum/list',
+                data: {museum_give: museum},
+                success: function (response) {
+                    let museum_show = response['museum_show']
+
+                    for (let i = 0; i < museum_show.length; i++) {
+
+                        let title = museum_show[i]['title']
+                        let ticket_link = museum_show[i]['ticket_link']
+                        let image_link = museum_show[i]['image_link']
+                        let place = museum_show[i]['place']
+                        let place_link = museum_show[i]['place_link']
+                        let start_date = museum_show[i]['start_date']
+                        let end_date = museum_show[i]['end_date']
+                        let show_class = museum_show[i]['class']
+                        let price = museum_show[i]['price']
+                        let age_limit = museum_show[i]['age_limit']
+                        let address = museum_show[i]['address']
+                        let phone_num = museum_show[i]['phone_num']
+                        let address_class1 = museum_show[i]['address_class1']
+                        let address_class2 = museum_show[i]['address_class2']
+                        let latitude = museum_show[i]['latitude']
+                        let longitude = museum_show[i]['longitude']
+
+                        console.log(title, ticket_link, image_link, place, place_link, start_date, end_date, show_class, price, age_limit, address, phone_num, address_class1, address_class2, latitude, longitude)
+
+                        let museum_temp_html = `<div type="button" class="col" data-bs-toggle="offcanvas"
+                                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                            <div class="card shadow show-card"  onclick="show_detail('${title}')">
+                                                <img class="card-img-top"
+                                                     src="${image_link}"
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title weight_600">${title}</h5>
+                                                    <p class="card-text">기간: ${start_date} ~ ${end_date}</p>
+                                                    <p class="card-text">지역: ${address_class1}</p>
+                                                    <p class="card-text">장소: ${address_class2}</p>
+                                                </div>
+                                            </div>
+                                        </div>`
+
+                        $('#cards-box').append(museum_temp_html)
+                    }
+                }
+            })
+        }
+
+        // 왼쪽 메뉴 아동체험전 리스트 가져오기 끝
 
         // 지도 검색 select 태그 내용 추가하기 시작
         $('document').ready(function () {
@@ -191,19 +466,11 @@
 
 <body>
 
-<div class="container">
+<div class="body-center">
 
-    <div class="top"></div>
-    <!-- MIDDLE -->
-    <div class="middle">
+    <div class="container-fluid">
 
-        <!-- LEFT 시작 -->
-        <div class="middle-left">
-            <!-- 관심 카테고리 모달 열기 위한 버튼 -->
-            <!--            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
-            <!--                모달 보기 버튼-->
-            <!--            </button>-->
-            <!-- 관심 카테고리 모달 열기 위한 버튼 끝 -->
+        <div class="top">
             <!-- 모달 영역 -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -231,14 +498,16 @@
                                 </div>
                                 <div id="ck-button_03" class="ck-button">
                                     <label>
-                                        <input type="checkbox" name="interest_03" id="interest" value="아동체험전"><span>아동체험전</span>
+                                        <input type="checkbox" name="interest_03" id="interest"
+                                               value="아동체험전"><span>아동체험전</span>
                                     </label>
                                 </div>
                             </div>
                             <div class="interest-ceter">
                                 <div id="ck-button_04" class="ck-button">
                                     <label>
-                                        <input type="checkbox" name="interest_04" id="interest" value="행사/축제"><span>행사/축제</span>
+                                        <input type="checkbox" name="interest_04" id="interest"
+                                               value="행사/축제"><span>행사/축제</span>
                                     </label>
                                 </div>
                                 <div id="ck-button_05" class="ck-button">
@@ -260,148 +529,149 @@
             </div>
             <!-- 모달 영역 끝 -->
 
-            <!-- 왼쪽 메뉴 시작 -->
-            <div class="left-menu">
-                <dl>
-                    <div class="interest" data-target="#myModal">관심 카테고리<i class="i-more" data-bs-toggle="modal"
-                                                                           data-bs-target="#staticBackdrop"></i>
-                    </div>
-                    <div class="">
-
-                            <div id="menu-button_01" class="menu-button">
-                                <label>
-                                    <input type="radio" name="main_menu" id="main-menu"
-                                           value="전시"><span>전시</span>
-                                </label>
-                            </div>
-                            <div id="menu-button_02" class="menu-button">
-                                <label>
-                                    <input type="radio" name="main_menu" id="main-menu"
-                                           value="뮤지엄"><span>뮤지엄</span>
-                                </label>
-                            </div>
-                            <div id="menu-button_03" class="menu-button">
-                                <label>
-                                    <input type="radio" name="main_menu" id="main-menu"
-                                           value="아동체험전"><span>아동체험전</span>
-                                </label>
-                            </div>
-
-                            <div id="menu-button_04" class="menu-button">
-                                <label>
-                                    <input type="radio" name="main_menu" id="main-menu"
-                                           value="행사/축제"><span>행사/축제</span>
-                                </label>
-                            </div>
-                            <div id="menu-button_05" class="menu-button">
-                                <label>
-                                    <input type="radio" name="main_menu" id="main-menu"
-                                           value="클래스"><span>클래스</span>
-                                </label>
-                            </div>
-
-                    </div>
-                </dl>
-            </div>
-            <!-- 왼쪽 메뉴 끝 -->
-
         </div>
-        <!-- LEFT 끝 -->
+        <!-- MIDDLE 시작 -->
+        <div class="middle">
+            <!-- LEFT 시작 -->
 
-        <!-- RIGHT 시작 -->
-        <div class="middle-right">
+            <div class="middle-left float-left">
 
-            <div class="wrap">
-                <!-- 검색 Input 시작 -->
-                <div class="search" style="float:left;">
-                    <select name="sido1" id="sido1" class="form-select"
-                            aria-label="Default select example"></select>
-                    <select name="gugun1" id="gugun1" class="form-select seach-position"
-                            aria-label="Default select example"></select>
+                <!-- 왼쪽 메뉴 시작 -->
+                <div class="left-menu">
+                    <div class="interest" data-target="#myModal">관심 카테고리<i class="i-more" data-bs-toggle="modal"
+                                                                           data-bs-target="#staticBackdrop"></i></div>
+                    <div class="">
+                        <div id="menu-button_01" class="menu-button">
+                            <label>
+                                <input type="radio" name="main_menu" id="main-menu" onclick="show_exhibit('museum')"
+                                       value="전시"><span>전시</span>
+                            </label>
+                        </div>
+                        <div id="menu-button_02" class="menu-button">
+                            <label>
+                                <input type="radio" name="main_menu" id="main-menu" onclick="show_museum('museum')"
+                                       value="뮤지엄"><span>뮤지엄</span>
+                            </label>
+                        </div>
+                        <div id="menu-button_03" class="menu-button">
+                            <label>
+                                <input type="radio" name="main_menu" id="main-menu"
+                                       onclick="show_childs_experience('childs_experience')"
+                                       value="아동체험전"><span>아동체험전</span>
+                            </label>
+                        </div>
+                        <div id="menu-button_04" class="menu-button">
+                            <label>
+                                <input type="radio" name="main_menu" id="main-menu" onclick="show_museum('museum')"
+                                       value="행사/축제"><span>행사/축제</span>
+                            </label>
+                        </div>
+                        <div id="menu-button_05" class="menu-button">
+                            <label>
+                                <input type="radio" name="main_menu" id="main-menu" onclick="show_museum('museum')"
+                                       value="클래스"><span>클래스</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div style="float:left;">
-                    <button class="btn btn-white btn-radius map-search" type="text" placeholder="">지도 검색</button>
-                </div>
-                <div style="float:left;">
-                    <button class="btn btn-white btn-radius position-search" type="text" placeholder="">현재 위치 검색
-                    </button>
-                </div>
-                <!-- 검색 Input 끝-->
+                <!-- 왼쪽 메뉴 끝 -->
 
-                <!-- 로그인 회원가입 시작 -->
-                <div style="float:left;">
-                    <button class="btn btn-white btn-radius log-in" type="text" placeholder="">로그인</button>
-                </div>
-                <div>
-                    <button class="btn btn-white btn-radius btn-blue sign-up" type="text" noresize="noresize"
-                            placeholder="">회원가입
-                    </button>
-                </div>
-                <div style="float:left;">
-                    <button class="btn btn-white btn-radius my-pro" type="text" placeholder="">My 프로필</button>
-                </div>
-                <div>
-                    <button class="btn btn-white btn-radius btn-blue log-out" type="text" noresize="noresize"
-                            placeholder="">로그아웃
-                    </button>
-                </div>
-                <!-- 로그인 회원가입 끝 -->
+            </div>
+            <!-- LEFT 끝 -->
 
-                <!-- 지도 부분 -->
-                <div class="current-position-map" id="map">
-                    <img src="/static/temp_img/main_map.png">
-                    <!--                    <iframe allow="fullscreen" src="exhibition_map.html" allowfullscreen-->
-                    <!--                            allow="autoplay; encrypted-media" style="display:block; width:800px; height: 500px"-->
-                    <!--                            scrolling="no" align="center"></iframe>-->
-                </div>
-                <!-- 지도 부분 끝 -->
-                <div class="weight_600 cards-list-title">최신 전시회</div>
 
-                <!-- 전시회 리스트 -->
-                <div class="cards-list-box">
-                    <div id="cards-box" class="row row-cols-1 row-cols-md-3 g-4">
-                        <div type="button" class="col" data-bs-toggle="offcanvas"
-                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                            <div class="card shadow show-card">
-                                <img class="card-img-top"
-                                     src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
-                                     alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
-                                    <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
-                                    <p class="card-text">지역: 서울</p>
-                                    <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+            <!-- RIGHT 시작 -->
+            <div class="middle-right">
+
+                <div class="wrap">
+                    <div class="header-postion">
+                        <!-- 검색 Input 시작 -->
+                        <div class="search float-left">
+                            <select name="sido1" id="sido1" class="form-select"
+                                    aria-label="Default select example"></select>
+                            <select name="gugun1" id="gugun1" class="form-select seach-position"
+                                    aria-label="Default select example"></select>
+                        </div>
+                        <div class="float-left">
+                            <button class="btn btn-white btn-radius map-search" type="text" placeholder="">지도 검색
+                            </button>
+                        </div>
+                        <div class="float-left">
+                            <button class="btn btn-white btn-radius position-search" type="text" placeholder=""
+                                    onclick="geoFindMe()">현재 위치 검색
+                            </button>
+                        </div>
+                        <!-- 검색 Input 끝-->
+                        <!-- 로그인 회원가입 시작 -->
+                        <div class="float-left">
+                            <button class="btn btn-white btn-radius log-in" type="text" placeholder="">로그인</button>
+                        </div>
+                        <div>
+                            <button class="btn btn-white btn-radius btn-blue sign-up" type="text" noresize="noresize"
+                                    placeholder="">회원가입
+                            </button>
+                        </div>
+                        <div class="float-left">
+                            <button class="btn btn-white btn-radius my-pro" type="text" placeholder="">My 프로필</button>
+                        </div>
+                        <div>
+                            <button class="btn btn-white btn-radius btn-blue log-out" type="text" noresize="noresize"
+                                    placeholder="">로그아웃
+                            </button>
+                        </div>
+                        <!-- 로그인 회원가입 끝 -->
+                    </div>
+                    <!-- 지도 부분 -->
+                    <div class="current-position-map" id="map">
+                        <iframe allow="fullscreen" src="http://credical.shop/exhibi_map"
+                                allow="autoplay; encrypted-media" scrolling="no" align="center"
+                                class="iframebox"></iframe>
+                    </div>
+                    <!-- 지도 부분 끝 -->
+                    <div class="weight_600 cards-list-title">최신 전시회</div>
+
+                    <!-- 전시회 리스트 -->
+                    <div class="cards-list-box">
+                        <div id="cards-box" class="row row-cols-auto ">
+                            <div type="button" class="col" data-bs-toggle="offcanvas"
+                                 data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                <div class="card shadow show-card">
+                                    <img class="card-img-top"
+                                         src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                         alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                        <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                        <p class="card-text">지역: 서울</p>
+                                        <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- 전시회 리스트 끝 -->
+
                 </div>
-                <!-- 전시회 리스트 끝 -->
+                <!-- RIGHT 끝 -->
+
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+                     aria-labelledby="offcanvasBottomLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasBottomLabel">상세페이지</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body small" id="detail-page">
+                        상세페이지 내용
+                    </div>
+                </div>
+                <!-- 모달 상세 페이지 부분 끝 -->
 
             </div>
-            <!-- RIGHT 끝 -->
-
-            <!-- 모달 상세 페이지 부분 시작 -->
-            <!--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"-->
-            <!--                        data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Toggle bottom offcanvas-->
-            <!--                </button>-->
-
-            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
-                 aria-labelledby="offcanvasBottomLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">상세페이지</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body small" id="detail-page">
-                    상세페이지 내용
-                </div>
-            </div>
-            <!-- 모달 상세 페이지 부분 끝 -->
-
         </div>
+        <!-- MIDDLE 끝 -->
+
     </div>
-    <!-- MIDDLE 끝 -->
 
 </div>
 

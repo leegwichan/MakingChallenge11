@@ -1,403 +1,423 @@
-        body {
-            background-color: #F2F3F7;
-            overflow: auto;
-        }
+body {
+    background-color: #F2F3F7;
+    overflow: auto;
+}
 
-        .iframebox {
-            max-width: 100%;
-            position: relative;
-            width: 100%;
-            height: 500px;
-        }
+.body-center {
+    max-width: 2028px;
+    width: 100%;
+    margin: 0 auto;
+}
 
-        .iframebox iframe {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
+.iframebox {
+    max-width: 100%;
+    position: relative;
+    width: 100%;
+    height: 500px;
+}
 
-        .cards-list-title {
-            margin-top: 550px;
-            margin-bottom: 20px;
+.iframebox iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
 
-        }
+.cards-list-title {
+    margin-top: 550px;
+    margin-bottom: 20px;
 
-        .cards-list-box {
-            position: absolute;
-            max-width: 1282px;
-            width: 71%;
-        }
+}
 
-        .current-position-map {
-            position: absolute;
-            max-width: 1282px;
-            width: 71%;
-            height: 500px;
-            border-radius: 0.8em;
-            margin: 20px auto 30px 0px;
-            border-style: solid;
-            border-width: 1px;
-            padding: 0px;
-            display: block;
-            text-align: center;
-            overflow: hidden;
-            margin-left: 0;
-        }
+.cards-list-box {
+    position: absolute;
+    max-width: 1410px;
+    width: 71%;
+}
 
-        .wrap {
-            max-width: 100%;
-        }
+.current-position-map {
+    position: absolute;
+    max-width: 2028px;
+    width: 71%;
+    height: 500px;
+    border-radius: 0.8em;
+    margin: 20px auto 30px 0px;
+    border-style: solid;
+    border-width: 1px;
+    padding: 0px;
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    margin-left: 0;
+}
 
-        .show-card {
-            max-width: 300px;
-            max-height: 530px;
-            width: 300px;
-            height: 530px;
-            margin-bottom: 20px;
-            margin-left: 2px;
-        }
+.wrap {
+    max-width: 100%;
+}
 
-        /* 로그인 회원가입 프로필 로그아웃 지도검색 버튼 위치 설정 시작 */
-        .header-postion {
-            max-width: 1282px;
-            width: 100%;
-            height: 70px;
-        }
+.show-card {
+    max-width: 500px;
+    max-height: 570px;
+    width: 332px;
+    height: 570px;
+    margin-bottom: 20px;
+    margin-left: 2px;
+}
 
-        .map-search{
-            position: relative;
-            top: 0px;
-            left: 120px;
-        }
+/* 로그인 회원가입 프로필 로그아웃 지도검색 버튼 위치 설정 시작 */
+.header-postion {
+    max-width: 1410px;
+    width: 100%;
+    height: 70px;
+}
 
-        .position-search {
-            position: relative;
-            top: 0px;
-            left: 130px;
-        }
+.map-search {
+    position: relative;
+    top: 0px;
+    left: 120px;
+}
 
-        .seach-position {
-            position: relative;
-            top: -38px;
-            left: 113px;
-        }
+.position-search {
+    position: relative;
+    top: 0px;
+    left: 130px;
+}
 
-        .sign-up {
-            position: relative;
-            left: 804px;
-            top: -1px;
-        }
+.seach-position {
+    position: relative;
+    top: -38px;
+    left: 113px;
+}
 
-        .my-pro {
-            position: relative;
-            left: 978px;
-            top: 5px;
-        }
+.sign-up {
+    position: relative;
+    left: 932px;
+    top: -1px;
+}
 
-        .log-in {
-            position: relative;
-            left: 794px;
-            top: -1px;
-        }
+.my-pro {
+    position: relative;
+    left: 1105px;
+    top: 5px;
+}
 
-        .log-out{
-            position: relative;
-            left:988px;
-            top:5px;
-        }
+.log-in {
+    position: relative;
+    left: 922px;
+    top: -1px;
+}
 
-        .float-left {
-            float:left;
-        }
+.log-out {
+    position: relative;
+    left: 1115px;
+    top: 5px;
+}
 
-
-        /* 로그인 회원가입 프로필 로그아웃 지도검색 버튼 위치 설정 시작 */
-
-        /*검색 박스 시작*/
-        .search {
-            position: relative;
-            width: 110px;
-        }
-
-        .search-input {
-            text-align: center;
-        }
-
-        .i-search {
-            position: absolute;
-            top: 7px;
-            left: 12px;
-            margin: 0;
-        }
-        /*검색 박스 끝*/
-
-        /* 오른쪽 프레임 위치 설정 시작 */
-        .middle-right {
-            max-width: 100%;
-            width: 99%;
-            margin-left: 250px;
-            margin-top: 30px;
-        }
-        /* 오른쪽 프레임 위치 설정 끝 */
-
-        /* 관심 카테고리 아이콘 설정 시작*/
-        .i-more {
-            cursor: pointer;
-            margin-left: 50px;
-        }
-
-        .interest { /* 관심 카테고리 */
-            max-width: 200px;
-            background: #F2F3F7;
-            color: #000000;
-            font-weight: 600;
-            padding: 15px;
-            position: relative;
-            text-align: left;
-            margin-left: 20px;
-        }
-        /* 관심 카테고리 아이콘 설정 끝 */
+.float-left {
+    float: left;
+}
 
 
-        /* 왼쪽 메뉴 설정 시작 */
-        .left-menu {
-            width: 260px;
-            height: 100%;
-            position: fixed;
-            margin-left: 0;
-        }
+/* 로그인 회원가입 프로필 로그아웃 지도검색 버튼 위치 설정 시작 */
 
-        dl {
-            margin: 0px auto 60px;
-            max-width: 260px; /* 전체 메뉴 사이즈 */
-        }
+/*검색 박스 시작*/
+.search {
+    position: relative;
+    width: 110px;
+}
 
-        dt { /* 메인 메뉴 */
-            background: #F2F3F7; /* 메인 메뉴 색 */
-            /*border-left:8px solid #1F2024;*/
-            border-radius: 15px;
-            color: #000000;
-            font-weight: 600;
-            padding: 15px;
-            position: relative;
-            text-align: left;
-            /*text-transform:uppercase;*/
-            transition: all .5s;
-        }
+.search-input {
+    text-align: center;
+}
 
-        dt:before {
-            opacity: 0;
-            transition: all .4s ease-in-out;
-        }
+.i-search {
+    position: absolute;
+    top: 7px;
+    left: 12px;
+    margin: 0;
+}
 
-        dt:hover {
-            cursor: pointer;
-        }
+/*검색 박스 끝*/
 
-        dt + dd { /* 전체 높이 서브 메뉴 감추기 */
-            max-height: 0px;
-        }
+/* 오른쪽 프레임 위치 설정 시작 */
+.middle-right {
+    position: relative;
+    max-width: 100%;
+    width: 99%;
+    margin-left: 470px;
+    margin-top: 30px;
+    /*left: 1500px;*/
 
-        dd { /*서브 리스트 */
-            background: #F2F3F7; /* 서브 배경색 */
-            color: #000000; /*서브 글씨색*/
-            margin: 0;
-            overflow: hidden;
-            padding: 1px 15px;
-            transition: all .5s; /* 서브 리스트 열리는 시간 */
-        }
+}
 
-        dt.open { /* 오픈시 메인 메뉴 */
-            background: #FFFFFF;
-            border-radius: 15px;
-            color: #000000;
-            /*margin:-5px;*/ /* 오픈시 살짝 커지는 효과 */
-        }
+/* 오른쪽 프레임 위치 설정 끝 */
 
-        dt.open + dd { /* 서브 메뉴 리스트 */
-            /*padding: 10px 10px 10px;*/
-            /*margin:0 -5px;  오픈시 살짝 커지는 효과 */
-            max-height: 0px; /* 서브 리스트 최대 길이 */
-        }
+.middle {
+    max-width: 2028px;
+    width: 100%;
+}
 
-        .sub-list-menu {
-            width: 140px;
-            height: 30px;
-            background-color: #F2F3F7;
-            color: #000000;
-            padding: 5px;
-            padding-left: 20px;
-        }
+/* 관심 카테고리 아이콘 설정 시작*/
+.i-more {
+    cursor: pointer;
+    margin-left: 50px;
+}
 
-        .sub-list-menu:hover {
-            cursor: pointer;
-            width: 140px;
-            background-color: #FFFFFF;
-            color: #000000;
-            border-radius: 2em;
-        }
+.interest { /* 관심 카테고리 */
+    max-width: 400px;
+    background: #F2F3F7;
+    color: #000000;
+    font-weight: 600;
+    padding: 15px;
+    position: relative;
+    text-align: left;
+    margin-left: 20px;
+}
 
-        .menu-button {
-            margin: 10px;
-            background-color: #F2F3F7;
-            border-radius: 10px;
-            width: 200px;
-            height: 50px;
-            float:left;
-        }
+/* 관심 카테고리 아이콘 설정 끝 */
 
-        .menu-button label {
-            width: 200px;
-            height: 50px;
-        }
 
-        .menu-button label span {
-            font-weight: 600;
-            padding: 15px 25px;
-            display: block;
-        }
+/* 왼쪽 메뉴 설정 시작 */
+.left-menu {
+    position: fixed;
+    width: 400px;
+    margin-left: 122px;
+}
 
-        .menu-button label input {
-            position: absolute;
-        }
+dl {
+    margin: 0px auto 60px;
+    max-width: 400px; /* 전체 메뉴 사이즈 */
+}
 
-        .menu-button input:checked + span {
-            background-color: #FFFFFF;
-            color: #000000;
-            border-radius: 10px;
-            width: 200px;
-            height: 50px;
-        }
+dt { /* 메인 메뉴 */
+    background: #F2F3F7; /* 메인 메뉴 색 */
+    /*border-left:8px solid #1F2024;*/
+    border-radius: 15px;
+    color: #000000;
+    font-weight: 600;
+    padding: 15px;
+    position: relative;
+    text-align: left;
+    /*text-transform:uppercase;*/
+    transition: all .5s;
+}
 
-        .menu-button input[id="main-menu"] {
-            display: none;
-        }
-        /* 왼쪽 메뉴 설정 끝 */
+dt:before {
+    opacity: 0;
+    transition: all .4s ease-in-out;
+}
 
-        /* 모달 관심 카테고리 페이지 설정 시작 */
-        .modal.modal-center {
-            text-align: center;
-        }
+dt:hover {
+    cursor: pointer;
+}
 
-        @media screen and (min-width: 768px) {
-            .modal.modal-center:before {
-                display: inline-block;
-                vertical-align: middle;
-                content: " ";
-                height: 100%;
-            }
-        }
+dt + dd { /* 전체 높이 서브 메뉴 감추기 */
+    max-height: 0px;
+}
 
-        .modal-dialog.modal-center {
-            display: inline-block;
-            text-align: left;
-            vertical-align: middle;
-            width: 700px;
-        }
-        /* 모달 관심 카테고리 페이지 설정 끝 */
+dd { /*서브 리스트 */
+    background: #F2F3F7; /* 서브 배경색 */
+    color: #000000; /*서브 글씨색*/
+    margin: 0;
+    overflow: hidden;
+    padding: 1px 15px;
+    transition: all .5s; /* 서브 리스트 열리는 시간 */
+}
 
-        /* 모달 상세페이지 설정 시작 */
-        .offcanvas-bottom {
-            height: 100%; /* 밑에서 올라오는 화면 비율 설정 */
-            border-top: 0;
-            border-bottom: 0;
-        }
+dt.open { /* 오픈시 메인 메뉴 */
+    background: #FFFFFF;
+    border-radius: 15px;
+    color: #000000;
+    /*margin:-5px;*/ /* 오픈시 살짝 커지는 효과 */
+}
 
-        .offcanvas-body {
-            display: flex;
-            flex-grow: 0;
-            padding: 0;
-            overflow-y: visible;
-        }
-        /* 모달 상세페이지 설정 끝 */
+dt.open + dd { /* 서브 메뉴 리스트 */
+    /*padding: 10px 10px 10px;*/
+    /*margin:0 -5px;  오픈시 살짝 커지는 효과 */
+    max-height: 0px; /* 서브 리스트 최대 길이 */
+}
 
-        /* 관심 카테고리 내용 설정 시작 */
-        .interest-title {
-            font-size: 25px;
-            display: block;
-            margin-left: 80px;
-        }
+.sub-list-menu {
+    width: 140px;
+    height: 30px;
+    background-color: #F2F3F7;
+    color: #000000;
+    padding: 5px;
+    padding-left: 20px;
+}
 
-        .interest-title-sub {
-            text-align: center;
-            font-size: 12px;
-            margin-bottom: 20px;
-        }
+.sub-list-menu:hover {
+    cursor: pointer;
+    width: 140px;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-radius: 2em;
+}
 
-        .interest-save-btn {
-            background-color: var(--blue);
-            color: #FFFFFF;
-            margin-left: 10px;
-            width: 300px;
-            height: 35px;
-            font-size: 12px;
-            border-radius: 2em;
-        }
+.menu-button {
+    margin: 10px;
+    background-color: #F2F3F7;
+    border-radius: 10px;
+    width: 260px;
+    height: 50px;
+    float: left;
+}
 
-        .interest-save-btn:hover {
-            background-color: #F2F3F7;
-            color: #000000;
-        }
+.menu-button label {
+    width: 260px;
+    height: 50px;
+}
 
-        .interest-cate-btn {
-            margin: 10px 10px 10px 10px;
-            background-color: #F2F3F7;
-            border-width: 1px;
-            border-style: solid;
-            border-color: #F2F3F7;
-            width: 100px;
-            height: 100px;
-            font-size: 12px;
-            border-radius: 2em;
-            font-weight: 600;
-        }
+.menu-button label span {
+    font-weight: 600;
+    padding: 15px 25px;
+    display: block;
+}
 
-        .interest-cate-btn:hover {
-            background-color: #004FFF;
-            color: #FFFFFF;
-        }
+.menu-button label input {
+    position: absolute;
+}
 
-        .interest-ceter {
-            display: inline-block;
-            text-align: center;
-        }
+.menu-button input:checked + span {
+    background-color: #FFFFFF;
+    color: #000000;
+    border-radius: 10px;
+    width: 260px;
+    height: 50px;
+}
 
-        .ck-button {
-            margin: 10px;
-            background-color: #F2F3F7;
-            border-radius: 10px;
-            width: 100px;
-            height: 100px;
-            float:left;
-        }
+.menu-button input[id="main-menu"] {
+    display: none;
+}
 
-        .ck-button label {
-            width: 100px;
-            height: 100px;
-        }
+/* 왼쪽 메뉴 설정 끝 */
 
-        .ck-button label span {
-            text-align: center;
-            padding: 40px 10px;
-            display: block;
-        }
+/* 모달 관심 카테고리 페이지 설정 시작 */
+.modal.modal-center {
+    text-align: center;
+}
 
-        .ck-button label input {
-            position: absolute;
-        }
+@media screen and (min-width: 768px) {
+    .modal.modal-center:before {
+        display: inline-block;
+        vertical-align: middle;
+        content: " ";
+        height: 100%;
+    }
+}
 
-        .ck-button input:checked + span {
-            background-color: var(--blue);
-            color: #FFFFFF;
-            border-radius: 10px;
-            width: 100px;
-            height: 100px;
-        }
+.modal-dialog.modal-center {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    width: 700px;
+}
 
-        .ck-button input[id="interest"] {
-            display: none;
-        }
-        /* 관심 카테고리 내용 설정 끝 */
+/* 모달 관심 카테고리 페이지 설정 끝 */
+
+/* 모달 상세페이지 설정 시작 */
+.offcanvas-bottom {
+    height: 100%; /* 밑에서 올라오는 화면 비율 설정 */
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.offcanvas-body {
+    display: flex;
+    flex-grow: 0;
+    padding: 0;
+    overflow-y: visible;
+}
+
+/* 모달 상세페이지 설정 끝 */
+
+/* 관심 카테고리 내용 설정 시작 */
+.interest-title {
+    font-size: 25px;
+    display: block;
+    margin-left: 80px;
+}
+
+.interest-title-sub {
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.interest-save-btn {
+    background-color: var(--blue);
+    color: #FFFFFF;
+    margin-left: 10px;
+    width: 300px;
+    height: 35px;
+    font-size: 12px;
+    border-radius: 2em;
+}
+
+.interest-save-btn:hover {
+    background-color: #F2F3F7;
+    color: #000000;
+}
+
+.interest-cate-btn {
+    margin: 10px 10px 10px 10px;
+    background-color: #F2F3F7;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #F2F3F7;
+    width: 100px;
+    height: 100px;
+    font-size: 12px;
+    border-radius: 2em;
+    font-weight: 600;
+}
+
+.interest-cate-btn:hover {
+    background-color: #004FFF;
+    color: #FFFFFF;
+}
+
+.interest-ceter {
+    display: inline-block;
+    text-align: center;
+}
+
+.ck-button {
+    margin: 10px;
+    background-color: #F2F3F7;
+    border-radius: 10px;
+    width: 100px;
+    height: 100px;
+    float: left;
+}
+
+.ck-button label {
+    width: 100px;
+    height: 100px;
+}
+
+.ck-button label span {
+    text-align: center;
+    padding: 40px 10px;
+    display: block;
+}
+
+.ck-button label input {
+    position: absolute;
+}
+
+.ck-button input:checked + span {
+    background-color: var(--blue);
+    color: #FFFFFF;
+    border-radius: 10px;
+    width: 100px;
+    height: 100px;
+}
+
+.ck-button input[id="interest"] {
+    display: none;
+}
+
+/* 관심 카테고리 내용 설정 끝 */
 
 
 
