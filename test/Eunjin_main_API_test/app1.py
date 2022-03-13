@@ -16,14 +16,10 @@ db = client.exhibition_project
 
 
 
-# 각 html에 맞는 route가 있으니 필요에 따라 주석 제거하면서 실행해 보시면 됩니다!
-
 # html 받아오는 부분
 @app.route('/')
 def home():
     return render_template('main.html')
-
-
 
 
 
@@ -103,22 +99,29 @@ def my_position():
 # 지도 검색 부분
 @app.route('/setposition', methods=['POST'])
 def set_position():
-   title_receive = request.form['title_give']
-   print(title_receive)
+   address1_recieve = request.form['address1_give'] #"광주시"
+   address2_recieve = request.form['address2_give'] #"북구"
+   # user = db.users.find_one({'name':'bobby'})
+   # same_ages = list(db.users.find({'age':21},{'_id':False}))
+   #새로운 db에 동시에 만족하는것 추출
+   # latitude_receive = request.form['latitude_give']
+   # longitude_receive = request.form['longitude_give']
+
+
+   # title_receive = request.form['title_give']
+   # print(title_receive)
    return jsonify({'result':'success', 'msg': '이 요청은 지도검색 POST!'})
 
 
 
+##메인페이지 로그인한 상태에서 동작
+@app.route('/mycategory', methods=['POST'])
+def test_post():
+   key_recieve = request.form['key_give']
+   user_data = db.login_info.find_one({'key':key_recieve})
+   user_category = user_data["CATEGORY"]
+   return jsonify({'result':'success', 'msg': '이 요청은 POST!', "selected_catgy":user_category})
 
-
-## 카테고리 관련부분 버튼
-
-# 관심카테고리 속 다했어요 버튼 부분
-@app.route('/select_list', methods=['POST'])
-def get_selectlist():
-   class_receive = request.form['class_give']
-   print(class_receive)
-   return jsonify({'result':'success', 'msg': '이 요청은 지도검색 POST!'})
 
 
 # 새로고침 전시 기본 리스트업(html ajax 수정완료)
@@ -128,158 +131,65 @@ def get_list():
    return jsonify({'show_list': dumps(exhibition_list)})
 
 
+## 카테고리 관련부분 버튼
+
+# 관심카테고리 속 다했어요 버튼 부분
+@app.route('/multi_s_list', methods=['POST'])
+def get_selectlist():
+   class_receive = request.form['class_give']
+   class_receive = request.form['key_give']
+   selected_list = list(db.exhibition_info.aggregate([{"$match": {"class":class_receive}},{"$sample":{"size": 20}}]))
+   #클라이언트에 클래스요소 검색후 반환
+   #클래서 변경부분 수정->DB저장
+   # db.users.update_one({'name':'bobby'},{'$set':{'age':19}})
+   # return jsonify({'show_list':dumps(selected_list), 'msg': '이 요청은 관심카테고리선택 POST!'})
+
+
+   key_recieve = request.form['key_give']
+   user_data = db.login_info.find_one({'key':key_recieve})
+
+
 # 전시 카데고리 선택 리스트업 시작
-# main.html의 inclick, value 부분 수정해주세요~ 
-@app.route('/exhibition_list', methods=['GET'])
+# main.html의 onclick, value 부분 수정해주세요~ 
+@app.route('/select_list', methods=['GET'])
 def get_exhibitionlist():
    class_receive = request.args.get('class_give')
-   print(class_receive)
-   # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
-   return jsonify({'result':'success', 'msg': '이 요청은 전시 GET!'})
+   selected_list = list(db.exhibition_info.aggregate([{"$match": {"class":class_receive}},{"$sample":{"size": 20}}]))
+   return jsonify({'show_list':dumps(selected_list), 'msg': '이 요청은 전시 GET!'})
 
-@app.route('/museum_list', methods=['GET'])
-def get_museumlist():
-   class_receive = request.args.get('class_give')
-   print(class_receive)
-   # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
-   return jsonify({'result':'success', 'msg': '이 요청은 뮤지엄 GET!'})
+# @app.route('/museum_list', methods=['GET'])
+# def get_museumlist():
+#    class_receive = request.args.get('class_give')
+#    print(class_receive)
+#    # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+#    return jsonify({'result':'success', 'msg': '이 요청은 뮤지엄 GET!'})
 
-@app.route('/childs_list', methods=['GET'])
-def get_childrenlist():
-   class_receive = request.args.get('class_give')
-   print(class_receive)
-   # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
-   return jsonify({'result':'success', 'msg': '이 요청은 아동체험전 GET!'})
+# @app.route('/childs_list', methods=['GET'])
+# def get_childrenlist():
+#    class_receive = request.args.get('class_give')
+#    print(class_receive)
+#    # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+#    return jsonify({'result':'success', 'msg': '이 요청은 아동체험전 GET!'})
 
-@app.route('/evenfestival_list', methods=['GET'])
-def get_eflist():
-   class_receive = request.args.get('class_give')
-   print(class_receive)
-   # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
-   return jsonify({'result':'success', 'msg': '이 요청은 evenfestiva GET!'})
+# @app.route('/evenfestival_list', methods=['GET'])
+# def get_eflist():
+#    class_receive = request.args.get('class_give')
+#    print(class_receive)
+#    # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+#    return jsonify({'result':'success', 'msg': '이 요청은 evenfestiva GET!'})
 
-@app.route('/class_list', methods=['GET'])
-def get_classlist():
-   class_receive = request.args.get('class_give')
-   print(class_receive)
-   # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
-   return jsonify({'result':'success', 'msg': '이 요청은 클래스리스트 GET!'})
+# @app.route('/class_list', methods=['GET'])
+# def get_classlist():
+#    class_receive = request.args.get('class_give')
+#    print(class_receive)
+#    # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+#    return jsonify({'result':'success', 'msg': '이 요청은 클래스리스트 GET!'})
 
 # 전시 카데고리 선택 리스트업 끝
 
 
 
 
-
-
-
-
-# # api
-
-# # 회원가입
-# @app.route('/sign_up', methods=['POST'])
-# def sign_up_post():
-
-#     session_key = ''
-
-#     ID_receive = request.form['ID_give']
-#     PASSWORD_receive = request.form['PASSWORD_give']
-#     NAME_receive = request.form['NAME_give']
-#     PHONE_NUMBER_receive = request.form['PHONE_NUMBER_give']
-#     CATEGORY_receive = request.form['INTEREST_CATEGORY_give']
-
-#     # 아이디의 아스키 코드를 key 값으로 설정
-#     len_id = len(ID_receive)
-#     for i in range(len_id):
-#         session_key += str(ord(str((ID_receive[i]))))
-
-#     doc = {
-
-#         'ID': ID_receive,
-#         'PASSWORD': PASSWORD_receive,
-#         'NAME': NAME_receive,
-#         'PHONE_NUMBER': PHONE_NUMBER_receive,
-#         'CATEGORY': CATEGORY_receive,
-#         'KEY' : session_key
-
-#     }
-#     db.login_info.insert_one(doc)
-#     return jsonify({'msg': 'COMPLETE'})
-
-
-
-
-# # 중복 확인란
-# @app.route('/id_overlap', methods=['POST'])
-# def overlap_get():
-#     find_ID_receive = request.form['ID_give']
-#     find_phone_receive = request.form['PHONE_NUMBER_give']
-
-#     same_ID = list(db.login_info.find({'ID': find_ID_receive},{'_id':False}))
-#     same_PHONE = list(db.login_info.find({'PHONE_NUMBER': find_phone_receive},{'_id':False}))
-
-#     # 중복 확인 조건문
-
-
-#     return jsonify({'ID_result':same_ID, 'Phone_result':same_PHONE})
-
-
-
-
-# # 로그인 부분
-# # 로그인 부분
-# # 로그인 부분
-# # 로그인 부분
-
-# @app.route('/login_page')
-# def login_page():
-#     return render_template('login.html')
-
-
-# # db에 저장된 목록 받아오기 --> 로그인을 위해서
-# @app.route('/login', methods=['GET'])
-# def sign_up_get():
-#     member_list = list(db.login_info.find({}, {'_id': False}))
-#     return jsonify({'all_member_list': member_list})
-
-
-
-# # 회원 정보 수정
-
-# @app.route('/user_edit')
-# def edit_page():
-#     return render_template('my_info_edit.html')
-
-
-# # 회원 정보 조회
-# @app.route('/user_view', methods=['POST'])
-# def user_view():
-#     key_receive = request.form['key_give']
-#     user_list = list(db.login_info.find({}, {'_id': False}))
-#     user = user_list[int(key_receive)]
-#     return jsonify({'user': user})
-
-# # 회원 정보 수정 api
-# @app.route('/user_edit', methods=['POST'])
-# def user_info_edit():
-
-#     # 정보 받아오기
-#     my_info_receive = request.form.get('my_info_give',False)
-#     key_receive = request.form['key_give']
-
-#     # 바꿀 아이디 찾기
-#     user_list = list(db.login_info.find({}, {'_id': False}))
-#     user = user_list[int(key_receive)]
-#     user_id = user['ID']
-
-#     # 찾은 아이디에 딕셔너리를 바꾸자
-#     db.login_info.delete_one({'ID':user_id})
-#     user = my_info_receive
-#     db.login_info.insert_one(user)
-#     # db.login_info.update_one({'ID':user_id},{'$set':my_info_receive})
-
-#     user = user_list[int(key_receive)]
-#     return jsonify({'msg': '완료되었습니다'})
 
 
 

@@ -26,21 +26,17 @@ db = client.exhibition_project
 #     print(exhibition_list.index(i))
 #     print("--------")
 
-# exhibition_list = list(db.exhibition_info.find().limit(20))
-# # for i in exhibition_list:
-# #     print(i)
-# #     print(exhibition_list.index(i))
-# #     print("--------")
-
-
-# exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
-
-print(db.exhibition_info.find({}))
-print(db.exhibition_info.aggregate([]))
-
-# db.exhibition_info.aggregate([{ "$match": {"class":{ "$exists": False }}},{"$sample": { "size": 1 } }])
-
 
 # in은 특정 key의 값이 ㅁㅁㅁ인 경우에 사용한다.
 # db.nettuts.find( { 'occupation' : { '$in' : [ "actor", "developer" ] } }, { "first" : 1, "last" : 1 } );
 # 출처: https://fors.tistory.com/403 [Code]
+
+class_receive = "exhibition"
+exhibition_list = list(db.exhibition_info.aggregate([{"$match": { "class": class_receive }},{"$sample":{ "size": 20}}]))
+for i in exhibition_list:
+    print(i)
+    print(exhibition_list.index(i))
+    print("--------")
+
+
+
