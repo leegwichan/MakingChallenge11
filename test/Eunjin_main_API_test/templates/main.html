@@ -18,60 +18,110 @@
 
     <script>
         $(document).ready(function () {
-            show_list()
+            all_listup();
         });
+        
+// 지도 현재 위치(지도용 좌표 전달) 시작
+        function geoFindMe() {
 
-        // 메인 최신 전시회 리스트 시작
-        function show_list() {
+        const status = document.querySelector('#status');
+        const mapLink = document.querySelector('#map-link');
+
+        mapLink.href = '';
+        mapLink.textContent = '';
+
+        function success(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        status.textContent = '';
+        mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+        mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+
+        $.ajax({
+            type: "POST",
+            url: "/myposition",
+            data: { latitude_give: latitude, longitude_give: longitude },
+            success: function (response) {
+            if (response['result'] == 'success'){
+                console.log("성공");
+                window.location.reload();
+            }
+            }
+        })
+        }
+
+        function error() {
+        status.textContent = 'Unable to retrieve your location';
+        }
+
+        if (!navigator.geolocation) {
+        status.textContent = 'Geolocation is not supported by your browser';
+        } else {
+        status.textContent = 'Locating…';
+        navigator.geolocation.getCurrentPosition(success, error);
+        }
+
+        }
+// 지도 현재 위치(지도용 좌표 전달) 끝
+
+//  리스트업용 함수 시작
+        function append_cards(response){
+            let show_list = JSON.parse(response['show_list'])
+
+            for (let i = 0; i < show_list.length; i++) {
+                // let _id = show_list[i]['_id'];
+                let title = show_list[i]['title'];
+                let image_link = show_list[i]['image_link'];
+                let start_date = show_list[i]['start_date'];
+                let end_date = show_list[i]['end_date'];
+                let address_class1 = show_list[i]['address_class1'];
+                let address_class2 = show_list[i]['address_class2'];
+                let place = show_list[i]['place'];
+
+                let temp_html = `<div type="button" class="col" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                    <div class="card shadow show-card"  onclick="show_detail('${title}')">
+                                        <img class="card-img-top"
+                                            src="${image_link}"
+                                            alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title weight_600">${title}</h5>
+                                            <p class="card-text">기간: ${start_date} ~ ${end_date}</p>
+                                            <p class="card-text">지역: ${address_class1} ${address_class2}</p>
+                                            <p class="card-text">장소: ${place}</p>
+                                        </div>
+                                    </div>
+                                </div>`;
+                $('#cards-box').append(temp_html);
+            } 
+        }
+//  리스트업용 함수 끝
+
+
+        // 메인 최신 전시회 리스트 시작(html ajax 작업완료했습니다.)
+        function all_listup() {
             $.ajax({
                 type: "GET",
-                url: '/list',
+                url: "/list",
                 data: {},
                 success: function (response) {
-                    let show_list = response['show_list']
-
-                    for (let i = 0; i < show_list.length; i++) {
-                        let _id = show_list[i]['_id']
-                        let title = show_list[i]['title']
-                        let ticket_link = show_list[i]['ticket_link']
-                        let image_link = show_list[i]['image_link']
-                        let place = show_list[i]['place']
-                        let place_link = show_list[i]['place_link']
-                        let start_date = show_list[i]['start_date']
-                        let end_date = show_list[i]['end_date']
-                        let show_class = show_list[i]['class']
-                        let price = show_list[i]['price']
-                        let age_limit = show_list[i]['age_limit']
-                        let address = show_list[i]['address']
-                        let phone_num = show_list[i]['phone_num']
-                        let address_class1 = show_list[i]['address_class1']
-                        let address_class2 = show_list[i]['address_class2']
-                        let latitude = show_list[i]['latitude']
-                        let longitude = show_list[i]['longitude']
-
-                        let temp_html = `<div type="button" class="col" data-bs-toggle="offcanvas"
-                                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                            <div class="card shadow show-card"  onclick="show_detail('${title}')">
-                                                <img class="card-img-top"
-                                                     src="${image_link}"
-                                                     alt="Card image cap">
-                                                <div class="card-body">
-                                                    <h5 class="card-title weight_600">${title}</h5>
-                                                    <p class="card-text">기간: ${start_date} ~ ${end_date}</p>
-                                                    <p class="card-text">지역: ${address_class1}</p>
-                                                    <p class="card-text">장소: ${address_class2}</p>
-                                                </div>
-                                            </div>
-                                        </div>`
-
-                        $('#cards-box').append(temp_html)
-                        window.location.reload();
-                    }
+                    append_cards(response);
                 }
             })
         }
         // 메인 최신 전시회 리스트 끝
 
+
+
+
+
+
+
+
+
+
+        
         // 전시회 상세 페이지 값 가져오기 시작
         function show_detail(title) {
             $('#detail-page').empty()
@@ -187,49 +237,7 @@
         // 메인 왼쪽 메뉴 끝
         
 
-// // 지도 현재 위치(지도용 좌표 전달) 시작
-//         function geoFindMe() {
 
-//         const status = document.querySelector('#status');
-//         const mapLink = document.querySelector('#map-link');
-
-//         mapLink.href = '';
-//         mapLink.textContent = '';
-
-//         function success(position) {
-//         const latitude = position.coords.latitude;
-//         const longitude = position.coords.longitude;
-
-//         status.textContent = '';
-//         mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-//         mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
-
-//         $.ajax({
-//             type: "POST",
-//             url: "/exhibition_map",
-//             data: { latitude_give: latitude, longitude_give: longitude },
-//             success: function (response) {
-//             if (response['result'] == 'success'){
-//                 console.log("성공")
-//                 window.location.reload();
-//             }   
-//             }
-//         })
-//         }
-
-//         function error() {
-//         status.textContent = 'Unable to retrieve your location';
-//         }
-
-//         if (!navigator.geolocation) {
-//         status.textContent = 'Geolocation is not supported by your browser';
-//         } else {
-//         status.textContent = 'Locating…';
-//         navigator.geolocation.getCurrentPosition(success, error);
-//         }
-        
-//         }
-// // 지도 현재 위치(지도용 좌표 전달) 끝
 
 
 
@@ -268,7 +276,7 @@
                                 <div id="ck-button_01" class="ck-button">
                                     <label>
                                         <input type="checkbox" name="interest_01" id="interest"
-                                               value="전시"><span>전시</span>
+                                               value="전시" ><span>전시</span>
                                     </label>
                                 </div>
                                 <div id="ck-button_02" class="ck-button">
@@ -319,7 +327,7 @@
                             <div id="menu-button_01" class="menu-button">
                                 <label>
                                     <input type="radio" name="main_menu" id="main-menu"
-                                           value="전시"><span>전시</span>
+                                           value="전시" onclick="exhibition_listup()"><span>전시</span>
                                 </label>
                             </div>
                             <div id="menu-button_02" class="menu-button">
@@ -409,7 +417,7 @@
                 <!-- 전시회 리스트 -->
                 <div class="cards-list-box">
                     <div id="cards-box" class="row row-cols-1 row-cols-md-3 g-4">
-                        <div type="button" class="col" data-bs-toggle="offcanvas"
+                        <!-- <div type="button" class="col" data-bs-toggle="offcanvas"
                              data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
                             <div class="card shadow show-card">
                                 <img class="card-img-top"
@@ -422,7 +430,7 @@
                                     <p class="card-text">장소: 롯데월드타워 서울스카이</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <!-- 전시회 리스트 끝 -->

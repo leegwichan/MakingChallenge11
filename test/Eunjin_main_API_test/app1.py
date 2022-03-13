@@ -1,3 +1,4 @@
+from bson.json_util import dumps
 from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
@@ -17,14 +18,19 @@ db = client.exhibition_project
 
 # 각 html에 맞는 route가 있으니 필요에 따라 주석 제거하면서 실행해 보시면 됩니다!
 
-
 # html 받아오는 부분
 @app.route('/')
 def home():
     return render_template('main.html')
 
 
-@app.route('/exhibition_map', methods=['POST'])
+
+
+
+## 지도 관련부분 버튼
+
+#현재 위치 검색
+@app.route('/myposition', methods=['POST'])
 def test_post():
    latitude_receive = request.form['latitude_give']
    longitude_receive = request.form['longitude_give']
@@ -94,20 +100,73 @@ def test_post():
    return jsonify({'result':'success'})
 
 
+# 지도 검색 부분
+@app.route('/setposition', methods=['POST'])
+def test_post():
+   title_receive = request.form['title_give']
+   print(title_receive)
+   return jsonify({'result':'success', 'msg': '이 요청은 지도검색 POST!'})
 
 
-# 전시 기본 리스트업
+
+
+
+## 카테고리 관련부분 버튼
+
+# 관심카테고리 속 다했어요 버튼 부분
+@app.route('/test', methods=['POST'])
+def test_post():
+   title_receive = request.form['title_give']
+   print(title_receive)
+   return jsonify({'result':'success', 'msg': '이 요청은 지도검색 POST!'})
+
+
+# 새로고침 전시 기본 리스트업(html ajax 수정완료)
 @app.route('/list', methods=['GET'])
-def test_get():
-   exhibition_list = list(db.exhibition_info.find({'place':"예술의전당 한가람디자인미술관"}))
-    
-   return jsonify({'show_list':exhibition_list})
+def get_list():
+   exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+   return jsonify({'show_list': dumps(exhibition_list)})
 
-# @app.route('/test', methods=['GET'])
-# def test_get():
-#    title_receive = request.args.get('title_give')
-#    print(title_receive)
-#    return jsonify({'result':'success', 'msg': '이 요청은 GET!'})
+
+# 전시 카데고리 선택 리스트업 시작
+# main.html의 inclick, value 부분 수정해주세요~ 
+@app.route('/exhibition_list', methods=['GET'])
+def test_get():
+   class_receive = request.args.get('class_give')
+   print(class_receive)
+   # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+   return jsonify({'result':'success', 'msg': '이 요청은 전시 GET!'})
+
+@app.route('/museum_list', methods=['GET'])
+def test_get():
+   class_receive = request.args.get('class_give')
+   print(class_receive)
+   # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+   return jsonify({'result':'success', 'msg': '이 요청은 뮤지엄 GET!'})
+
+@app.route('/childs_list', methods=['GET'])
+def test_get():
+   class_receive = request.args.get('class_give')
+   print(class_receive)
+   # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+   return jsonify({'result':'success', 'msg': '이 요청은 아동체험전 GET!'})
+
+@app.route('/evenfestival_list', methods=['GET'])
+def test_get():
+   class_receive = request.args.get('class_give')
+   print(class_receive)
+   # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+   return jsonify({'result':'success', 'msg': '이 요청은 evenfestiva GET!'})
+
+@app.route('/class_list', methods=['GET'])
+def test_get():
+   class_receive = request.args.get('class_give')
+   print(class_receive)
+   # exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+   return jsonify({'result':'success', 'msg': '이 요청은 클래스리스트 GET!'})
+
+# 전시 카데고리 선택 리스트업 끝
+
 
 
 

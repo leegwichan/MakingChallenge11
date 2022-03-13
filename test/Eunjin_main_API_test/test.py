@@ -3,6 +3,7 @@ from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
 #지도 관련
+
 import folium
 from geopy.geocoders import Nominatim
 from collections import Counter
@@ -13,6 +14,33 @@ client = MongoClient('18.208.182.249',27017,
                      password='server_test')
 db = client.exhibition_project
 
-exhibition_list = list(db.exhibition_info.find({'place':"예술의전당 한가람디자인미술관"}))
-# exhibition_list = list(db.exhibition_info.find({'place':"예술의전당 한가람디자인미술관"}).limit(20))
-print(exhibition_list)
+# data = db.exhibition_info.aggregate([{"$sample":{ "size": 20}}])
+# print(type(data)) #<class 'pymongo.command_cursor.CommandCursor'>
+# data = db.exhibition_info.find()
+# print(type(data)) #<class 'pymongo.cursor.Cursor'>
+
+# exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+
+# for i in exhibition_list:
+#     print(i)
+#     print(exhibition_list.index(i))
+#     print("--------")
+
+# exhibition_list = list(db.exhibition_info.find().limit(20))
+# # for i in exhibition_list:
+# #     print(i)
+# #     print(exhibition_list.index(i))
+# #     print("--------")
+
+
+# exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
+
+print(db.exhibition_info.find({}))
+print(db.exhibition_info.aggregate([]))
+
+# db.exhibition_info.aggregate([{ "$match": {"class":{ "$exists": False }}},{"$sample": { "size": 1 } }])
+
+
+# in은 특정 key의 값이 ㅁㅁㅁ인 경우에 사용한다.
+# db.nettuts.find( { 'occupation' : { '$in' : [ "actor", "developer" ] } }, { "first" : 1, "last" : 1 } );
+# 출처: https://fors.tistory.com/403 [Code]
