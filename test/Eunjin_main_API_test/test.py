@@ -38,10 +38,10 @@ db = client.exhibition_project
 #     print(exhibition_list.index(i))
 #     print("--------")
 
-title_receive = "팀 버튼 특별전"
+title_receive = "숙련기술체험관(만11~18세)"
 target_data = db.exhibition_info.find_one({'title':title_receive}, {'_id': False})
-# print(target_data)
-now_viewn= target_data['view_num']
-print(type(now_viewn))
+print(target_data['view_num'])
+# now_viewn= target_data['view_num']
+# print(type(now_viewn))
 
 

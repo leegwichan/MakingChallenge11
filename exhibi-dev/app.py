@@ -44,6 +44,11 @@ def map():
 def join_Loadpage():
     return render_template('join.html')
 
+# html 받아오는 부분 # 로그인 부분
+@app.route('/login_page')
+def login_page():
+    return render_template('login.html')
+
 
 
 
@@ -267,9 +272,7 @@ def overlap_get():
 # 로그인 부분
 # 로그인 부분
 
-@app.route('/login_page')
-def login_page():
-    return render_template('login.html')
+
 
 
 # db에 저장된 목록 받아오기 --> 로그인을 위해서
