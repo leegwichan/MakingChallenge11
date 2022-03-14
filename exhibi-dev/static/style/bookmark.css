@@ -9,15 +9,16 @@ dl {
     width: 170px; /* 전체 메뉴 사이즈 */
 }
 .active{
-    background: #FFFFFF;
-    border-radius: 2em;
-    color: #000000;
-    margin-top: 20px;
+    background: #FFFFFF !important;
 }
 .deact:hover{
     background-color: white;
-    border-radius: 2em;
+    border-radius: 10px;
     color: #000000;
+    margin: 10px;
+    width: 260px;
+    height: 50px;
+    float: left;
 }
 .marktext{
     font-size:30px;
@@ -28,4 +29,7 @@ dl {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+.rowedit{
+    --bs-gutter-x: 0.5rem !important;
 }
