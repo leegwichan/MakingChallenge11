@@ -39,15 +39,25 @@
                                 let start_date = response['info'][i]['start_date']
                                 let end_date = response['info'][i]['end_date']
                                 let place = response['info'][i]['place']
+                                let address_class1 = response['info'][i]['address_class1']
+                                let address_class2 = response['info'][i]['address_class2']
 
-                                let temp_html = `<div class="card shadow" style="width: 16.4rem;">
-                                                    <img src="${image}" class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title weight_600">${title}</h5>
-                                                        <p class="card-text">기간 : ${start_date}~${end_date}</p>
-                                                        <p class="card-text">장소 : ${place}</p>
+                                let temp_html = `<div type="button" class="col" data-bs-toggle="offcanvas"
+                                                    data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                                    <div class="card shadow show-card" onclick="show_detail('${title}')">
+                                                        <img class="card-img-top"
+                                                            src="${image}"
+                                                            alt="Card image cap">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title weight_600">${title}</h5>
+                                                            <p class="card-text">기간: ${start_date} ~ ${end_date}</p>
+                                                            <p class="card-text">지역: ${address_class1} ${address_class2}</p>
+                                                            <p class="card-text">장소: ${place}</p>
+                                                        </div>
                                                     </div>
-                                                </div>`
+                                                </div>
+                                                
+                                                `
                                 $("#bookmark_cardbox").append(temp_html)
 
                             }
@@ -79,22 +89,19 @@
                 <div class="middle-left float-left">
                     <div class="left-menu">
                         <div class="">
-                            <a>
-                                <div id="menu-button_01" class="menu-button deact" href="/mypage">
-                                    <label>
-                                        <input type="radio" name="main_menu" id="main-menu" 
-                                            value="My 프로필"><span>My 프로필</span>
-                                    </label>
-                                </div>
-                            </a>
-                            <a>
-                                <div id="menu-button_02" class="menu-button active" href="/mybookmark">
-                                    <label>
-                                        <input type="radio" name="main_menu" id="main-menu"
-                                               value="북마크"><span>북마크</span>
-                                    </label>
-                                </div>
-                            </a>
+                            <div id="menu-button_01" class="menu-button deact" href="/mypage">
+                                <label>
+                                    <input type="radio" name="main_menu" id="main-menu" 
+                                        value="My 프로필"  onClick="location.href='/mypage'"><span>My 프로필</span>
+                                </label>
+                            </div>
+
+                            <div id="menu-button_02" class="menu-button active">
+                                <label>
+                                    <input type="radio" name="main_menu" id="main-menu"
+                                           value="북마크"><span>북마크</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,20 +114,6 @@
 
                             <div class="cards-list-box" >
                                 <div id="bookmark_cardbox" class="row row-cols-auto rowedit">
-                                    <div type="button" class="col" data-bs-toggle="offcanvas"
-                                         data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                        <div class="card shadow show-card">
-                                            <img class="card-img-top"
-                                                 src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
-                                                 alt="Card image cap">
-                                            <div class="card-body">
-                                                <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
-                                                <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
-                                                <p class="card-text">지역: 서울</p>
-                                                <p class="card-text">장소: 롯데월드타워 서울스카이</p>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

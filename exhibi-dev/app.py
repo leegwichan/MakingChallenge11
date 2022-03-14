@@ -520,7 +520,9 @@ def write_review():
                 'title': exhibition_data['title'],
                 'start_date': exhibition_data['start_date'],
                 'end_date': exhibition_data['end_date'],
-                'place': exhibition_data['place']}
+                'place': exhibition_data['place'],
+                'address_class1':exhibition_data['address_class1'],
+                'address_class2':exhibition_data['address_class2']}
             give_exhibition_data = give_exhibition_data + [data_dict]
         return jsonify({'info': give_exhibition_data,
                         'Okay': 'MATCH_SUCCESS'})
