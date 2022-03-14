@@ -56,7 +56,7 @@ def login_page():
 
 ## 지도 관련부분 버튼 시작 ##
 
-#현재 위치 검색
+#현재 위치 검색(수정필요!)
 @app.route('/myposition', methods=['POST'])
 def my_position():
    latitude_receive = request.form['latitude_give']
@@ -127,7 +127,7 @@ def my_position():
    return jsonify({'result':'success'})
 
 
-# 지도 검색 부분
+# 지도 검색 부분(수정필요!)
 @app.route('/setposition', methods=['POST'])
 def set_position():
    address1_recieve = request.form['address1_give'] #"광주시"
@@ -143,7 +143,7 @@ def set_position():
 ## 지도 관련부분 버튼 끝 ##
 
 
-#메인페이지 로그인한 상태에서 동작
+#메인페이지 로그인한 상태에서 동작(수정필요!)
 @app.route('/mycategory', methods=['POST'])
 def login_category():
    user_key = request.form['key_give']
@@ -152,7 +152,7 @@ def login_category():
    return jsonify({'msg': '이 요청은 POST!', "selected_catgy":user_category})
 
 
-# 새로고침 전시 기본 리스트업(html ajax 수정완료)
+# 새로고침 전시 기본 리스트업
 @app.route('/list', methods=['GET'])
 def get_list():
    exhibition_list = list(db.exhibition_info.aggregate([{"$sample":{ "size": 20}}]))
@@ -161,7 +161,7 @@ def get_list():
 
 ## 카테고리 관련부분 버튼 시작 ##
 
-# 관심카테고리 속 다했어요 버튼 부분
+# 관심카테고리 속 다했어요 버튼 부분(수정필요!)
 @app.route('/multi_s_list', methods=['POST'])
 def get_selectlist():
    class_receive = request.form['class_give']
@@ -180,16 +180,15 @@ def get_selectlist():
 
 
 # 전시 카데고리 선택 리스트업 시작
-# main.html의 onclick, value 부분 수정해주세요~ 
 @app.route('/select_list', methods=['GET'])
 def get_exhibitionlist():
    class_receive = request.args.get('class_give')
    selected_list = list(db.exhibition_info.aggregate([{"$match": {"class":class_receive}},{"$sample":{"size": 20}}]))
-   return jsonify({'show_list':dumps(selected_list), 'msg': '이 요청은 전시 GET!'})
+   return jsonify({'show_list':dumps(selected_list)})
 
 
 # 상세페이지 전환
-@app.route('/api/show/detail', methods=['POST'])
+@app.route('/show_detail', methods=['POST'])
 def show_details():
    title_receive = request.form['title_give']
    target_data = db.exhibition_info.find_one({'title':title_receive}, {'_id': False})
