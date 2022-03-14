@@ -19,10 +19,9 @@ db = client.exhibition_project
 # html 받아오는 부분
 @app.route('/')
 def home():
-   return render_template('C:/Users/82104/Desktop/MakingC/exhibi-dev/templates/main.html')
-   #  return render_template('main.html')
+    return render_template('main.html')
 
-
+#######메인 관련#########
 
 ## 지도 관련부분 버튼 시작 ##
 
@@ -115,7 +114,7 @@ def set_position():
 
 #메인페이지 로그인한 상태에서 동작
 @app.route('/mycategory', methods=['POST'])
-def test_post():
+def login_category():
    user_key = request.form['key_give']
    user_data = db.login_info.find_one({'key':user_key})
    user_category = user_data["CATEGORY"]
@@ -156,6 +155,24 @@ def get_exhibitionlist():
    class_receive = request.args.get('class_give')
    selected_list = list(db.exhibition_info.aggregate([{"$match": {"class":class_receive}},{"$sample":{"size": 20}}]))
    return jsonify({'show_list':dumps(selected_list), 'msg': '이 요청은 전시 GET!'})
+
+
+# 상세페이지 전환
+@app.route('/api/show/detail', methods=['POST'])
+def show_details():
+   title_receive = request.form['title_give']
+   target_data = db.exhibition_info.find_one({'title':title_receive}, {'_id': False})
+
+   # 조회수 +1
+   now_viewnm = target_data['view_num']
+   new_viewnm = now_viewnm +1
+   db.exhibition_info.update_one({'title':title_receive},{'$set':{'view_num':new_viewnm}})
+   
+   return jsonify({'target_show':target_data})
+
+#######메인 관련#########
+
+
 
 ## 카테고리 관련부분 버튼 끝 ##
 

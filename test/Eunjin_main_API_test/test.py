@@ -38,6 +38,10 @@ db = client.exhibition_project
 #     print(exhibition_list.index(i))
 #     print("--------")
 
-
+title_receive = "팀 버튼 특별전"
+target_data = db.exhibition_info.find_one({'title':title_receive}, {'_id': False})
+# print(target_data)
+now_viewn= target_data['view_num']
+print(type(now_viewn))
 
 
