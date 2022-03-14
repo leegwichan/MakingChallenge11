@@ -1,6 +1,6 @@
 body {
     background-color: #F2F3F7;
-    overflow: auto;
+    overflow-x: hidden;
 }
 
 .body-center {

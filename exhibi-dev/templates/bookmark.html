@@ -5,6 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!--CSS-->
     <link rel="stylesheet" href="/static/style/bootstrap.min.css">
     <link rel="stylesheet" href="/static/style/common.css">
     <link rel="stylesheet" href="/static/style/bookmark.css">
@@ -75,20 +79,22 @@
                 <div class="middle-left float-left">
                     <div class="left-menu">
                         <div class="">
-                            <a href="/mypage">
-                                <div id="menu-button_01" class="menu-button deact">
+                            <a>
+                                <div id="menu-button_01" class="menu-button deact" href="/mypage">
                                     <label>
                                         <input type="radio" name="main_menu" id="main-menu" 
                                             value="My 프로필"><span>My 프로필</span>
                                     </label>
                                 </div>
                             </a>
-                            <div id="menu-button_02" class="menu-button active">
-                                <label>
-                                    <input type="radio" name="main_menu" id="main-menu"
-                                           value="북마크"><span>북마크</span>
-                                </label>
-                            </div>
+                            <a>
+                                <div id="menu-button_02" class="menu-button active" href="/mybookmark">
+                                    <label>
+                                        <input type="radio" name="main_menu" id="main-menu"
+                                               value="북마크"><span>북마크</span>
+                                    </label>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -99,11 +105,8 @@
                         <div class="header-postion">
                             <p class="marktext"><b>북마크</b></p>
 
-                            <div class="card-columns" id="bookmark_cardbox">
-                            </div>
-
-                            <div class="cards-list-box">
-                                <div id="cards-box" class="row row-cols-auto rowedit">
+                            <div class="cards-list-box" >
+                                <div id="bookmark_cardbox" class="row row-cols-auto rowedit">
                                     <div type="button" class="col" data-bs-toggle="offcanvas"
                                          data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
                                         <div class="card shadow show-card">
