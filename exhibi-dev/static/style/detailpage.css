@@ -1,21 +1,20 @@
-body{
-    background-color: #F7F8FA;
-}
 .top{
     position:relative;
-    background-color: white;
+    /*background-color: white;*/
     align-content: center;
-    width:fit-content;
-    padding:0 10px 10px 10px;
+    /**width:fit-content;*/
+    /*padding:0 10px 10px 10px;*/
     border-radius:0 0 10px 10px;
     justify-content: center;
     left:45%;
+    width: 100%;
+    padding-right: var(--bs-gutter-x,.75rem);
+    padding-left: var(--bs-gutter-x,.75rem);
+    margin-right: auto;
+    margin-left: auto;
 }
 .topbtn{
     background-color: white;
-}
-.middle-left {
-    margin-top: 30px;
 }
 .imgbox{
     float:left;
@@ -54,10 +53,6 @@ body{
 .box-left{
     width:130px;
 }
-.wrap{
-    width:420px !important; 
-    float: right;
-}
 .right-menu{
     background-color: white;
     padding: 17px;
@@ -67,10 +62,6 @@ body{
     background-color: white;
     margin-top: 10px;
     display: none;
-}
-.date{
-    font-size:18px;
-    margin: 10px 0 20px 10px;
 }
 .infonum{
     margin: 10px 0;
@@ -82,28 +73,6 @@ body{
 .num{
     font-size:18px;
     margin: 10px 0;
-}
-.tagtxt{
-    margin: 10px 0 10px 10px;
-}
-.tagbox{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
-.tag{
-    color: black;
-    background-color: var(--blue_E);
-    border-color: var(--blue_E);
-    border-radius: 9px;
-    margin-right: 20px;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    margin-top: .5rem;
-}
-.tag:hover{
-    color: var(--blue);
-    
 }
 .tit{
     font-size: 23px;
@@ -143,6 +112,18 @@ body{
     height: fit-content;
     margin-bottom:50px;
 }
+
+.offcanvas-header {
+    padding: 1rem 1rem 1rem 2rem !important;
+}
+
+.wrap2{
+    width:420px !important;
+    float: right;
+}
+.scrolledit{
+    overflow-y:scroll;
+}
 .plus{
     padding:0;
     margin-bottom:40px;
@@ -150,8 +131,18 @@ body{
 .card-columns{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 .card.shadow:hover{
     cursor: pointer;
+}
+
+.modalcard{
+    width:300px !important;
+    height:528px !important;
+}
+
+.modalcol{
+    margin-right: 1%;
+    flex: 0 0 0%;
 }
