@@ -511,9 +511,10 @@ def write_review():
     user_data = list(db.login_info.find({'KEY': key_receive}))
     if user_data:
         bookmark_data = user_data[0]['BOOKMARK']
+        print(bookmark_data)
         give_exhibition_data = []
         for id_value in bookmark_data:
-            exhibition_data = db.exhibition_info.find_one({'_id': id_value})
+            exhibition_data = db.exhibition_info.find_one({'id': id_value})
             data_dict = {
                 'image': exhibition_data['image_link'],
                 'title': exhibition_data['title'],
@@ -521,7 +522,6 @@ def write_review():
                 'end_date': exhibition_data['end_date'],
                 'place': exhibition_data['place']}
             give_exhibition_data = give_exhibition_data + [data_dict]
-
         return jsonify({'info': give_exhibition_data,
                         'Okay': 'MATCH_SUCCESS'})
     else:
