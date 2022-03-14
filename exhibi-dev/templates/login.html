@@ -69,6 +69,7 @@
 						for (let i = 0; i < member_list.length; i++) {
 							let ID = member_list[i]['ID'];
 							let PASSWORD = member_list[i]['PASSWORD'];
+							let KEY = member_list[i]['KEY'];
 							// let NAME = member_list[i]['NAME']
 							// let SEX = member_list[i]['SEX']
 							// let PHONE_NUMBER = member_list[i]['PHONE_NUMBER']
@@ -79,8 +80,9 @@
 
                             if (ID === type_id) {
                                 if (PASSWORD === type_pw) {
-                                    sessionStorage.setItem("key", JSON.stringify(member_list[i]['KEY']));
-                                    let session_key = JSON.parse(sessionStorage.getItem("key"))
+									sessionStorage.setItem("session_key", member_list[i]['KEY']);
+                                    // sessionStorage.setItem("key", JSON.stringify(member_list[i]['KEY']));
+									alert('로그인이 되었습니다.')
                                     return window.location.href = '/';
 
                                 } else {
