@@ -56,7 +56,7 @@ body {
 }
 
 .show-card {
-    max-width: 500px;
+    max-width: 332px;
     max-height: 570px;
     width: 332px;
     height: 570px;
@@ -68,7 +68,6 @@ body {
 .header-postion {
     max-width: 1410px;
     width: 100%;
-    height: 70px;
 }
 
 .map-search {
@@ -97,8 +96,8 @@ body {
 
 .my-pro {
     position: relative;
-    left: 1105px;
-    top: 5px;
+    left: 892px;
+    top: -1px;
 }
 
 .log-in {
@@ -109,8 +108,8 @@ body {
 
 .log-out {
     position: relative;
-    left: 1115px;
-    top: 5px;
+    left: 902px;
+    top: -1px;
 }
 
 .float-left {
