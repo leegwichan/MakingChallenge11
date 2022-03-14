@@ -17,9 +17,91 @@
 
     <script>
 
+        function login() {
+        sessionStorage.setItem('ID', 'depgom');
+        //key : value 생성한다.
+
+        console.log(sessionStorage.getItem("ID"));
+        //key 값을 이용해 value값을 string형으로 return 받는다.
+        //key 값이 없는 경우 null을 return
+
+        sessionStorage.clear();
+        //sessionStorage의 모든 data를 삭제
+
+        sessionStorage.removeItem('key');
+        //해당 key 값만 삭제
+
+        let length = sessionStorage.length;
+        //현재 sessionStorage data개수를 숫자로 return
+
+        let keyname = sessionStorage.key('index');
+        // 'index'번째 key이름 String으로 return;
+
         $(document).ready(function () {
             all_listup();
         });
+        }
+
+
+        function logIn() {
+
+            let userId = request.getParameter("userId");
+            let password = request.getParameter("password");
+
+            sessionStorage.setItem('ID', 'depgom');                 // 세션 생성
+
+            session.setAttribute("userId", userId);          //userId에 세션을 가지고 다닐수가 있다.
+
+            response.sendRedirect("/");                         //메인페이지 이동한다.
+
+
+            let userId = session.getAttribute("userId");        //userID에 세션값을 가지고 온다.
+
+            if (userId == null) {                               //아이디값에 세션이 null인지 확인해서 로그인한 상태인지 확인한다.
+                consol.log("로그인 회원가입");
+            } else {
+                consol.log("프로필 로그아웃");
+            }
+
+        }
+
+
+                function logIn() {
+
+            let userId = request.getParameter("userId");
+            let password = request.getParameter("password");
+
+            if (User.login(userId, password)) {                  // 로그인이 정상적으로 되었는지 확인한다.
+                session.setAttribute("userId", userId);          //userId에 세션을 가지고 다닐수가 있다.
+            }
+
+            response.sendRedirect("/");                         //메인페이지 이동한다.
+
+
+            let userId = session.getAttribute("userId");        //userID에 세션값을 가지고 온다.
+
+            if (userId == null) {                               //아이디값에 세션이 null인지 확인해서 로그인한 상태인지 확인한다.
+                consol.log("로그인 회원가입");
+            } else {
+                consol.log("프로필 로그아웃");
+            }
+
+        }
+
+
+        function logOut() {
+
+            session.removeAttribute("userId");      //아이디의 세션을 지워준다.
+            response.sendRedirect("/");             //메인페이지로 이동한다.
+
+        }
+
+
+
+
+
+
+
 
         // 지도 현재 위치(지도용 좌표 전달) 시작
         function geoFindMe() {
@@ -101,6 +183,7 @@
         //  리스트업용 함수 끝
 
         // 메인 최신 전시회 리스트 시작(html ajax 작업완료했습니다.)
+
         function all_listup() {
             $.ajax({
                 type: "GET",
@@ -376,20 +459,26 @@
                             <!-- 검색 Input 끝-->
                             <!-- 로그인 회원가입 시작 -->
                             <div class="float-left">
-                                <button class="btn btn-white btn-radius log-in" type="text" placeholder="" onclick="log_in">
-                                    로그인
+                                <button class="btn btn-white btn-radius log-in" type="text" placeholder=""
+                                        onclick="">
+
+
                                 </button>
                             </div>
                             <div>
-                                <button class="btn btn-white btn-radius btn-blue sign-up" type="text" noresize="noresize"
+                                <button class="btn btn-white btn-radius btn-blue sign-up" type="text"
+                                        noresize="noresize"
                                         placeholder="">회원가입
                                 </button>
                             </div>
+
                             <div class="float-left">
-                                <button class="btn btn-white btn-radius my-pro" type="text" placeholder="">My 프로필</button>
+                                <button class="btn btn-white btn-radius my-pro" type="text" placeholder="">My 프로필
+                                </button>
                             </div>
                             <div>
-                                <button class="btn btn-white btn-radius btn-blue log-out" type="text" noresize="noresize"
+                                <button class="btn btn-white btn-radius btn-blue log-out" type="text"
+                                        noresize="noresize"
                                         placeholder="">로그아웃
                                 </button>
                             </div>
