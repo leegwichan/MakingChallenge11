@@ -363,7 +363,7 @@
         });
 
 
-        // 로그아웃 버튼 누눌때, 작동
+        // 로그아웃 버튼 누눌때, 작동 시작
         function log_out() {
             if (sessionStorage.getItem('session_key') != null) {
                 sessionStorage.removeItem('session_key')
@@ -373,6 +373,8 @@
                 alert('아직 로그인하지 않았습니다.')
             }
         }
+        // 로그아웃 버튼 누눌때, 작동 끝
+
 
         // 세션 확인 로그인 로그아웃 화면 노출 시작
 
@@ -401,6 +403,7 @@
                 $('#logout-view').append(logout_temp)
             }
         }
+        // 세션 확인 로그인 로그아웃 화면 노출 끝
 
         function mapSearch() {
 
@@ -430,6 +433,76 @@
 
             console.log(cate_check1, cate_check2, cate_check3, cate_check4, cate_check5)
 
+
+            if ($('input:checkbox[name="interest-01"]').is(":checked") == true) {
+                console.log(cate_check1)
+                let cate_exhibition = `<div id="menu-button_01" class="menu-button">
+                            <label>
+                                <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
+                                       value="exhibition"><span>전시</span>
+                            </label>
+                        </div>`
+                $('#left-menu').append(cate_exhibition)
+            }
+
+            if ($('input:checkbox[name="interest-02"]').is(":checked") == true) {
+                console.log(cate_check2)
+                let cate_museum = `<div id="menu-button_02" class="menu-button">
+                            <label>
+                                <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
+                                       value="museum"><span>뮤지엄</span>
+                            </label>
+                        </div>`
+                $('#left-menu').append(cate_museum)
+            }
+
+            if ($('input:checkbox[name="interest-03"]').is(":checked") == true) {
+                console.log(cate_check3)
+                let cate_childs_experience = `<div id="menu-button_03" class="menu-button">
+                            <label>
+                                <input type="radio" name="main_menu" id="main-menu"
+                                       onclick="exhibition_listup()"
+                                       value="childs_experience"><span>아동체험전</span>
+                            </label>
+                        </div>`
+                $('#left-menu').append(cate_childs_experience)
+            }
+
+            if ($('input:checkbox[name="interest-04"]').is(":checked") == true) {
+                console.log(cate_check4)
+                let cate_eventfestival = `<div id="menu-button_04" class="menu-button">
+                            <label>
+                                <input type="radio" name="main_menu" id="main-menu"
+                                       onclick="exhibition_listup()"
+                                       value="event/festival"><span>행사/축제</span>
+                            </label>
+                        </div>`
+                $('#left-menu').append(cate_eventfestival)
+            }
+
+            if ($('input:checkbox[name="interest-05"]').is(":checked") == true) {
+                console.log(cate_check5)
+                let cate_class = `<div id="menu-button_05" class="menu-button">
+                            <label>
+                                <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
+                                       value="class"><span>클래스</span>
+                            </label>
+                        </div>`
+                $('#left-menu').append(cate_class)
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/",
+                data: {sido_give: sido, gugun_give: gugun},
+                success: function (response) {
+
+                }
+            })
+        }
+
+
+        function categorySave() {
             $.ajax({
                 type: "POST",
                 url: "/",
@@ -502,7 +575,7 @@
 
                         <div class="modal-footer interest-ceter">
                             <div>
-                                <input class="interest-save-btn btn-radius" type="submit" value="다 했어요!">
+                                <input class="interest-save-btn btn-radius" type="submit" value="다 했어요!" onclick="categorySave()">
                             </div>
                         </div>
                     </div>
