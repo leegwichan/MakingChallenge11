@@ -174,6 +174,7 @@
                     let bookmark_total_num = target_show['bookmark_total_num']
                     let view_num = target_show['view_num']
                     let id = target_show['id']
+                    let detail_link = target_show['detail_link']
 
                     console.log(title, ticket_link, image_link, place, place_link, start_date, end_date, show_class, price, age_limit, address, phone_num, address_class1, address_class2, latitude, longitude)
 
@@ -190,32 +191,28 @@
                                                         <div>
                                                             <!--왼쪽 박스-->
                                                             <div class="imgbox">
-                                                                <img src="../static/imgs/imgcap.jpg" class="infoimg" alt="..." align="left">
+                                                                <img src="${image_link}" class="infoimg" alt="..." align="left">
                                                             </div>
                                                             <div class="infobox">
                                                                 <div class="infotext">
-                                                                    <h3 class="preview"><b>혜택안내</b></h3>
+                                                                    <h3 class="preview"><b>${title}</b></h3>
                                                                     <hr width="400px" color="#ECEDF4" noshade>
                                                                     <table width="280px" height="230px">
                                                                         <tr class="tabletr">
                                                                             <td class="box-left"><b>장소</b></td>
-                                                                            <td>장소</td>
+                                                                            <td>${place}</td>
                                                                         </tr>
                                                                         <tr class="tabletr">
                                                                             <td class="box-left"><b>기간</b></td>
-                                                                            <td>기간</td>
-                                                                        </tr>
-                                                                        <tr class="tabletr">
-                                                                            <td class="box-left"><b>관람시간</b></td>
-                                                                            <td>관람시간</td>
+                                                                            <td>${start_date} ~ ${end_date}</td>
                                                                         </tr>
                                                                         <tr class="tabletr">
                                                                             <td class="box-left"><b>관람연령</b></td>
-                                                                            <td>관람연령</td>
+                                                                            <td>${age_limit}</td>
                                                                         </tr>
                                                                         <tr class="tabletr">
                                                                             <td class="box-left"><b>가격</b></td>
-                                                                            <td>가격</td>
+                                                                            <td>${price}</td>
                                                                         </tr>
 
                                                                     </table>
@@ -226,8 +223,8 @@
                                                             <div class="wrap2">
                                                                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.039532707417!2d126.98614821516816!3d37.57768677979574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca327740a4ad9%3A0xa1b7a5ebaf602455!2z7JWE652866as7Jik666k7KeA7JeEIOyduCDsiqTtjpjsnbTsiqQ!5e0!3m2!1sko!2skr!4v1647009389803!5m2!1sko!2skr" width="420" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                                                                 <div class="right-menu">
-                                                                    <p class="tit"><b>전시회</b></p>
-                                                                    <input class="form-control add" type="text" placeholder="Disabled input" aria-label="Disabled input example" value="링크 가져오기" readonly>
+                                                                    <p class="tit"><b>구매 링크</b></p>
+                                                                    <input class="form-control add" type="text" placeholder="Disabled input" aria-label="Disabled input example" value="${ticket_link}" readonly>
                                                                     <div class=igather>
                                                                         <i class="i-bookmark circle" onclick="check()" id="bookmark" ></i>
                                                                         <i class="i-share circle" onclick="copy('https://www.naver.com')"></i>
@@ -245,7 +242,7 @@
                                                         <!--상세정보-->
                                                         <div class="left-box2">
                                                             <p class="detailstxt"><b>상세정보</b></p>
-                                                            <div><img src="../static/imgs/imgcap.jpg" class="details" alt="..."></div>
+                                                            <div><img src="${detail_link}" class="details" alt="..."></div>
                                                         </div>
                                                     </div>
                                                 </div>
