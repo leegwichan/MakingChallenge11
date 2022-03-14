@@ -15,7 +15,7 @@ import time
 from pymongo import MongoClient
 
 client = MongoClient('localhost',27017)
-db = client.exhibition_info
+db = client.exhibition_project
 
 # 전체 데이터 불러오기
 all_data = list(db.exhibition_info.find({},{'_id':False}))
@@ -25,7 +25,7 @@ for data in all_data:
     before_data = data['title']
     middle_data = before_data.replace('〈얼리버드 50%〉','').replace('(2022.01 ~)','').replace('［얼리버드］','').replace('［체험프로그램］','').replace('(2021년 3월 ~ 2021년 7월)','').replace('［전통주갤러리 야외정원 기념품증정］','').replace('［개인］','').replace('［단체_예약자］','').strip()
     middle2_data = middle_data.replace('［북촌］','').replace('［동탄］','').replace('［겨울특가］','').replace('［서울］','').replace('［제주］','').replace('［강릉］','').replace('［여수］','').replace('［소풍］','').replace('［할인］','').replace('［강원］','').replace('［강남］','').replace('［부산］','').strip()
-    after_data = middle2_data.replace('［서울/코엑스］','').replace('［충북］','').replace('［통합권］','').replace('［파주］','').replace('(강원 춘천)','').replace('(경기도 포천)','').replace('입장권','').strip()
+    after_data = middle2_data.replace('［서울/코엑스］','').replace('［충북］','').replace('［통합권］','').replace('［파주］','').replace('(강원 춘천)','').replace('(경기도 포천)','').replace('입장권','').replace('할인 티켓','').replace('(4월티켓)','').replace('할인 티켓','').replace('할인 티켓','').replace('할인 티켓','').strip()
 
     # print 하여 상황 확인
     print('제목 변경: ' + before_data + '  ---------->  ' + after_data)
@@ -37,6 +37,13 @@ print('-----------------------------------------------------------------')
 db.exhibition_info.update_many({'place': '여수 녹테마레'}, {'$set': {'address': '전라남도 여수시 만흥동 1226'}})
 db.exhibition_info.update_many({'place': '예술의전당 서예박물관'}, {'$set': {'address': '서울특별시 서초구 서초동 700'}})
 db.exhibition_info.update_many({'place': '현대백화점 미아점 10층 문화홀'}, {'$set': {'address': '서울 성북구 동소문로 315'}})
+db.exhibition_info.update_many({'place': '고양꽃전시관 특별전시장'}, {'$set': {'address': '경기도 고양시 일산동구 호수로 595'}})
+db.exhibition_info.update_many({'place': '헤이리 아지동 플레이'}, {'$set': {'address': '경기도 파주시 탄현면 헤이리마을길 93-75'}})
+db.exhibition_info.update_many({'place': 'GFX 상상놀이터'}, {'$set': {'address': '서울특별시 중구 퇴계로20길 71'}})
+db.exhibition_info.update_many({'place': '군포시 평생학습원 상상극장'}, {'$set': {'address': '경기도 군포시 고산로 263'}})
+db.exhibition_info.update_many({'place': '유니버설아트센터 루나홀'}, {'$set': {'address': '서울특별시 광진구 천호대로 664'}})
+db.exhibition_info.update_many({'place': '남동소래아트홀 갤러리 화소'}, {'$set': {'address': '인천 남동구 아암대로1437번길 32'}})
+
 
 # 수정된 전체 데이터 불러오기
 all_data = list(db.exhibition_info.find({},{'_id':False}))
@@ -65,9 +72,6 @@ for data in all_data:
     # address_class2 생성
     if not a_address_class1 == '온라인':
         a_address_class2 = data['address'].split(' ')[1]
-        # 예외 처리
-        if a_address_class2 == '부산진구':
-            a_address_class2 = '진구'
 
     # 장소가 온라인 경우에는 class2에도 온라인으로 사용
     else:
@@ -140,8 +144,8 @@ for data in all_data:
             #검색을 했을 때, 장소가 여러개가 나오는 경우에는 추후 재조사 실시, 임시적으로 0 0 을 넣어둠
             # plus_index2는 장소가 여러개 나오는 경우 공통적인 html 부분을 나타낸 것.
 
-            plus_index2 = driver.find_elements(by=By.XPATH,
-                                               value='//*[@id="pane"]/div/div[1]/div/div/div[2]/div[1]/div[3]/div/a')
+            plus_index2 = driver.find_elements(by=By.XPATH, value='//*[@id="pane"]/div/div[1]/div/div/div[2]/div[1]/div[3]/div/a')
+
             if plus_index2:
                 a_latitude = 0
                 a_longitude = 0
@@ -195,7 +199,14 @@ exception_datas = [['그라운드시소 성수',37.54639029683398, 127.065231812
              ['브릭캠퍼스',33.45840665500307, 126.48546720223197],
              ['세계술박물관',33.35395416863774, 126.81770868290214],
              ['제주공룡동물농장',33.40667628695956, 126.84489956147286],
-             ['북촌 어둠속의대화',37.5832975170162, 126.98482936377448]]
+             ['북촌 어둠속의대화',37.5832975170162, 126.98482936377448],
+            ['타임워크 명동 1층',37.56420650772611, 126.98288573632772],
+            ['군포문화예술회관 제1전시실, 제2전시실',37.36612854753956, 126.92732027323426],
+            ['피규어뮤지엄W',37.525759120430614, 127.04038381061265],
+            ['갤러리아포레',37.54570328495779, 127.04242207033414]]
+
+
+
 
 for data in exception_datas:
 

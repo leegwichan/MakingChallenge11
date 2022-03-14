@@ -11,7 +11,6 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 import time
 
-
 #mongoDB 저장 패키지
 from pymongo import MongoClient
 client = MongoClient('localhost',27017)
@@ -32,7 +31,7 @@ for i in range(len(divs)):
     div = driver.find_element(by=By.CSS_SELECTOR, value= f'body > table > tbody > tr:nth-child(2) > td:nth-child(3) > div > div > div.con > div > table > tbody > tr:nth-child({i+1})')
     a_title = div.find_element(by=By.CSS_SELECTOR, value='td.RKtxt > span > a').text
     a_ticket_link = div.find_element(by=By.CSS_SELECTOR, value='td.RKtxt > span > a').get_attribute("href")
-    a_image_link = div.find_element(by=By.CSS_SELECTOR, value='td.RKthumb > a > img').get_attribute("src")
+    # a_image_link = div.find_element(by=By.CSS_SELECTOR, value='td.RKthumb > a > img').get_attribute("src")
     a_place = div.find_element(by=By.CSS_SELECTOR, value='td:nth-child(3) > a').text
     a_place_link = div.find_element(by=By.CSS_SELECTOR, value='td:nth-child(3) > a').get_attribute("href")
 
@@ -46,7 +45,7 @@ for i in range(len(divs)):
     print(a_title + '/' + a_ticket_link)
     print('장소: '+a_place + '/' + a_place_link)
     print('시작날짜: ' + a_start_date + ' /종료날짜: ' + a_end_date)
-    print('구분: ' + a_class[0] + ' 이미지링크: ' +  a_image_link)
+    print('구분: ' + a_class[0])
 
 
     # 전시회 예매 페이지로 이동
@@ -73,17 +72,31 @@ for i in range(len(divs)):
         if total_list:
             a_price = total_list[0].text
 
+
+    a_image_link = driver.find_element(by=By.XPATH, value='//*[@id="container"]/div[5]/div[1]/div[2]/div[1]/div/div[2]/div/div[1]/img').get_attribute("src")
+
+    a_detail_link = []
+    aa = driver.find_elements(by=By.CSS_SELECTOR, value='#productMainBody > div > div.content.description > div')
+    for bb in aa:
+        cc = bb.find_elements(by=By.TAG_NAME, value='img')
+        for ee in range(len(cc)):
+            dd = bb.find_elements(by=By.TAG_NAME, value='img')[ee].get_attribute('src')
+            a_detail_link = a_detail_link + [dd]
+
     # 2차 크롤링 결과 print
-    print('가격: ' + a_price + '/연령: ' + a_age_limit )
+    print('가격: ' + a_price + '/연령: ' + a_age_limit + '/상세설명: ', a_detail_link)
 
 
     # 장소 페이지로 이동
     driver.back()
-    time.sleep(1)
+    time.sleep(0.5)
+
+    print(i)
 
     div = driver.find_element(by=By.CSS_SELECTOR, value= f'body > table > tbody > tr:nth-child(2) > td:nth-child(3) > div > div > div.con > div > table > tbody > tr:nth-child({i+1})')
     div.find_element(by=By.CSS_SELECTOR, value='td:nth-child(3) > a').click()
-    time.sleep(0.3)
+    time.sleep(0.5)
+
 
 
     # 장소 페이지에서 정보 크롤링(3차)
@@ -133,7 +146,8 @@ for i in range(len(divs)):
         'age_limit': a_age_limit,
         'address': a_address,
         'phone_num': a_phone_num,
-        'place_homepage': a_homepage
+        'place_homepage': a_homepage,
+        'detail_link': a_detail_link
     }
     db.exhibition_info.insert_one(doc)
 

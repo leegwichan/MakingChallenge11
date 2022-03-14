@@ -11,7 +11,6 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 import time
 
-
 #mongoDB 저장 패키지
 from pymongo import MongoClient
 client = MongoClient('localhost',27017)
@@ -46,7 +45,7 @@ for class_url in class_url_list:
         if not Cheak_DB_in:
 
             a_ticket_link = div.find_element(by=By.CSS_SELECTOR, value='td.RKtxt > span > a').get_attribute("href")
-            a_image_link = div.find_element(by=By.CSS_SELECTOR, value='td.RKthumb > a > img').get_attribute("src")
+            # a_image_link = div.find_element(by=By.CSS_SELECTOR, value='td.RKthumb > a > img').get_attribute("src")
             a_place = div.find_element(by=By.CSS_SELECTOR, value='td:nth-child(3) > a').text
             a_place_link = div.find_element(by=By.CSS_SELECTOR, value='td:nth-child(3) > a').get_attribute("href")
 
@@ -60,7 +59,7 @@ for class_url in class_url_list:
             print(a_title + '/' + a_ticket_link)
             print('장소: '+a_place + '/' + a_place_link)
             print('시작날짜: ' + a_start_date + ' /종료날짜: ' + a_end_date)
-            print('구분: ' + a_class[0] + ' 이미지링크: ' +  a_image_link)
+            print('구분: ' + a_class[0] )
 
 
             # 전시회 예매 페이지로 이동
@@ -86,6 +85,19 @@ for class_url in class_url_list:
                 total_list = sale_list + price_list + price_etc_list + price_etc_list2
                 if total_list:
                     a_price = total_list[0].text
+
+            a_image_link = driver.find_element(by=By.XPATH,
+                                               value='//*[@id="container"]/div[5]/div[1]/div[2]/div[1]/div/div[2]/div/div[1]/img').get_attribute("src")
+
+            a_detail_link = []
+            aa = driver.find_elements(by=By.CSS_SELECTOR,
+                                      value='#productMainBody > div > div.content.description > div')
+            for bb in aa:
+                cc = bb.find_elements(by=By.TAG_NAME, value='img')
+                for ee in range(len(cc)):
+                    dd = bb.find_elements(by=By.TAG_NAME, value='img')[ee].get_attribute('src')
+                    a_detail_link = a_detail_link + [dd]
+
 
             # 2차 크롤링 결과 print
             print('가격: ' + a_price + '/연령: ' + a_age_limit )
@@ -146,7 +158,8 @@ for class_url in class_url_list:
                 'age_limit': a_age_limit,
                 'address': a_address,
                 'phone_num': a_phone_num,
-                'place_homepage': a_homepage
+                'place_homepage': a_homepage,
+                'detail_link': a_detail_link
             }
             db.exhibition_info.insert_one(doc)
 

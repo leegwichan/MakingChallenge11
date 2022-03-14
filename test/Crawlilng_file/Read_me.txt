@@ -13,3 +13,7 @@ client = MongoClient('localhost',27017)
 db = client.exhibition_project
 --------------------------------------------
 collection이름은 exhibition_info 로 사용
+
+
+
+Position_Crawling은 직접 돌리지 않는 것을 추천함.
