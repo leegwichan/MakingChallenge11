@@ -34,6 +34,7 @@
                     data: {key_give: user_key},          // sample_give 변수로 데이터를 넘겨줌
                     success: function (response) {
                         if(response['Okay'] == 'MATCH_SUCCESS'){
+                            let card_id_list = []
                             for (let i=0; i<response['info'].length; i++){
                                 let image = response['info'][i]['image']
                                 let title = response['info'][i]['title']
@@ -42,10 +43,11 @@
                                 let place = response['info'][i]['place']
                                 let address_class1 = response['info'][i]['address_class1']
                                 let address_class2 = response['info'][i]['address_class2']
+                                let id = response['info'][i]['id']
 
                                 let temp_html = `<div type="button" class="col" data-bs-toggle="offcanvas"
                                                     data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                                    <div class="card shadow show-card" onclick="show_detail('${title}')">
+                                                    <div class="card shadow show-card" onclick="show_detail('${id}')">
                                                         <img class="card-img-top"
                                                             src="${image}"
                                                             alt="Card image cap">
@@ -60,6 +62,9 @@
                                                 
                                                 `
                                 $("#bookmark_cardbox").append(temp_html)
+
+                                card_id_list = card_id_list +[id]
+                                sessionStorage.setItem('exhibit_id_list',card_id_list)
 
                             }
                         } else {
@@ -76,170 +81,181 @@
         })
 
         // 전시회 상세 페이지 값 가져오기 시작
-        function show_detail(title) {
+        function show_detail(id) {
             $('#detail-page').empty()
-            $.ajax({
-                type: 'POST',
-                url: '/show_detail',
-                data: {title_give: title},
-                success: function (response) {
-                    let target_show = response['target_show']
 
-                    let title = target_show['title']
-                    let ticket_link = target_show['ticket_link']
-                    let image_link = target_show['image_link']
-                    let place = target_show['place']
-                    let place_link = target_show['place_link']
-                    let start_date = target_show['start_date']
-                    let end_date = target_show['end_date']
-                    let show_class = target_show['class']
-                    let price = target_show['price']
-                    let age_limit = target_show['age_limit']
-                    let address = target_show['address']
-                    let phone_num = target_show['phone_num']
-                    let address_class1 = target_show['address_class1']
-                    let address_class2 = target_show['address_class2']
-                    let latitude = target_show['latitude']
-                    let longitude = target_show['longitude']
-                    let bookmark_total_num = target_show['bookmark_total_num']
-                    let view_num = target_show['view_num']
-                    let id = target_show['id']
-                    let detail_link = target_show['detail_link']
+            if (id == 'preview'){
+                alert('첫 페이지입니다.')
+            } else if(id == 'next'){
+                alert('마지막 페이지입니다.')
+            } else {
 
-                    console.log(title, ticket_link, image_link, place, place_link, start_date, end_date, show_class, price, age_limit, address, phone_num, address_class1, address_class2, latitude, longitude)
+                $.ajax({
+                    type: 'POST',
+                    url: '/show_detail',
+                    data: {id_give: id},
+                    success: function (response) {
+                        let target_show = response['target_show']
 
-                    let detail_temp_html = `<div class="container">
-                                                <!--헤드 버튼-->
-                                                <div class="top">
-                                                    <i class="i-shape_l btn btn-blue_F topbtn"></i>
-                                                    <i class="i-close btn btn-blue_F topbtn" data-bs-dismiss="offcanvas" aria-label="Close"></i>
-                                                    <i class="i-shape_r btn btn-blue_F topbtn"></i>
-                                                </div>
-                                                <div class="middle">
-                                                    <div class="middle-left">
-                                                        <div>
-                                                            <!--왼쪽 박스-->
-                                                            <div class="imgbox">
-                                                                <img src="${image_link}" class="infoimg" alt="..." align="left">
-                                                            </div>
-                                                            <div class="infobox">
-                                                                <div class="infotext">
-                                                                    <h3 class="preview"><b>${title}</b></h3>
-                                                                    <hr width="400px" color="#ECEDF4" noshade>
-                                                                    <table width="280px" height="230px">
-                                                                        <tr class="tabletr">
-                                                                            <td class="box-left"><b>장소</b></td>
-                                                                            <td>${place}</td>
-                                                                        </tr>
-                                                                        <tr class="tabletr">
-                                                                            <td class="box-left"><b>기간</b></td>
-                                                                            <td>${start_date} ~ ${end_date}</td>
-                                                                        </tr>
-                                                                        <tr class="tabletr">
-                                                                            <td class="box-left"><b>관람연령</b></td>
-                                                                            <td>${age_limit}</td>
-                                                                        </tr>
-                                                                        <tr class="tabletr">
-                                                                            <td class="box-left"><b>가격</b></td>
-                                                                            <td>${price}</td>
-                                                                        </tr>
-                                                                    </table>
+                        let title = target_show['title']
+                        let ticket_link = target_show['ticket_link']
+                        let image_link = target_show['image_link']
+                        let place = target_show['place']
+                        let place_link = target_show['place_link']
+                        let start_date = target_show['start_date']
+                        let end_date = target_show['end_date']
+                        let show_class = target_show['class']
+                        let price = target_show['price']
+                        let age_limit = target_show['age_limit']
+                        let address = target_show['address']
+                        let phone_num = target_show['phone_num']
+                        let address_class1 = target_show['address_class1']
+                        let address_class2 = target_show['address_class2']
+                        let latitude = target_show['latitude']
+                        let longitude = target_show['longitude']
+                        let bookmark_total_num = target_show['bookmark_total_num']
+                        let view_num = target_show['view_num']
+                        let id = target_show['id']
+                        let detail_link = target_show['detail_link']
+
+                        let exhibit_id_list = sessionStorage.getItem('exhibit_id_list')
+
+                        console.log(exhibit_id_list.indexOf(id))
+
+
+                        let detail_temp_html = `<div class="container">
+                                                    <!--헤드 버튼-->
+                                                    <div class="top">
+                                                        <i class="i-shape_l btn btn-blue_F topbtn"></i>
+                                                        <i class="i-close btn btn-blue_F topbtn" data-bs-dismiss="offcanvas" aria-label="Close"></i>
+                                                        <i class="i-shape_r btn btn-blue_F topbtn"></i>
+                                                    </div>
+                                                    <div class="middle">
+                                                        <div class="middle-left">
+                                                            <div>
+                                                                <!--왼쪽 박스-->
+                                                                <div class="imgbox">
+                                                                    <img src="${image_link}" class="infoimg" alt="..." align="left">
                                                                 </div>
-                                                            </div>
-                                                            <!--오른쪽 박스-->
-                                                            <div class="wrap2">
-                                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.039532707417!2d126.98614821516816!3d37.57768677979574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca327740a4ad9%3A0xa1b7a5ebaf602455!2z7JWE652866as7Jik666k7KeA7JeEIOyduCDsiqTtjpjsnbTsiqQ!5e0!3m2!1sko!2skr!4v1647009389803!5m2!1sko!2skr" width="420" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                                                                <div class="right-menu">
-                                                                    <p class="tit"><b>구매 링크</b></p>
-                                                                    <input class="form-control add" type="text" placeholder="Disabled input" aria-label="Disabled input example" id="ticketlink" value="${ticket_link}" readonly>
-                                                                    <div class=igather>
-                                                                        <i class="i-bookmark circle" onclick="check()" id="bookmark" ></i>
-                                                                        <i class="i-share circle" onclick="copy('${ticket_link}')"></i>
-                                                                        <i class="i-info circle" onclick="info()" id="info"></i>
+                                                                <div class="infobox">
+                                                                    <div class="infotext">
+                                                                        <h3 class="preview"><b>${title}</b></h3>
+                                                                        <hr width="400px" color="#ECEDF4" noshade>
+                                                                        <table width="280px" height="230px">
+                                                                            <tr class="tabletr">
+                                                                                <td class="box-left"><b>장소</b></td>
+                                                                                <td>${place}</td>
+                                                                            </tr>
+                                                                            <tr class="tabletr">
+                                                                                <td class="box-left"><b>기간</b></td>
+                                                                                <td>${start_date} ~ ${end_date}</td>
+                                                                            </tr>
+                                                                            <tr class="tabletr">
+                                                                                <td class="box-left"><b>관람연령</b></td>
+                                                                                <td>${age_limit}</td>
+                                                                            </tr>
+                                                                            <tr class="tabletr">
+                                                                                <td class="box-left"><b>가격</b></td>
+                                                                                <td>${price}</td>
+                                                                            </tr>
+                                                                        </table>
                                                                     </div>
-                                                                <!--i 클릭하면 정보 보이는 박스-->
                                                                 </div>
-                                                                <div class="right-menu" id="infoopen">
-                                                                    <h3 class="infonum space"><span>조회</span><span>북마크</span></h3>
-                                                                    <p class="num"><b class="space"><span>${view_num}</span><span>${bookmark_total_num}</span></b></p>
-                                                                </div>
-                                                                <button class="btn btn-white btn-radius btn-blue btn-point weight_600 button" onclick = "location.href = '${ticket_link}' " type="button">예매하기</button>
-                                                            </div>
-                                                        </div>
-                                                        <!--상세정보-->
-                                                        <div class="left-box2">
-                                                            <p class="detailstxt"><b>상세정보</b></p>
-                                                            <div><img src="${detail_link}" class="details" alt="..."></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="plus">
-                                                    <p class="detailstxt"><b>함께 보면 좋은 전시들</b></p>
-                                                    <div class="card-columns">
-                                                        <div type="button" class="col modalcol" data-bs-toggle="offcanvas"
-                                                            data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                                            <div class="card shadow show-card modalcard">
-                                                                <img class="card-img-top"
-                                                                        src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
-                                                                        alt="Card image cap">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
-                                                                    <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
-                                                                    <p class="card-text">지역: 서울</p>
-                                                                    <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                                                                <!--오른쪽 박스-->
+                                                                <div class="wrap2">
+                                                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.039532707417!2d126.98614821516816!3d37.57768677979574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca327740a4ad9%3A0xa1b7a5ebaf602455!2z7JWE652866as7Jik666k7KeA7JeEIOyduCDsiqTtjpjsnbTsiqQ!5e0!3m2!1sko!2skr!4v1647009389803!5m2!1sko!2skr" width="420" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                                                    <div class="right-menu">
+                                                                        <p class="tit"><b>구매 링크</b></p>
+                                                                        <input class="form-control add" type="text" placeholder="Disabled input" aria-label="Disabled input example" id="ticketlink" value="${ticket_link}" readonly>
+                                                                        <div class=igather>
+                                                                            <i class="i-bookmark circle" onclick="check()" id="bookmark" ></i>
+                                                                            <i class="i-share circle" onclick="copy('${ticket_link}')"></i>
+                                                                            <i class="i-info circle" onclick="info()" id="info"></i>
+                                                                        </div>
+                                                                    <!--i 클릭하면 정보 보이는 박스-->
+                                                                    </div>
+                                                                    <div class="right-menu" id="infoopen">
+                                                                        <h3 class="infonum space"><span>조회</span><span>북마크</span></h3>
+                                                                        <p class="num"><b class="space"><span>${view_num}</span><span>${bookmark_total_num}</span></b></p>
+                                                                    </div>
+                                                                    <button class="btn btn-white btn-radius btn-blue btn-point weight_600 button" onclick = "location.href = '${ticket_link}' " type="button">예매하기</button>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div type="button" class="col modalcol" data-bs-toggle="offcanvas"
-                                                            data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                                            <div class="card shadow show-card modalcard">
-                                                                <img class="card-img-top"
-                                                                        src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
-                                                                        alt="Card image cap">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
-                                                                    <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
-                                                                    <p class="card-text">지역: 서울</p>
-                                                                    <p class="card-text">장소: 롯데월드타워 서울스카이</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div type="button" class="col modalcol" data-bs-toggle="offcanvas"
-                                                            data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                                            <div class="card shadow show-card modalcard">
-                                                                <img class="card-img-top"
-                                                                        src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
-                                                                        alt="Card image cap">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
-                                                                    <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
-                                                                    <p class="card-text">지역: 서울</p>
-                                                                    <p class="card-text">장소: 롯데월드타워 서울스카이</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div type="button" class="col modalcol" data-bs-toggle="offcanvas"
-                                                            data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                                            <div class="card shadow show-card modalcard">
-                                                                <img class="card-img-top"
-                                                                        src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
-                                                                        alt="Card image cap">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
-                                                                    <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
-                                                                    <p class="card-text">지역: 서울</p>
-                                                                    <p class="card-text">장소: 롯데월드타워 서울스카이</p>
-                                                                </div>
+                                                            <!--상세정보-->
+                                                            <div class="left-box2">
+                                                                <p class="detailstxt"><b>상세정보</b></p>
+                                                                <div><img src="${detail_link}" class="details" alt="..."></div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="plus">
+                                                        <p class="detailstxt"><b>함께 보면 좋은 전시들</b></p>
+                                                        <div class="card-columns">
+                                                            <div type="button" class="col modalcol" data-bs-toggle="offcanvas"
+                                                                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                                                <div class="card shadow show-card modalcard">
+                                                                    <img class="card-img-top"
+                                                                            src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                                                            alt="Card image cap">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                                                        <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                                                        <p class="card-text">지역: 서울</p>
+                                                                        <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div type="button" class="col modalcol" data-bs-toggle="offcanvas"
+                                                                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                                                <div class="card shadow show-card modalcard">
+                                                                    <img class="card-img-top"
+                                                                            src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                                                            alt="Card image cap">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                                                        <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                                                        <p class="card-text">지역: 서울</p>
+                                                                        <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div type="button" class="col modalcol" data-bs-toggle="offcanvas"
+                                                                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                                                <div class="card shadow show-card modalcard">
+                                                                    <img class="card-img-top"
+                                                                            src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                                                            alt="Card image cap">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                                                        <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                                                        <p class="card-text">지역: 서울</p>
+                                                                        <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div type="button" class="col modalcol" data-bs-toggle="offcanvas"
+                                                                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                                                <div class="card shadow show-card modalcard">
+                                                                    <img class="card-img-top"
+                                                                            src="https://ticketimage.interpark.com/Play/image/large/21/21008039_p.gif"
+                                                                            alt="Card image cap">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title weight_600">한영수 미디어전 전시회</h5>
+                                                                        <p class="card-text">기간: 2021.09.01 ~ 2022.03.20</p>
+                                                                        <p class="card-text">지역: 서울</p>
+                                                                        <p class="card-text">장소: 롯데월드타워 서울스카이</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            `
+                                                `
 
-                    $('#detail-page').append(detail_temp_html)
-                }
-            })
+                        $('#detail-page').append(detail_temp_html)
+                    }
+                })
+            }
         }
 
         /*상세 페이지 북마크 클릭 함수*/
@@ -292,17 +308,16 @@
                 <div class="middle-left float-left">
                     <div class="left-menu">
                         <div class="">
-                            <div id="menu-button_01" class="menu-button deact" href="/mypage">
-                                <label>
-                                    <input type="radio" name="main_menu" id="main-menu" 
-                                        value="My 프로필"  onClick="location.href='/mypage'"><span>My 프로필</span>
-                                </label>
-                            </div>
-
-                            <div id="menu-button_02" class="menu-button active">
+                            <div id="menu-button_01" class="menu-button">
                                 <label>
                                     <input type="radio" name="main_menu" id="main-menu"
-                                           value="북마크"><span>북마크</span>
+                                        value="My 프로필" ><span>My 프로필</span>
+                                </label>
+                            </div>
+                            <div id="menu-button_02" class="menu-button active deact">
+                                <label>
+                                    <input type="radio" name="main_menu" id="main-menu"
+                                        value="북마크" onClick="location.href='/mybookmark'"><span>북마크</span>
                                 </label>
                             </div>
                         </div>
