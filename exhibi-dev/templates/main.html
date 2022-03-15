@@ -148,13 +148,16 @@
 
         // 전시회 상세 페이지 값 가져오기 시작
         function show_detail(title) {
+            var session_key = sessionStorage.getItem('session_key')
+
             $('#detail-page').empty()
             $.ajax({
                 type: 'POST',
                 url: '/show_detail',
-                data: {title_give: title},
+                data: {title_give: title, key_give: session_key},
                 success: function (response) {
                     let target_show = response['target_show']
+                    let bookmark_give= response['bookmark_give']
 
                     let title = target_show['title']
                     let ticket_link = target_show['ticket_link']
@@ -311,20 +314,49 @@
                     $('#detail-page').append(detail_temp_html)
 
                     $('#detailimg').empty()
-
+                    /*상세이미지 리스트*/
                     for(let i = 0; i < detail_link.length; i++){
                         let img_link = detail_link[i]
                         let temp2_html = `<div><img src="${img_link}" id=detailimg class="details" alt="..."></div>`
                         $('#detailimg').append(temp2_html)
+                    }
+
+                    /*유저키 없으면 No_login*/
+                    if(sessionStorage.getItem('session_key')==NULL){
+                        let userkey_give = 'No_login'
+                    } else{
+                        let userkey_give = sessionStorage.getItem('session_key')
+                        /*북마크 값이 있을 때와 없을 때 표시*/
+                        if(bookmark_give == 'Yes'){
+                            document.getElementById('bookmark').style.color == "blue"
+                        } else{
+                            document.getElementById('bookmark').style.color = "black";
+                        }
+                    }
+                }
+            })
+        }
+
+
+        function add_bookmark(title){
+            $.ajax({
+                type: 'POST',
+                url: '/add_bookmark',
+                data: {},
+                success: function (response) {
+                    let target_show = response['target_show']
+                    
+                    let id = target_show['id']
+
+                    if(sessionStorage.getItem('session_key')){
+                        let userkey_give = sessionStorage.getItem('session_key')
+                        let exhibitid_give = id
                     }
                 }
             })
         }
 
         // 전시회 상세 페이지 값 가져오기 끝
-
-
-
 
         /*상세 페이지 북마크 클릭 함수*/
         function check(){
