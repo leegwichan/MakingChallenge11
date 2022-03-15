@@ -156,7 +156,7 @@ def login_category():
     user_data = db.login_info.find_one({'key': user_key})
     user_category = user_data['CATEGORY']
     print(user_category)
-    return jsonify({'msg': '이 요청은 로그인상태POST!', "selected_catgy": user_category})
+    return jsonify({"selected_catgy": user_category})
 
 
 # 새로고침 전시 기본 리스트업
@@ -190,7 +190,7 @@ def get_selectlist():
         categ_exhibit.extend(selected_list)
     new_select = categ_exhibit[:20]
 
-    return jsonify({'show_list': dumps(new_select), 'msg': msg})
+    return jsonify({'show_list': dumps(new_select), 'user_categ': userdb_categ, 'msg': msg})
 
 
 # 전시 카데고리 선택 리스트업 시작
