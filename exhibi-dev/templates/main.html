@@ -229,7 +229,7 @@
                                                                     <p class="tit"><b>구매 링크</b></p>
                                                                     <input class="form-control add" type="text" placeholder="Disabled input" aria-label="Disabled input example" value="${ticket_link}" readonly>
                                                                     <div class=igather>
-                                                                        <i class="i-bookmark circle" onclick="check()" id="bookmark" ></i>
+                                                                        <i class="i-bookmark circle" onclick="check('${id}')" id="bookmark" ></i>
                                                                         <i class="i-share circle" onclick="copy('${ticket_link}')"></i>
                                                                         <i class="i-info circle" onclick="info()" id="info"></i>
                                                                     </div>
@@ -331,35 +331,31 @@
             })
         }
 
-
-        function add_bookmark(title){
-            $.ajax({
-                type: 'POST',
-                url: '/add_bookmark',
-                data: {},
-                success: function (response) {
-                    let target_show = response['target_show']
-                    
-                    let id = target_show['id']
-
-                    if(sessionStorage.getItem('session_key')){
-                        let userkey_give = sessionStorage.getItem('session_key')
-                        let exhibitid_give = id
-                    }
-                }
-            })
-        }
-
         // 전시회 상세 페이지 값 가져오기 끝
 
         /*상세 페이지 북마크 클릭 함수*/
-        function check(){
-            if(document.getElementById('bookmark').style.color == "blue"){
-                document.getElementById('bookmark').style.color = "black";
-                alert('북마크가 해제 되었습니다')
+        function check(id){
+            var session_key = sessionStorage.getItem('session_key')
+
+            if(sessionStorage.getItem('session_key') == null){
+                alert('로그인 후 이용해주세요')
             } else{
-                document.getElementById('bookmark').style.color = "blue"
-                alert('북마크가 추가 되었습니다')
+                $.ajax({
+                    type: 'POST',
+                    url: '/add_bookmark',
+                    data: {userkey_give: session_key, exhibitid_give: id},
+                    success: function (response) {
+                        let Do = response['Do']
+                        
+                        if(Do == "remove_complete"){
+                            document.getElementById('bookmark').style.color = "black"
+                            alert('북마크가 해제 되었습니다')
+                        } else{
+                            document.getElementById('bookmark').style.color = "blue"
+                            alert('북마크가 추가 되었습니다')
+                        }
+                    }
+                })
             }
         }
         /*상세 페이지 링크 복사 함수*/
