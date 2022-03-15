@@ -152,9 +152,9 @@ def set_position():
 @app.route('/mycategory', methods=['POST'])
 def login_category():
     user_key = request.form['key_give']
-#    print(type(user_key))
     user_data = db.login_info.find_one({'key': user_key})
-    user_category = user_data["CATEGORY"]
+    user_category = user_data['CATEGORY']
+    print(user_category)
     return jsonify({'msg': '이 요청은 로그인상태POST!', "selected_catgy": user_category})
 
 
@@ -172,6 +172,7 @@ def get_list():
 @app.route('/multi_s_list', methods=['POST'])
 def get_selectlist():
     userdb_class = request.form['class_give']
+    print(userdb_class)
     key_receive = request.form['key_give']
 
     # DB저장
@@ -183,6 +184,10 @@ def get_selectlist():
     # 새로운 리스트정보
     selected_list = list(db.exhibition_info.aggregate(
         [{"$match": {"class": userdb_class}}, {"$sample": {"size": 20}}]))
+#     selected_list = list(db.exhibition_info.aggregate(
+#         [{"$match": {"class": {"$or": }}}, {"$sample": {"size": 20}}]))
+
+# {$or : [{quantity: {$lt: 20 } }, {price: 10 } ] }
 
     return jsonify({'show_list': dumps(selected_list), 'msg': msg})
 
@@ -199,27 +204,29 @@ def get_exhibitionlist():
 # 상세페이지 전환
 @app.route('/show_detail', methods=['POST'])
 def show_detail():
-   title_receive = request.form['title_give']
-   target_data = db.exhibition_info.find_one({'title':title_receive}, {'_id': False})
-   # userkey_receive = request.form['key_give']
+    title_receive = request.form['title_give']
+    target_data = db.exhibition_info.find_one(
+        {'title': title_receive}, {'_id': False})
+    # userkey_receive = request.form['key_give']
 
-   # 조회수 +1
-   now_viewnm = target_data['view_num']
-   new_viewnm = now_viewnm +1
-   db.exhibition_info.update_one({'title':title_receive},{'$set':{'view_num':new_viewnm}})
+    # 조회수 +1
+    now_viewnm = target_data['view_num']
+    new_viewnm = now_viewnm + 1
+    db.exhibition_info.update_one({'title': title_receive}, {
+                                  '$set': {'view_num': new_viewnm}})
 
-   # # 유저 데이터에 북마크 있는지 확인
-   # if userkey_receive == 'No_login':
-   #     bookmark_data = 'No'
-   # else:
-   #     user_total_data = db.login_info.find_one({'KEY': userkey_receive}, {'_id': False})
-   #     if target_data['id'] in user_total_data['BOOKMARK']:
-   #         bookmark_data = 'Yes'
-   #     else:
-   #         bookmark_data = 'No'
+    # # 유저 데이터에 북마크 있는지 확인
+    # if userkey_receive == 'No_login':
+    #     bookmark_data = 'No'
+    # else:
+    #     user_total_data = db.login_info.find_one({'KEY': userkey_receive}, {'_id': False})
+    #     if target_data['id'] in user_total_data['BOOKMARK']:
+    #         bookmark_data = 'Yes'
+    #     else:
+    #         bookmark_data = 'No'
 
-   return jsonify({'target_show': target_data})
-   # return jsonify({'target_show':target_data, 'bookmark_give':bookmark_data})
+    return jsonify({'target_show': target_data})
+    # return jsonify({'target_show':target_data, 'bookmark_give':bookmark_data})
 
 #######메인 관련#########
 
@@ -258,9 +265,7 @@ def show_detail():
 #         return jsonify({"Do" : "add_complete"})
 
 
-
 #######상세페이지#######
-
 
 
 # 회원가입 api
