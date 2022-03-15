@@ -38,6 +38,7 @@ def home():
 @app.route('/exhibi_map')
 def map():
     return render_template('exhibition_map.html')
+    # return render_template('default_map.html')
 
 # html 받아오는 부분 # 회원가입 부분
 
@@ -171,25 +172,25 @@ def get_list():
 # 관심카테고리 속 다했어요 버튼 부분(수정필요!)
 @app.route('/multi_s_list', methods=['POST'])
 def get_selectlist():
-    userdb_class = request.form['class_give']
-    print(userdb_class)
+    class_str = request.form['class_give']
     key_receive = request.form['key_give']
+    userdb_categ = class_str.split(',')
 
     # DB저장
-    db.login_info.update_one({'key': key_receive}, {
-                             '$set': {'CATEGORY': userdb_class}})
+    db.login_info.update_one({'KEY': key_receive}, {
+                             '$set': {'CATEGORY': userdb_categ}})
     user_name = db.login_info.find_one({"KEY": key_receive})["NAME"]
     msg = user_name + "님의 관심카테고리가 변경되었습니다."
 
     # 새로운 리스트정보
-    selected_list = list(db.exhibition_info.aggregate(
-        [{"$match": {"class": userdb_class}}, {"$sample": {"size": 20}}]))
-#     selected_list = list(db.exhibition_info.aggregate(
-#         [{"$match": {"class": {"$or": }}}, {"$sample": {"size": 20}}]))
+    categ_exhibit = []
+    for one_catg in userdb_categ:
+        selected_list = list(db.exhibition_info.aggregate(
+            [{"$match": {"class": one_catg}}, {"$sample": {"size": 20}}]))
+        categ_exhibit.extend(selected_list)
+    new_select = categ_exhibit[:20]
 
-# {$or : [{quantity: {$lt: 20 } }, {price: 10 } ] }
-
-    return jsonify({'show_list': dumps(selected_list), 'msg': msg})
+    return jsonify({'show_list': dumps(new_select), 'msg': msg})
 
 
 # 전시 카데고리 선택 리스트업 시작
