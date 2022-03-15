@@ -225,16 +225,16 @@
                                                                     <input class="form-control add" type="text" placeholder="Disabled input" aria-label="Disabled input example" value="${ticket_link}" readonly>
                                                                     <div class=igather>
                                                                         <i class="i-bookmark circle" onclick="check()" id="bookmark" ></i>
-                                                                        <i class="i-share circle" onclick="copy('https://www.naver.com')"></i>
+                                                                        <i class="i-share circle" onclick="copy('${ticket_link}')"></i>
                                                                         <i class="i-info circle" onclick="info()" id="info"></i>
                                                                     </div>
                                                                 <!--i 클릭하면 정보 보이는 박스-->
                                                                 </div>
                                                                 <div class="right-menu" id="infoopen">
                                                                     <h3 class="infonum space"><span>조회</span><span>북마크</span></h3>
-                                                                    <p class="num"><b class="space"><span>1</span><span>2</span></b></p>
+                                                                    <p class="num"><b class="space"><span>>${view_num}</span><span>${bookmark_total_num}</span></b></p>
                                                                 </div>
-                                                                <button class="btn btn-white btn-radius btn-blue btn-point weight_600 button" onclick = "location.href = '#' " type="button">예매하기</button>
+                                                                <button class="btn btn-white btn-radius btn-blue btn-point weight_600 button" onclick = "location.href = '${ticket_link}' " type="button">예매하기</button>
                                                             </div>
                                                         </div>
                                                         <!--상세정보-->
@@ -314,6 +314,38 @@
         }
 
         // 전시회 상세 페이지 값 가져오기 끝
+
+        /*상세 페이지 북마크 클릭 함수*/
+        function check(){
+            if(document.getElementById('bookmark').style.color == "blue"){
+                document.getElementById('bookmark').style.color = "black";
+                alert('북마크가 해제 되었습니다')
+            } else{
+                document.getElementById('bookmark').style.color = "blue"
+                alert('북마크가 추가 되었습니다')
+            }
+        }
+        /*상세 페이지 링크 복사 함수*/
+        function copy(str) {
+            let t = document.createElement("textarea");
+            document.getElementById('detail-page').appendChild(t);
+            t.value = str;
+            t.select();
+            document.execCommand('copy');
+            document.getElementById('detail-page').removeChild(t);
+            alert('링크가 복사되었습니다');
+        }
+
+        /*상세 페이지 i 클릭 함수*/
+        function info(){
+            if(document.getElementById("infoopen").style.display == 'block'){
+                document.getElementById("info").style.color = "black"
+                document.getElementById("infoopen").style.display = 'none';
+            } else{
+                document.getElementById("info").style.color = "blue"
+                document.getElementById("infoopen").style.display = 'block';
+            }
+        }
 
 
         // 지도 검색 select 태그 내용 추가하기 시작
