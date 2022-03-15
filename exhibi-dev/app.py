@@ -1,16 +1,19 @@
 # flask import
-from collections import Counter
-from geopy.geocoders import Nominatim
-import folium
 from bson.json_util import dumps
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-import smtplib
 import random
 import string
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import folium
+from geopy.geocoders import Nominatim
+from collections import Counter
 from pymongo import MongoClient
+import webbrowser
 from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
+
+
 # pymongo import
 client = MongoClient('18.208.182.249', 27017,
                      username='noE',
@@ -133,29 +136,137 @@ def my_position():
     return jsonify({'result': 'success'})
 
 
+##### 지도함수 #####
+# 지도 좌표설정
+def make_map(latitude, longitude):
+    m = folium.Map([latitude, longitude],
+                   tiles='cartodbpositron', zoom_start=15)
+    return m
+
+# 북마크 장소값 모음 함수
+
+
+def make_bmplace(key):
+    user_data = db.login_info.find_one({'KEY': key})
+    bmark_id = user_data['BOOKMARK']  # list형태
+    bmark_place = []
+    for target_id in bmark_id:
+        place = db.exhibition_info.find_one({'id': target_id})["place"]
+        bmark_place.append(place)
+    return bmark_place
+
+
 # 지도 검색 부분(수정필요!)
 @app.route('/setposition', methods=['POST'])
 def set_position():
+    # 맵 생성까지 구현
     address1_recieve = request.form['address1_give']  # "광주시"
     address2_recieve = request.form['address2_give']  # "북구"
-    # user = db.users.find_one({'name':'bobby'})
-    # same_ages = list(db.users.find({'age':21},{'_id':False}))
-    # 새로운 db에 동시에 만족하는것 추출
-    # latitude_receive = request.form['latitude_give']
-    # longitude_receive = request.form['longitude_give']
-    # title_receive = request.form['title_give']
-    # print(title_receive)
-    return jsonify({'msg': '이 요청은 지도검색 POST!'})
+    set_location = db.region_info.find_one(
+        {'address_class1': address1_recieve, 'address_class2': address2_recieve})
+    map = make_map(set_location['latitude'], set_location['longitude'])
+
+    # 마이로케이션이랑 동일한 로직
+    total_data = list(db.exhibition_info.find({}, {'_id': False}))
+
+    # 여러 전시 운영하는 장소 변수 : overlap_place
+    overlap_check = []
+    for data in total_data:
+        overlap_check.append(data['place'])
+
+    overlap_place = []
+    result = Counter(overlap_check)
+    for key, value in result.items():
+        if value >= 2:
+            overlap_place.append(key)
+
+    # 한 장소에 여러 종류 전시(구름아이콘)
+    for place in overlap_place:
+        overlap_data = list(db.exhibition_info.find(
+            {'place': place}, {'_id': False}))
+        p_tags = []
+        for layer in overlap_data:
+            if "latitude" in layer:
+                target_latitude = layer['latitude']
+                target_longitude = layer['longitude']
+                target_title = layer['title']
+                target_place = layer['place']
+                target_period = layer['start_date'] + " ~ " + layer['end_date']
+
+                target_info = f"""<p style="font-weight:bold;">{target_title}<br>{target_period}</p>"""
+                p_tags.append(target_info)
+
+        p_tags = ''.join(p_tags)
+        full_text = f"""<div style = "text-align: center; ">{p_tags}
+                           in {target_place}
+                     </div>"""
+
+        summary_info = folium.Html(f"""{full_text}""", script=True)
+        popup_html = folium.Popup(summary_info, max_width=500)
+
+# 수정해야함
+        if(request.form['key_give'] is not None):
+            key_receive = request.form['key_give']
+            make_bmplace(key_receive)
+
+            print(make_bmplace('OAkozq7U'))
+
+            folium.Marker(location=[target_latitude, target_longitude], popup=popup_html,
+                          tooltip=target_place, icon=folium.Icon(color='red', icon='bookmark')).add_to(map)
+        else:
+            folium.Marker(location=[target_latitude, target_longitude], popup=popup_html,
+                          tooltip=target_place, icon=folium.Icon(color='red', icon='cloud')).add_to(map)
+
+    # 한 장소에 1종류 전시
+    for data in total_data:
+        if "latitude" in data:
+            if(data['place'] not in overlap_place):
+                target_title = data['title']
+                target_place = data['place']
+                target_period = data['start_date'] + " ~ " + data['end_date']
+                target_latitude = data['latitude']
+                target_longitude = data['longitude']
+
+                summary_info = folium.Html(f"""<div style = "text-align: center; ">
+                                                   <p style="font-weight:bold;">{target_title}<br>{target_period}</p>
+                                                   in {target_place}
+                                          </div>""", script=True)
+# 로그인한경우
+                if(request.form['key_give'] is not None):
+                    key_receive = request.form['key_give']
+                    userbm_place = make_bmplace(key_receive)
+                    if(target_place in userbm_place):
+                        folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(
+                            color='blue', icon='bookmark')).add_to(map)
+                    # ['롯데월드타워 서울스카이', '롯데뮤지엄', '예술의전당 1101 어린이라운지']
+                    # print(make_bmplace('OAkozq7U'))
+                    else:
+                        folium.Marker(location=[target_latitude, target_longitude], popup=popup_html,
+                                      tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
+
+                else:
+                    folium.Marker(location=[target_latitude, target_longitude], popup=popup_html,
+                                  tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
+
+    map.save(
+        r'C:/Users/82104/Desktop/220308/test/map_test/map_api_test/templates/exhibition_map.html')
+    webbrowser.open_new_tab(
+        'C:/Users/82104/Desktop/220308/test/map_test/map_api_test/templates/exhibition_map.html')
+    # m.save(r'sftp://ubuntu@18.208.182.249/home/ubuntu/MakingChallenge11/exhibi-dev/templates/exhibition_map.html')
+    return jsonify({'result': 'success'})
+   #  return jsonify({'msg': '이 요청은 지도검색 POST!'})
 ## 지도 관련부분 버튼 끝 ##
 
 
-# 메인페이지 로그인한 상태에서 동작(수정필요!)
+# 메인페이지 로그인한 상태에서 동작(오류 발생)
 @app.route('/mycategory', methods=['POST'])
 def login_category():
     user_key = request.form['key_give']
+    # print("33333333333333333333333")
+    # print(user_key)
     user_data = db.login_info.find_one({'key': user_key})
+    # print(user_data)
     user_category = user_data['CATEGORY']
-    print(user_category)
     return jsonify({"selected_catgy": user_category})
 
 
@@ -169,7 +280,7 @@ def get_list():
 
 ## 카테고리 관련부분 버튼 시작 ##
 
-# 관심카테고리 속 다했어요 버튼 부분(수정필요!)
+# 관심카테고리 속 다했어요 버튼 부분
 @app.route('/multi_s_list', methods=['POST'])
 def get_selectlist():
     class_str = request.form['class_give']
