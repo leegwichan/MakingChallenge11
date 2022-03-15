@@ -198,6 +198,7 @@ def get_exhibitionlist():
 
 # 상세페이지 전환
 @app.route('/show_detail', methods=['POST'])
+def show_detail():
    title_receive = request.form['title_give']
    target_data = db.exhibition_info.find_one({'title':title_receive}, {'_id': False})
    # userkey_receive = request.form['key_give']
