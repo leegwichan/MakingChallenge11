@@ -4,6 +4,7 @@ body {
 }
 
 .body-center {
+    min-width: 2045px;
     max-width: 2028px;
     width: 100%;
     margin: 0 auto;
