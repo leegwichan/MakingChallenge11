@@ -212,6 +212,7 @@ def show_detail():
 
     # 조회수 +1
     now_viewnm = target_data['view_num']
+    print(now_viewnm)
     new_viewnm = now_viewnm + 1
     db.exhibition_info.update_one({'id': id_receive}, {
                                   '$set': {'view_num': new_viewnm}})
