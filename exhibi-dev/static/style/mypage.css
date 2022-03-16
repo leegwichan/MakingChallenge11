@@ -90,3 +90,6 @@ label {
 .position_edit{
     height: max-content !important;
 }
+.floatsty{
+    float: left;
+}

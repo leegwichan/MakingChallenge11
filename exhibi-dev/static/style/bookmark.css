@@ -38,3 +38,6 @@ label {
 .rowedit{
     --bs-gutter-x: 0.5rem !important;
 }
+.floatsty{
+    float: left;
+}
