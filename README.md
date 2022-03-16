@@ -22,11 +22,11 @@
     - folium
     - request
     - geopy  
-  <br/>
+<br/>
     2. app.py 실행
-  <br/>
+<br/>
     3. console에 찍힌 url로 접속
-  <br/>
+<br/>
     **app.py 안 route 주소로 페이지 변경해 가시면 됩니다**
 
 <br/><br/>
@@ -34,13 +34,14 @@
 
 ## 💼디렉토리 설명  
 <br/>
+
 ### exhibi-dev 폴더
 - 본격적인 프로젝트 코드로 exhibi-dev폴더가 root(최상위)폴더 입니다.  
 
 ### test 폴더
 - 전시회 프로젝트를 진행하면서 사전에 미리 test를 해본 코드는 여기서 관리합니다.  
 
-<br/><br/>
+<br/>
 
 ## ⛑업로드 서버
 - http://credical.shop  임시 도메인 주소 입니다.
