@@ -1,6 +1,6 @@
 # 전시회 조회 웹 서비스  
 
-<br/><br/><br/><br/>
+<br/><br/>
 
 ## Tech Stack  
 ![](https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white)
@@ -12,33 +12,27 @@
 
 <br/><br/>
 
-## ⏰개발 기간  
-2022년 3월 4일 - 2022년 3월 18일  
-  
-  
-<br/><br/>
-  
+## 👍실행 하는 법
 
-## 📄맴버 구성
-- 이충안(팀장) : 백엔드
-- 조은진 : 백엔드
-- 김윤식 : 백엔드
-- 소윤호 : 프론트엔드
-- 최우재 : 프론트엔드
-- 김인애 : 프론트엔드  
-  
-  
-<br/><br/>
+### 🦾app.py (flask) 서버 실행
 
-## 🖊기능 소개
-- 전국 전시회 정보 조회 서비스
-- 로그인을 통한 회원 정보 관리 및 북마크 기능
-- 사용자 위치 정보를 받아 주변 전시회 추천  
+  1. 패키지 설치
+    - flask
+    - pymongo
+    - folium
+    - request
+    - geopy  
+  <br/>
+  2. app.py 실행
+  <br/>
+  3. console에 찍힌 url로 접속
+  <br/>
+  **app.py 안 route 주소로 페이지 변경해 가시면 됩니다**
 
 <br/><br/>
  
 
-## 디렉토리 설명  
+## 💼디렉토리 설명  
 ### exhibi-dev 폴더
 본격적인 프로젝트 코드로 exhibi-dev폴더가 root(최상위)폴더 입니다.  
 
@@ -47,5 +41,5 @@
 
 <br/><br/>
 
-## 업로드 서버
+## ⛑업로드 서버
 - http://credical.shop  임시 도메인 주소 입니다.
