@@ -39,8 +39,8 @@ def home():
 # html 받아오는 부분 # 기본맵
 @app.route('/exhibi_map')
 def map():
-    return render_template('exhibition_map.html')
-    # return render_template('default_map.html')
+    return render_template('default_map.html')
+    # return render_template('exhibition_map.html')
 
 # html 받아오는 부분 # API 생성맵
 @app.route('/position_map')
@@ -66,80 +66,6 @@ def login_page():
 
 ## 지도 관련부분 버튼 시작 ##
 
-# 현재 위치 검색(수정필요!)
-@app.route('/myposition', methods=['POST'])
-def my_position():
-    latitude_receive = request.form['latitude_give']
-    longitude_receive = request.form['longitude_give']
-
-    m = folium.Map([latitude_receive, longitude_receive],
-                   tiles='cartodbpositron', zoom_start=15)
-
-    total_data = list(db.exhibition_info.find({}, {'_id': False}))
-
-    # 여러 전시 운영하는 장소 변수 : overlap_place
-    overlap_check = []
-    for data in total_data:
-        overlap_check.append(data['place'])
-
-    overlap_place = []
-    result = Counter(overlap_check)
-    for key, value in result.items():
-        if value >= 2:
-            overlap_place.append(key)
-
-    # 한 장소에 여러 종류 전시(구름아이콘)
-    for place in overlap_place:
-        overlap_data = list(db.exhibition_info.find(
-            {'place': place}, {'_id': False}))
-        p_tags = []
-        for layer in overlap_data:
-            if "latitude" in layer:
-                target_latitude = layer['latitude']
-                target_longitude = layer['longitude']
-                target_title = layer['title']
-                target_place = layer['place']
-                target_period = layer['start_date'] + " ~ " + layer['end_date']
-
-                target_info = f"""<p style="font-weight:bold;">{target_title}<br>{target_period}</p>"""
-                p_tags.append(target_info)
-
-        p_tags = ''.join(p_tags)
-        full_text = f"""<div style = "text-align: center; ">{p_tags}
-                           in {target_place}
-                     </div>"""
-
-        summary_info = folium.Html(f"""{full_text}""", script=True)
-        popup_html = folium.Popup(summary_info, max_width=500)
-
-        folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(
-            color='blue', icon_color='lightgray', icon='cloud')).add_to(m)
-
-    # 한 장소에 1종류 전시
-    for data in total_data:
-        if "latitude" in data:
-            if(data['place'] not in overlap_place):
-                target_title = data['title']
-                target_place = data['place']
-                target_period = data['start_date'] + " ~ " + data['end_date']
-                target_latitude = data['latitude']
-                target_longitude = data['longitude']
-
-                summary_info = folium.Html(f"""<div style = "text-align: center; ">
-                                                   <p style="font-weight:bold;">{target_title}<br>{target_period}</p>
-                                                   in {target_place}
-                                          </div>""", script=True)
-                popup_html = folium.Popup(summary_info, max_width=500)
-
-                folium.Marker(location=[target_latitude, target_longitude], popup=popup_html,
-                              tooltip=target_place, icon=folium.Icon(color='blue')).add_to(m)
-
-    m.save(r'C:/Users/82104/Desktop/220308/test/map_test/map_api_test/templates/exhibition_map.html')
-    # webbrowser.open_new_tab('C:/Users/82104/Desktop/220308/test/map_test/map_api_test/templates/exhibition_map.html')
-    # m.save(r'sftp://ubuntu@18.208.182.249/home/ubuntu/MakingChallenge11/exhibi-dev/templates/exhibition_map.html')
-    return jsonify({'result': 'success'})
-
-
 ##### 지도함수 #####
 # 지도 좌표설정
 def make_map(latitude, longitude):
@@ -147,9 +73,8 @@ def make_map(latitude, longitude):
                    tiles='cartodbpositron', zoom_start=15)
     return m
 
+
 # 북마크 장소값 모음 함수
-
-
 def make_bmplace(key):
     user_data = db.login_info.find_one({'KEY': key})
     bmark_id = user_data['BOOKMARK']  # list형태
@@ -160,10 +85,89 @@ def make_bmplace(key):
     return bmark_place
 
 
-# 지도 검색 부분(수정필요!)
+# 현재 위치 검색(북마크 수정 필요!)
+@app.route('/myposition', methods=['POST'])
+def my_position():
+    latitude_receive = request.form['latitude_give']
+    longitude_receive = request.form['longitude_give']
+
+    total_data = list(db.exhibition_info.find({}, {'_id': False}))
+
+    # 여러 전시 운영하는 장소의 좌표 리스트 : overlap_coordinate
+    overlap_check = []
+    for data in total_data:
+        if "latitude" in data and "longitude" in data:
+            overlap_data = (data['latitude'], data['longitude'])
+            overlap_check.append(overlap_data)
+
+    overlap_coordinate = []
+    result = Counter(overlap_check)
+    for key, value in result.items():
+        if value >= 2:
+            overlap_coordinate.append(key)
+
+    # 한 장소에 1종류 전시
+    for data in total_data:
+        if "latitude" in data:
+            if((data['latitude'], data['longitude']) not in overlap_coordinate):
+                target_title = data['title']
+                target_place = data['place']
+                target_period = data['start_date'] + " ~ " + data['end_date']
+                target_latitude = data['latitude']
+                target_longitude = data['longitude']
+
+                summary_info = folium.Html(f"""<div style = "text-align: center; ">
+                                                   <p style="color:gray;">
+                                                   <span style="font-weight:bold; color:#080808">{target_title}
+                                                   <br>{target_period}</span>
+                                                   <br>in {target_place}
+                                                   </p>
+                                          </div>""", script=True)
+                popup_html = folium.Popup(summary_info, max_width=500)
+                folium.Marker(location=[target_latitude, target_longitude], popup=popup_html,
+                              tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
+
+    # 한 장소에 여러 종류 전시(구름아이콘)
+    for coordinate in overlap_coordinate:
+        overlap_coordinate = list(db.exhibition_info.find(
+            {'latitude': coordinate[0], 'longitude': coordinate[1]}, {'_id': False}))
+        popup_msg = []
+        for overlap_one in overlap_coordinate:
+            target_latitude = overlap_one['latitude']
+            target_longitude = overlap_one['longitude']
+            target_title = overlap_one['title']
+            target_place = overlap_one['place']
+            target_period = overlap_one['start_date'] + \
+                " ~ " + overlap_one['end_date']
+
+            target_info = f"""<p style="color:gray;">
+                                 <span style="font-weight:bold; color:#080808">{target_title}<br>{target_period}</span>
+                                <br>in {target_place}
+                            </p>"""
+            popup_msg.append(target_info)
+
+        popup_msg = ''.join(popup_msg)
+        full_text = f"""<div style = "text-align: center; ">{popup_msg}
+                        </div>"""
+
+        summary_info = folium.Html(f"""{full_text}""", script=True)
+        popup_html = folium.Popup(summary_info, max_width=500)
+        folium.Marker(location=[target_latitude, target_longitude], popup=popup_html,
+                      tooltip=target_place, icon=folium.Icon(color='blue', icon='cloud')).add_to(map)
+
+    map.save(
+        r'C:/Users/82104/Desktop/220308/test/map_test/map_api_test/templates/position_map.html')
+    webbrowser.open_new_tab(
+        'C:/Users/82104/Desktop/220308/test/map_test/map_api_test/templates/position_map.html')
+    # map.save(r'sftp://ubuntu@18.208.182.249/home/ubuntu/MakingChallenge11/exhibi-dev/templates/position_map.html')
+    return jsonify({'result': 'success'})
+
+
+
+# 지도 검색 부분(북마크 수정 필요!)
 @app.route('/setposition', methods=['POST'])
 def set_position():
-    # 맵 생성까지 구현
+    # 베이스맵 생성
     address1_recieve = request.form['address1_give']  # "광주시"
     address2_recieve = request.form['address2_give']  # "북구"
     set_location = db.region_info.find_one(
