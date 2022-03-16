@@ -201,9 +201,9 @@ def set_position():
                     target_latitude = data['latitude']
                     target_longitude = data['longitude']
 
-                    summary_info = folium.Html(f"""<div class="map_inner" style = "text-align: center; ">
-                                                    <p class="item" style="color:gray;">
-                                                    <span style="font-weight:bold; color:#080808">{target_title}
+                    summary_info = folium.Html(f"""<div class="map_inner">
+                                                    <p class="item">
+                                                    <span>{target_title}
                                                     <br>{target_period}</span>
                                                     <br>in {target_place}
                                                     </p>
@@ -228,14 +228,14 @@ def set_position():
                 target_place = overlap_one['place']
                 target_period = overlap_one['start_date'] + " ~ " + overlap_one['end_date']
 
-                target_info = f"""<p class="item" style="color:gray;">
-                                    <span style="font-weight:bold; color:#080808">{target_title}<br>{target_period}</span>
+                target_info = f"""<p class="item">
+                                    <span>{target_title}<br>{target_period}</span>
                                     <br>in {target_place}
                                 </p>"""
                 popup_msg.append(target_info)
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""<div class="map_inner" style = "text-align: center; ">{popup_msg}
+            full_text = f"""<div class="map_inner">{popup_msg}
                             </div>"""
 
             summary_info = folium.Html(f"""{full_text}""", script=True)
@@ -260,9 +260,9 @@ def set_position():
                     target_place = data['place']
                     target_period = data['start_date'] + " ~ " + data['end_date']
 
-                    summary_info = folium.Html(f"""<div class="map_inner" style = "text-align: center; ">
-                                                        <p class="item" style="color:gray;">
-                                                        <span style="font-weight:bold; color:#080808">{target_title}
+                    summary_info = folium.Html(f"""<div class="map_inner">
+                                                        <p class="item">
+                                                        <span>{target_title}
                                                         <br>{target_period}</span>
                                                         <br>in {target_place}
                                                         </p>
@@ -283,14 +283,14 @@ def set_position():
                 target_place = overlap_one['place']
                 target_period = overlap_one['start_date'] + " ~ " + overlap_one['end_date']
 
-                target_info = f"""<p class="item" style="color:gray;">
-                                    <span style="font-weight:bold; color:#080808">{target_title}<br>{target_period}</span>
+                target_info = f"""<p class="item">
+                                    <span>{target_title}<br>{target_period}</span>
                                     <br>in {target_place}
                                 </p>"""
                 popup_msg.append(target_info)
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""<div class="map_inner" style = "text-align: center; ">{popup_msg}
+            full_text = f"""<div class="map_inner">{popup_msg}
                             </div>"""
 
             summary_info = folium.Html(f"""{full_text}""", script=True)
