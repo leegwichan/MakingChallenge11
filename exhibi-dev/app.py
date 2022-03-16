@@ -304,7 +304,7 @@ def get_selectlist():
     return jsonify({'show_list': dumps(new_select), 'user_categ': userdb_categ, 'msg': msg})
 
 
-# 전시 카데고리 선택 리스트업 시작
+# 전시 카데고리 선택 리스트업 시작f
 @app.route('/select_list', methods=['GET'])
 def get_exhibitionlist():
     class_receive = request.args.get('class_give')

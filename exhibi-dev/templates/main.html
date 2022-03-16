@@ -80,7 +80,6 @@
             let show_list = JSON.parse(response['show_list'])
 
             for (let i = 0; i < show_list.length; i++) {
-                // let _id = show_list[i]['_id'];
                 let title = show_list[i]['title'];
                 let image_link = show_list[i]['image_link'];
                 let start_date = show_list[i]['start_date'];
@@ -88,10 +87,11 @@
                 let address_class1 = show_list[i]['address_class1'];
                 let address_class2 = show_list[i]['address_class2'];
                 let place = show_list[i]['place'];
+                let id = show_list[i]['id'];
 
                 let temp_html = `<div type="button" class="col" data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                    <div class="card shadow show-card"  onclick="show_detail('${title}')">
+                                    <div class="card shadow show-card"  onclick="show_detail('${id}')">
                                         <img class="card-img-top"
                                             src="${image_link}"
                                             alt="Card image cap">
@@ -148,12 +148,12 @@
 
 
         // 전시회 상세 페이지 값 가져오기 시작
-        function show_detail(title) {
+        function show_detail(id) {
             $('#detail-page').empty()
             $.ajax({
                 type: 'POST',
                 url: '/show_detail',
-                data: {title_give: title},
+                data: {id_give: id},
                 success: function (response) {
                     let target_show = response['target_show']
 
