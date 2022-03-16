@@ -16,17 +16,23 @@
 <br/>
 ### app.py (flask) 서버 실행
 <br/>
-  1. 패키지 설치
-    - flask
-    - pymongo
-    - folium
-    - request
+  1. 패키지 설치  
+    - flask  
+    - pymongo  
+    - folium  
+    - request  
     - geopy  
+    
 <br/>
+
     2. app.py 실행
+    
 <br/>
+
     3. console에 찍힌 url로 접속
+    
 <br/>
+
     **app.py 안 route 주소로 페이지 변경해 가시면 됩니다**
 
 <br/><br/>
