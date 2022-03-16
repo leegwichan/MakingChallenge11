@@ -19,9 +19,9 @@
     <script>
 
         $(document).ready(function () {
-            cateMainmenu();
             all_listup();
             session_check();
+            cateMainmenu();
         });
 
 
@@ -652,67 +652,7 @@
                     let select_cate = (response['user_categ']);
                     console.log(select_cate)
 
-
-
-                    for (let i = 0; i < select_cate.length; i++) {
-
-                        if (select_cate[i] == "exhibition") {
-
-                            $('#left-mainmenu').empty()
-
-                            let cate_exhibition = `<div id="menu-button_01" class="menu-button">
-                                                <label>
-                                                    <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
-                                                           value="exhibition"><span>전시</span>
-                                                </label>
-                                            </div>`
-                            $('#left-mainmenu').append(cate_exhibition)
-                        }
-
-                        if (select_cate[i] == "museum") {
-                            let cate_museum = `<div id="menu-button_02" class="menu-button">
-                                            <label>
-                                                <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
-                                                       value="museum"><span>뮤지엄</span>
-                                            </label>
-                                        </div>`
-                            $('#left-mainmenu').append(cate_museum)
-                        }
-
-                        if (select_cate[i] == "childs_experience") {
-                            let cate_childs_experience = `<div id="menu-button_03" class="menu-button">
-                                                    <label>
-                                                        <input type="radio" name="main_menu" id="main-menu"
-                                                               onclick="exhibition_listup()"
-                                                               value="childs_experience"><span>아동체험전</span>
-                                                    </label>
-                                                </div>`
-                            $('#left-mainmenu').append(cate_childs_experience)
-                        }
-
-                        if (select_cate[i] == "event/festival") {
-                            let cate_eventfestival = `<div id="menu-button_04" class="menu-button">
-                                                    <label>
-                                                        <input type="radio" name="main_menu" id="main-menu"
-                                                               onclick="exhibition_listup()"
-                                                               value="event/festival"><span>행사/축제</span>
-                                                    </label>
-                                                </div>`
-                            $('#left-mainmenu').append(cate_eventfestival)
-                        }
-
-                        if (select_cate[i] == "class") {
-                            let cate_class = `<div id="menu-button_05" class="menu-button">
-                                            <label>
-                                                <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
-                                                       value="class"><span>클래스</span>
-                                            </label>
-                                        </div>`
-                            $('#left-mainmenu').append(cate_class)
-                        }
-                    }
-                    // window.location.reload();
-
+                    location.href="/";
                 }
             })
         }
@@ -735,14 +675,11 @@
 
                         let cate = response['selected_catgy'];
 
-
-                        for (let i = 0; i < cate.length; i++) {
+                        $('#left-mainmenu').empty()
 
 
                             if (cate.includes("exhibition")) {
 
-
-                                $('#left-mainmenu').empty()
 
                                 let main_exhibition = `<div id="menu-button_01" class="menu-button">
                                                 <label>
@@ -835,7 +772,7 @@
                     </label>`
                                 $('#ck-button_05').append(cate_class)
                             }
-                        }
+
 
                     }
                 })
