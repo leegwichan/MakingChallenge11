@@ -128,11 +128,12 @@
                     INTEREST_CATEGORY.push($(this).val());
                 }
             });
-            if (!hobbyCheck) {
+            if (hobbyCheck !== true) {
                 alert("하나이상 관심 카테고리를 체크해 주세요");
+                return;
             }
             INTEREST_CATEGORY = INTEREST_CATEGORY.toString();
-
+            
             //중복 체크
             $.ajax({
                 type: "POST",
