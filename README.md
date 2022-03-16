@@ -1,6 +1,6 @@
 # 전시회 조회 웹 서비스  
 
-<br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/>
 
 ## Tech Stack  
 ![](https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white)
@@ -10,16 +10,13 @@
 ![](https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black)
 ![](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)  
 
-  
-<br/><br/><br/><br/><br/><br/>
-  
-  
+<br/><br/>
 
 ## ⏰개발 기간  
 2022년 3월 4일 - 2022년 3월 18일  
   
   
-<br/><br/><br/><br/><br/><br/>
+<br/><br/>
   
 
 ## 📄맴버 구성
@@ -31,35 +28,24 @@
 - 김인애 : 프론트엔드  
   
   
-<br/><br/><br/><br/><br/><br/>
-  
-
+<br/><br/>
 
 ## 🖊기능 소개
 - 전국 전시회 정보 조회 서비스
 - 로그인을 통한 회원 정보 관리 및 북마크 기능
 - 사용자 위치 정보를 받아 주변 전시회 추천  
-  
-  
-<br/><br/><br/><br/><br/><br/>
-  
 
+<br/><br/>
+ 
 
 ## 디렉토리 설명  
 ### exhibi-dev 폴더
 본격적인 프로젝트 코드로 exhibi-dev폴더가 root(최상위)폴더 입니다.  
 
-  
-<br/><br/><br/><br/><br/><br/>
-  
-  
 ### test 폴더
 전시회 프로젝트를 진행하면서 사전에 미리 test를 해본 코드는 여기서 관리합니다.  
-  
-  
-<br/><br/><br/><br/><br/><br/>
-  
 
+<br/><br/>
 
 ## 업로드 서버
 - http://credical.shop  임시 도메인 주소 입니다.
