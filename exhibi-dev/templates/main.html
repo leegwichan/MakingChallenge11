@@ -138,6 +138,28 @@
             let exhibition = $("input[name='main_menu']:checked").val();
 
             console.log(exhibition)
+            $('#cards-list-title').empty()
+
+            if (exhibition == "exhibition") {
+                let cards_list_title = `전시 리스트`
+                $('#cards-list-title').append(cards_list_title)
+            }
+            if (exhibition == "museum") {
+                let cards_list_title = `뮤지엄 리스트`
+                $('#cards-list-title').append(cards_list_title)
+            }
+            if (exhibition == "childs_experience") {
+                let cards_list_title = `아동체험전 리스트`
+                $('#cards-list-title').append(cards_list_title)
+            }
+            if (exhibition == "event/festival") {
+                let cards_list_title = `행사/축제 리스트`
+                $('#cards-list-title').append(cards_list_title)
+            }
+            if (exhibition == "class") {
+                let cards_list_title = `클래스 리스트`
+                $('#cards-list-title').append(cards_list_title)
+            }
 
             $.ajax({
                 type: "GET",
@@ -947,7 +969,7 @@
                                 class="iframebox"></iframe>
                     </div>
                     <!-- 지도 부분 끝 -->
-                    <div class="weight_600 cards-list-title">최신 전시회</div>
+                    <div id="cards-list-title" class="weight_600 cards-list-title">최신 전시회</div>
 
                     <!-- 전시회 리스트 -->
                     <div class="cards-list-box">
