@@ -67,7 +67,6 @@
                         },          // sample_give 변수로 데이터를 넘겨줌
                         success: function (response) {
                             if (response["id_data_find"] == "find_OK") {
-                                alert(`당신의 ID: ${response["id_data"]}`)
                                 sessionStorage.setItem('found_id_data', JSON.stringify(response["id_data"]));
                                 location.href = "/find_id/complete"
                             } else {
