@@ -320,7 +320,8 @@ def show_detail():
     print(id_receive)
     target_data = db.exhibition_info.find_one({'id': id_receive}, {'_id': False})
     print(target_data)
-    # userkey_receive = request.form['key_give']
+    userkey_receive = request.form['key_give']
+
 
     # 조회수 +1
     now_viewnm = target_data['view_num']
@@ -329,54 +330,54 @@ def show_detail():
     db.exhibition_info.update_one({'id': id_receive}, {
                                   '$set': {'view_num': new_viewnm}})
 
-    # # 유저 데이터에 북마크 있는지 확인
-    # if userkey_receive == 'No_login':
-    #     bookmark_data = 'No'
-    # else:
-    #     user_total_data = db.login_info.find_one({'KEY': userkey_receive}, {'_id': False})
-    #     if target_data['id'] in user_total_data['BOOKMARK']:
-    #         bookmark_data = 'Yes'
-    #     else:
-    #         bookmark_data = 'No'
+    # 유저 데이터에 북마크 있는지 확인
+    if userkey_receive == 'No_login':
+        bookmark_data = 'No'
+    else:
+        user_total_data = db.login_info.find_one({'KEY': userkey_receive}, {'_id': False})
+        if target_data['id'] in user_total_data['BOOKMARK']:
+            bookmark_data = 'Yes'
+        else:
+            bookmark_data = 'No'
 
-    return jsonify({'target_show': target_data})
-    # return jsonify({'target_show':target_data, 'bookmark_give':bookmark_data})
+    
+    return jsonify({'target_show':target_data, 'bookmark_give':bookmark_data})
 
 #######메인 관련#########
 
 #######상세페이지#######
 
-# @app.route('/add_bookmark', methods=['POST'])
-# def add_bookmark():
-#     userkey_receive = request.form['userkey_give']
-#     exhibitid_receive = request.form['exhibitid_give']
-#     user_total_data = db.login_info.find_one({'KEY': userkey_receive}, {'_id': False})
-#     exhibit_total_data = db.exhibition_info.find_one({'id': exhibitid_receive}, {'_id': False})
-#
-#     if exhibit_total_data['id'] in user_total_data['BOOKMARK']:
-#         # 전시회 북마크값 -1
-#         bookmark_value = exhibit_total_data['bookmark_total_num']
-#         new_bookmark_value = bookmark_value - 1
-#         # 유저 북마크 리스트에서 제거
-#         user_bookmark_list = user_total_data['BOOKMARK']
-#         user_bookmark_list.remove(exhibitid_receive)
-#         # DB에 업데이트
-#         db.exhibition_info.update_one({'id': exhibit_total_data['id']}, {'$set': {'bookmark_total_num': new_bookmark_value}})
-#         db.login_info.update_one({'KEY': userkey_receive}, {'$set': {'BOOKMARK': user_bookmark_list}})
-#         # 값을 돌려줌
-#         return jsonify({"Do" : "remove_complete"})
-#     else:
-#         # 전시회 북마크값 +1
-#         bookmark_value = exhibit_total_data['bookmark_total_num']
-#         new_bookmark_value = bookmark_value + 1
-#         # 유저 북마크 리스트에서 제거
-#         user_bookmark_list = user_total_data['BOOKMARK']
-#         user_bookmark_list = user_bookmark_list + [exhibitid_receive]
-#         # DB에 업데이트
-#         db.exhibition_info.update_one({'id': exhibit_total_data['id']}, {'$set': {'bookmark_total_num': new_bookmark_value}})
-#         db.login_info.update_one({'KEY': userkey_receive}, {'$set': {'BOOKMARK': user_bookmark_list}})
-#         # 값을 돌려줌
-#         return jsonify({"Do" : "add_complete"})
+@app.route('/add_bookmark', methods=['POST'])
+def add_bookmark():
+    userkey_receive = request.form['userkey_give']
+    exhibitid_receive = request.form['exhibitid_give']
+    user_total_data = db.login_info.find_one({'KEY': userkey_receive}, {'_id': False})
+    exhibit_total_data = db.exhibition_info.find_one({'id': exhibitid_receive}, {'_id': False})
+
+    if exhibit_total_data['id'] in user_total_data['BOOKMARK']:
+        # 전시회 북마크값 -1
+        bookmark_value = exhibit_total_data['bookmark_total_num']
+        new_bookmark_value = bookmark_value - 1
+        # 유저 북마크 리스트에서 제거
+        user_bookmark_list = user_total_data['BOOKMARK']
+        user_bookmark_list.remove(exhibitid_receive)
+        # DB에 업데이트
+        db.exhibition_info.update_one({'id': exhibit_total_data['id']}, {'$set': {'bookmark_total_num': new_bookmark_value}})
+        db.login_info.update_one({'KEY': userkey_receive}, {'$set': {'BOOKMARK': user_bookmark_list}})
+        # 값을 돌려줌
+        return jsonify({"Do" : "remove_complete"})
+    else:
+        # 전시회 북마크값 +1
+        bookmark_value = exhibit_total_data['bookmark_total_num']
+        new_bookmark_value = bookmark_value + 1
+        # 유저 북마크 리스트에서 제거
+        user_bookmark_list = user_total_data['BOOKMARK']
+        user_bookmark_list = user_bookmark_list + [exhibitid_receive]
+        # DB에 업데이트
+        db.exhibition_info.update_one({'id': exhibit_total_data['id']}, {'$set': {'bookmark_total_num': new_bookmark_value}})
+        db.login_info.update_one({'KEY': userkey_receive}, {'$set': {'BOOKMARK': user_bookmark_list}})
+        # 값을 돌려줌
+        return jsonify({"Do" : "add_complete"})
 
 
 #######상세페이지#######
