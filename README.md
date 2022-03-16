@@ -1,9 +1,4 @@
-# MakingChallenge11
-MakingChallenge11 전시회 프로젝트
-
-## Introduction
-스파르타 코딩 클럽 메이킹 첼린지 11기에서 진행하는\
-전시회 프로젝트 입니다.
+# 전시회 조회 웹 서비스
 
 ## Tech Stack
 ![](https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white)
@@ -13,15 +8,32 @@ MakingChallenge11 전시회 프로젝트
 ![](https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black)
 ![](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 
+
+## ⏰개발 기간
+2022년 3월 4일 - 2022년 3월 18일
+
+
+## 📄맴버 구성
+- 이충안(팀장) : 백엔드
+- 조은진 : 백엔드
+- 김윤식 : 백엔드
+- 소윤호 : 프론트엔드
+- 최우재 : 프론트엔드
+- 김인애 : 프론트엔드
+
+
+## 🖊기능 소개
+- 전국 전시회 정보 조회 서비스
+- 로그인을 통한 회원 정보 관리 및 북마크 기능
+- 사용자 위치 정보를 받아 주변 전시회 추천
+
+
 ## 디렉토리 설명
 ### exhibi-dev 폴더
-본격적인 프로젝트 코드는 여기서 진행 합니다.
-exhibi-dev폴더가 root(최상위)폴더라고 생각해도 무방합니다.
+본격적인 프로젝트 코드로 exhibi-dev폴더가 root(최상위)폴더 입니다.
 
 ### test 폴더
 전시회 프로젝트를 진행하면서 사전에 미리 test를 해본 코드는 여기서 관리합니다.
 
 ## 업로드 서버
-http://credical.shop/
-해당 서버에 html과 python 파일은 테스트 용 입니다.
---> 임시 도메인 주소 입니다.
+- http://credical.shop  임시 도메인 주소 입니다.
