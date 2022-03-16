@@ -316,15 +316,17 @@ def get_exhibitionlist():
 # 상세페이지 전환
 @app.route('/show_detail', methods=['POST'])
 def show_detail():
-    title_receive = request.form['title_give']
-    target_data = db.exhibition_info.find_one(
-        {'title': title_receive}, {'_id': False})
+    id_receive = request.form['id_give']
+    print(id_receive)
+    target_data = db.exhibition_info.find_one({'id': id_receive}, {'_id': False})
+    print(target_data)
     # userkey_receive = request.form['key_give']
 
     # 조회수 +1
     now_viewnm = target_data['view_num']
+    print(now_viewnm)
     new_viewnm = now_viewnm + 1
-    db.exhibition_info.update_one({'title': title_receive}, {
+    db.exhibition_info.update_one({'id': id_receive}, {
                                   '$set': {'view_num': new_viewnm}})
 
     # # 유저 데이터에 북마크 있는지 확인
@@ -721,7 +723,8 @@ def write_review():
                 'end_date': exhibition_data['end_date'],
                 'place': exhibition_data['place'],
                 'address_class1': exhibition_data['address_class1'],
-                'address_class2': exhibition_data['address_class2']}
+                'address_class2': exhibition_data['address_class2'],
+                'id': exhibition_data['id']}
             give_exhibition_data = give_exhibition_data + [data_dict]
         return jsonify({'info': give_exhibition_data,
                         'Okay': 'MATCH_SUCCESS'})
