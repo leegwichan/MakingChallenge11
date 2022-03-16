@@ -1,9 +1,6 @@
 # 전시회 조회 웹 서비스  
 
-  
-  
-  
-  
+<br/><br/><br/><br/><br/><br/>
 
 ## Tech Stack  
 ![](https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white)
@@ -14,7 +11,7 @@
 ![](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)  
 
   
-  
+<br/><br/><br/><br/><br/><br/>
   
   
 
@@ -22,7 +19,7 @@
 2022년 3월 4일 - 2022년 3월 18일  
   
   
-  
+<br/><br/><br/><br/><br/><br/>
   
 
 ## 📄맴버 구성
@@ -34,7 +31,7 @@
 - 김인애 : 프론트엔드  
   
   
-  
+<br/><br/><br/><br/><br/><br/>
   
 
 
@@ -44,7 +41,7 @@
 - 사용자 위치 정보를 받아 주변 전시회 추천  
   
   
-  
+<br/><br/><br/><br/><br/><br/>
   
 
 
@@ -53,14 +50,14 @@
 본격적인 프로젝트 코드로 exhibi-dev폴더가 root(최상위)폴더 입니다.  
 
   
-  
+<br/><br/><br/><br/><br/><br/>
   
   
 ### test 폴더
 전시회 프로젝트를 진행하면서 사전에 미리 test를 해본 코드는 여기서 관리합니다.  
   
   
-  
+<br/><br/><br/><br/><br/><br/>
   
 
 
