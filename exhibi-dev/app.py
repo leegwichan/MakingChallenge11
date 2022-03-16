@@ -317,9 +317,7 @@ def get_exhibitionlist():
 @app.route('/show_detail', methods=['POST'])
 def show_detail():
     id_receive = request.form['id_give']
-    print(id_receive)
     target_data = db.exhibition_info.find_one({'id': id_receive}, {'_id': False})
-    print(target_data)
     userkey_receive = request.form['key_give']
 
 

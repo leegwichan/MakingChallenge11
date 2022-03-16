@@ -87,12 +87,17 @@
             } else if(id == 'No_next'){
                 alert('마지막 페이지입니다.')
             } else {
+
+                var session_key = sessionStorage.getItem('session_key')
+                if (session_key == null){
+                session_key = 'No_login'
+                }
                 
                 $('#detail-page').empty()
                 $.ajax({
                     type: 'POST',
                     url: '/show_detail',
-                    data: {id_give: id},
+                    data: {id_give: id, key_give: session_key},
                     success: function (response) {
                         let target_show = response['target_show']
 
