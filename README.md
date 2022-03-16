@@ -47,7 +47,7 @@
     
 <br/>
 
-    **app.py 안 route 주소로 페이지 변경해 가시면 됩니다**
+    ps) app.py 안 route 주소로 페이지 변경해 가시면 됩니다
 
 <br/><br/>
  
