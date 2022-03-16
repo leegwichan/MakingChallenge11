@@ -21,11 +21,29 @@
 <br/>
 
     1. 패키지 설치  
-    - flask  <br/>
-    - pymongo  <br/>
-    - folium  <br/>
-    - request  <br/>
-    - geopy  <br/>
+    
+    <br/>
+        // install pip [패키지]
+    <br/>
+    
+        - flask  
+        
+        <br/>
+        
+        - pymongo 
+        
+        <br/>
+        
+        - folium  
+        
+        <br/>
+        
+        - request  
+        
+        <br/>
+        
+        - geopy  
+        
     
 <br/>
 
