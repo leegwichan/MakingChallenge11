@@ -20,6 +20,10 @@ dl {
     width: 260px;
     height: 50px;
     float: left;
+    cursor: pointer !important;
+}
+label {
+    cursor: pointer;
 }
 .marktext{
     font-size:30px;

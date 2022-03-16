@@ -183,7 +183,7 @@
                                                                         <p class="tit"><b>구매 링크</b></p>
                                                                         <input class="form-control add" type="text" placeholder="Disabled input" aria-label="Disabled input example" id="ticketlink" value="${ticket_link}" readonly>
                                                                         <div class=igather>
-                                                                            <i class="i-bookmark circle" onclick="check()" id="bookmark" ></i>
+                                                                            <i class="i-bookmark circle" onclick="check('${id}')" id="bookmark" ></i>
                                                                             <i class="i-share circle" onclick="copy('${ticket_link}')"></i>
                                                                             <i class="i-info circle" onclick="info()" id="info"></i>
                                                                         </div>
@@ -199,7 +199,7 @@
                                                             <!--상세정보-->
                                                             <div class="left-box2">
                                                                 <p class="detailstxt"><b>상세정보</b></p>
-                                                                <div><img src="${detail_link}" class="details" alt="..."></div>
+                                                                <div><img src="${detail_link}" class="details" alt="..." id=detailimg></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -268,19 +268,45 @@
                                                 `
 
                         $('#detail-page').append(detail_temp_html)
+                        $('#detailimg').empty()
+                        /*상세이미지 리스트*/
+                        for(let i = 0; i < detail_link.length; i++){
+                            let img_link = detail_link[i]
+                            let temp2_html = `<div><img src="${img_link}" id=detailimg class="details" alt="..."></div>`
+                            $('#detailimg').append(temp2_html)
+                        }
+
+                        if(response['bookmark_give'] == 'Yes'){
+                            document.getElementById('bookmark').style.color = "blue"
+                        }
                     }
                 })
             }
         }
 
         /*상세 페이지 북마크 클릭 함수*/
-        function check(){
-            if(document.getElementById('bookmark').style.color == "blue"){
-                document.getElementById('bookmark').style.color = "black";
-                alert('북마크가 해제 되었습니다')
+        function check(id){
+            var session_key = sessionStorage.getItem('session_key')
+
+            if(sessionStorage.getItem('session_key') == null){
+                alert('로그인 후 이용해주세요')
             } else{
-                document.getElementById('bookmark').style.color = "blue"
-                alert('북마크가 추가 되었습니다')
+                $.ajax({
+                    type: 'POST',
+                    url: '/add_bookmark',
+                    data: {userkey_give: session_key, exhibitid_give: id},
+                    success: function (response) {
+                        let Do = response['Do']
+                        
+                        if(Do == "remove_complete"){
+                            document.getElementById('bookmark').style.color = "black"
+                            alert('북마크가 해제 되었습니다')
+                        } else{
+                            document.getElementById('bookmark').style.color = "blue"
+                            alert('북마크가 추가 되었습니다')
+                        }
+                    }
+                })
             }
         }
         /*상세 페이지 링크 복사 함수*/
@@ -323,16 +349,16 @@
                 <div class="middle-left float-left">
                     <div class="left-menu">
                         <div class="">
-                            <div id="menu-button_01" class="menu-button">
+                            <div id="menu-button_01" class="menu-button deact">
                                 <label>
                                     <input type="radio" name="main_menu" id="main-menu"
-                                        value="My 프로필" ><span>My 프로필</span>
+                                        value="My 프로필" onClick="location.href='/mypage'"><span>My 프로필</span>
                                 </label>
                             </div>
-                            <div id="menu-button_02" class="menu-button active deact">
+                            <div id="menu-button_02" class="menu-button active ">
                                 <label>
                                     <input type="radio" name="main_menu" id="main-menu"
-                                        value="북마크" onClick="location.href='/mybookmark'"><span>북마크</span>
+                                        value="북마크"><span>북마크</span>
                                 </label>
                             </div>
                         </div>

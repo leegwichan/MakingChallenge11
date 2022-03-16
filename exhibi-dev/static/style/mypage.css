@@ -21,6 +21,9 @@ dl {
     height: 50px;
     float: left;
 }
+label {
+    cursor: pointer;
+}
 .protext{
     font-size:30px;
 }
