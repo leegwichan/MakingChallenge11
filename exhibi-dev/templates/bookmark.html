@@ -178,7 +178,6 @@
                                                                 </div>
                                                                 <!--오른쪽 박스-->
                                                                 <div class="wrap2">
-                                                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.039532707417!2d126.98614821516816!3d37.57768677979574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca327740a4ad9%3A0xa1b7a5ebaf602455!2z7JWE652866as7Jik666k7KeA7JeEIOyduCDsiqTtjpjsnbTsiqQ!5e0!3m2!1sko!2skr!4v1647009389803!5m2!1sko!2skr" width="420" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                                                                     <div class="right-menu">
                                                                         <p class="tit"><b>구매 링크</b></p>
                                                                         <input class="form-control add" type="text" placeholder="Disabled input" aria-label="Disabled input example" id="ticketlink" value="${ticket_link}" readonly>
@@ -197,9 +196,8 @@
                                                                 </div>
                                                             </div>
                                                             <!--상세정보-->
-                                                            <div class="left-box2">
+                                                            <div class="left-box2" id=detailimg>
                                                                 <p class="detailstxt"><b>상세정보</b></p>
-                                                                <div><img src="${detail_link}" class="details" alt="..." id=detailimg></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -211,7 +209,7 @@
                         /*상세이미지 리스트*/
                         for(let i = 0; i < detail_link.length; i++){
                             let img_link = detail_link[i]
-                            let temp2_html = `<div><img src="${img_link}" id=detailimg class="details" alt="..."></div>`
+                            let temp2_html = `<div><img src="${img_link}" class="details" alt="..."></div>`
                             $('#detailimg').append(temp2_html)
                         }
 

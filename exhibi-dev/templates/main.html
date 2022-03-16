@@ -269,9 +269,8 @@
                                                                 </div>
                                                             </div>
                                                             <!--상세정보-->
-                                                            <div class="left-box2">
+                                                            <div class="left-box2" id=detailimg>
                                                                 <p class="detailstxt"><b>상세정보</b></p>
-                                                                <div><img src="${detail_link}" class="details" alt="..." id=detailimg></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -288,6 +287,7 @@
                         /*상세이미지 리스트*/
                         for (let i = 0; i < detail_link.length; i++) {
                             let img_link = detail_link[i]
+                            console.log(img_link)
                             let temp2_html = `<div><img src="${img_link}" id=detailimg class="details" alt="..."></div>`
                             $('#detailimg').append(temp2_html)
                         }
