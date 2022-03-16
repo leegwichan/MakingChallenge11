@@ -94,7 +94,7 @@
                                     data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
                                     <div class="card shadow show-card"  onclick="show_detail('${id}')">
                                         <img class="card-img-top"
-                                            src="${image_link}"
+                                            src="${image_link}" onerror="this.src='/static/imgs/noimage.png';"
                                             alt="Card image cap">
                                         <div class="card-body">
                                             <h5 class="card-title weight_600">${title}</h5>
@@ -107,7 +107,7 @@
                 $('#cards-box').append(temp_html);
 
                 card_id_list.push(id)
-                sessionStorage.setItem('exhibit_id_list',card_id_list)
+                sessionStorage.setItem('exhibit_id_list', card_id_list)
             }
         }
 
@@ -148,15 +148,16 @@
                 }
             })
         }
+
         // 왼쪽 메뉴 전시 리스트 가져오기 끝
 
 
         // 전시회 상세 페이지 값 가져오기 시작
 
         function show_detail(id) {
-            if (id == 'No_preview'){
+            if (id == 'No_preview') {
                 alert('첫 페이지입니다.')
-            } else if(id == 'No_next'){
+            } else if (id == 'No_next') {
                 alert('마지막 페이지입니다.')
             } else {
 
@@ -199,13 +200,13 @@
                         //버튼 만들기 작업
                         let exhibit_id_list = sessionStorage.getItem('exhibit_id_list').split(',')
 
-                        if(exhibit_id_list.indexOf(id) == 0){
+                        if (exhibit_id_list.indexOf(id) == 0) {
                             var pre_value = "'No_preview'"
                         } else {
                             var pre_value = "'" + exhibit_id_list[exhibit_id_list.indexOf(id) - 1] + "'"
                         }
 
-                        if(exhibit_id_list.indexOf(id) == exhibit_id_list.length - 1){
+                        if (exhibit_id_list.indexOf(id) == exhibit_id_list.length - 1) {
                             var next_value = "'No_next'"
                         } else {
                             var next_value = "'" + exhibit_id_list[exhibit_id_list.indexOf(id) + 1] + "'"
@@ -213,9 +214,9 @@
 
                         let detail_temp_html = `<div class="container">
                                                     <!--헤드 버튼-->
-                                                    <div class="top topbutton">
+                                                    <div class="top">
                                                         <i class="i-shape_l btn btn-blue_F topbtn" onclick="show_detail(${pre_value})"></i>
-                                                        <i class="i-close btn btn-blue_F topbtn close" data-bs-dismiss="offcanvas" aria-label="Close"></i>
+                                                        <i class="i-close btn btn-blue_F topbtn" data-bs-dismiss="offcanvas" aria-label="Close"></i>
                                                         <i class="i-shape_r btn btn-blue_F topbtn" onclick="show_detail(${next_value})"></i>
                                                     </div>
                                                     <div class="middle">
@@ -283,7 +284,7 @@
                                                 `
 
                         $('#detail-page').append(detail_temp_html)
-                        
+                        $('#detailimg').empty()
                         /*상세이미지 리스트*/
                         for (let i = 0; i < detail_link.length; i++) {
                             let img_link = detail_link[i]
@@ -308,7 +309,7 @@
                 url: '/show_detail/another_exhibit',
                 data: {id_give: id},
                 success: function (response) {
-                    for (let i=0; i<response.length; i++){
+                    for (let i = 0; i < response.length; i++) {
                         let image = response[i]['image_link']
                         let title = response[i]['title']
                         let start_date = response[i]['start_date']
@@ -344,23 +345,23 @@
 
 
         /*상세 페이지 북마크 클릭 함수*/
-        function check(id){
+        function check(id) {
             var session_key = sessionStorage.getItem('session_key')
 
-            if(sessionStorage.getItem('session_key') == null){
+            if (sessionStorage.getItem('session_key') == null) {
                 alert('로그인 후 이용해주세요')
-            } else{
+            } else {
                 $.ajax({
                     type: 'POST',
                     url: '/add_bookmark',
                     data: {userkey_give: session_key, exhibitid_give: id},
                     success: function (response) {
                         let Do = response['Do']
-                        
-                        if(Do == "remove_complete"){
+
+                        if (Do == "remove_complete") {
                             document.getElementById('bookmark').style.color = "black"
                             alert('북마크가 해제 되었습니다')
-                        } else{
+                        } else {
                             document.getElementById('bookmark').style.color = "blue"
                             alert('북마크가 추가 되었습니다')
                         }
@@ -368,6 +369,7 @@
                 })
             }
         }
+
         /*상세 페이지 링크 복사 함수*/
         function copy(str) {
             let t = document.createElement("textarea");
@@ -380,11 +382,11 @@
         }
 
         /*상세 페이지 i 클릭 함수*/
-        function info(){
-            if(document.getElementById("infoopen").style.display == 'block'){
+        function info() {
+            if (document.getElementById("infoopen").style.display == 'block') {
                 document.getElementById("info").style.color = "black"
                 document.getElementById("infoopen").style.display = 'none';
-            } else{
+            } else {
                 document.getElementById("info").style.color = "blue"
                 document.getElementById("infoopen").style.display = 'block';
             }
@@ -450,6 +452,7 @@
                 alert('아직 로그인하지 않았습니다.')
             }
         }
+
         // 로그아웃 버튼 누눌때, 작동 끝
 
 
@@ -461,7 +464,7 @@
                 let login_temp = `<button class="btn btn-white btn-radius log-in" type="text" placeholder=""
                                     onClick="location.href='/login_page'">로그인
                                   </button>`
-                let join_temp =`<button class="btn btn-white btn-radius btn-blue sign-up" type="text" noresize="noresize"
+                let join_temp = `<button class="btn btn-white btn-radius btn-blue sign-up" type="text" noresize="noresize"
                                     placeholder="" onClick="location.href='/join'">회원가입
                                  </button>`
 
@@ -480,6 +483,7 @@
                 $('#logout-view').append(logout_temp)
             }
         }
+
         // 세션 확인 로그인 로그아웃 화면 노출 끝
 
         // 지역 지도 검색 시작
@@ -505,14 +509,24 @@
                     url: "/setposition",
                     data: {address1_give: sido, address2_give: gugun, key_give: session_key},
                     success: function (response) {
-                        alert(response['msg']);
-                    }
+                        console.log(response['result']);
+                        console.log(response['position_map.html'])
+                        let iframe_map = response['position_map.html']
 
+                        if (iframe_map != '') {
+                            let iframe_temp = `<iframe allow="fullscreen" src="http://https://map.kakao.com/"
+                                                allow="autoplay; encrypted-media" scrolling="no" align="center"
+                                                class="iframebox"></iframe>`
+                            $('#iframe-map').empty()
+                            $('#iframe-map').append(iframe_temp)
+                        }
+                    }
                 })
             }
         }
 
         // 지역 지도 검색 시작 끝
+
 
         function myCategory() {
 
@@ -588,7 +602,7 @@
         }
 
 
-         function categorySave() {
+        function categorySave() {
 
             let cate = [];
             let session_key;
@@ -635,7 +649,7 @@
                     let select_cate = (response['user_categ']);
                     console.log(select_cate)
 
-                    location.href="/";
+                    location.href = "/";
                 }
             })
         }
@@ -661,100 +675,100 @@
                         $('#left-mainmenu').empty()
 
 
-                            if (cate.includes("exhibition")) {
+                        if (cate.includes("exhibition")) {
 
 
-                                let main_exhibition = `<div id="menu-button_01" class="menu-button">
+                            let main_exhibition = `<div id="menu-button_01" class="menu-button">
                                                 <label>
                                                     <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
                                                            value="exhibition"><span>전시</span>
                                                 </label>
                                             </div>`
-                                $('#left-mainmenu').append(main_exhibition)
+                            $('#left-mainmenu').append(main_exhibition)
 
 
-                                $('#ck-button_01').empty()
-                                let cate_exhibition = `                    <label>
+                            $('#ck-button_01').empty()
+                            let cate_exhibition = `                    <label>
                         <input type="checkbox" name="interest-01" id="interest"
                                value="exhibition" onClick="myCategory()" checked><span>전시</span>
                     </label>
                 </div>`
-                                $('#ck-button_01').append(cate_exhibition)
-                            }
+                            $('#ck-button_01').append(cate_exhibition)
+                        }
 
-                            if (cate.includes("museum")) {
-                                let main_museum = `<div id="menu-button_02" class="menu-button">
+                        if (cate.includes("museum")) {
+                            let main_museum = `<div id="menu-button_02" class="menu-button">
                                             <label>
                                                 <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
                                                        value="museum"><span>뮤지엄</span>
                                             </label>
                                         </div>`
-                                $('#left-mainmenu').append(main_museum)
+                            $('#left-mainmenu').append(main_museum)
 
 
-                                $('#ck-button_02').empty()
-                                let cate_museum = ` <label>
+                            $('#ck-button_02').empty()
+                            let cate_museum = ` <label>
                         <input type="checkbox" name="interest-02" id="interest"
                                value="museum" onClick="myCategory()" checked><span>뮤지엄</span>
                     </label>`
-                                $('#ck-button_02').append(cate_museum)
-                            }
+                            $('#ck-button_02').append(cate_museum)
+                        }
 
-                            if (cate.includes("childs_experience")) {
-                                let main_childs_experience = `<div id="menu-button_03" class="menu-button">
+                        if (cate.includes("childs_experience")) {
+                            let main_childs_experience = `<div id="menu-button_03" class="menu-button">
                                                     <label>
                                                         <input type="radio" name="main_menu" id="main-menu"
                                                                onclick="exhibition_listup()"
                                                                value="childs_experience"><span>아동체험전</span>
                                                     </label>
                                                 </div>`
-                                $('#left-mainmenu').append(main_childs_experience)
+                            $('#left-mainmenu').append(main_childs_experience)
 
 
-                                $('#ck-button_03').empty()
-                                let cate_childs_experience = `<label>
+                            $('#ck-button_03').empty()
+                            let cate_childs_experience = `<label>
                         <input type="checkbox" name="interest-03" id="interest"
                                value="childs_experience" onClick="myCategory()" checked><span>아동체험전</span>
                     </label>`
-                                $('#ck-button_03').append(cate_childs_experience)
-                            }
+                            $('#ck-button_03').append(cate_childs_experience)
+                        }
 
-                            if (cate.includes("event/festival")) {
-                                let main_eventfestival = `<div id="menu-button_04" class="menu-button">
+                        if (cate.includes("event/festival")) {
+                            let main_eventfestival = `<div id="menu-button_04" class="menu-button">
                                                     <label>
                                                         <input type="radio" name="main_menu" id="main-menu"
                                                                onclick="exhibition_listup()"
                                                                value="event/festival"><span>행사/축제</span>
                                                     </label>
                                                 </div>`
-                                $('#left-mainmenu').append(main_eventfestival)
+                            $('#left-mainmenu').append(main_eventfestival)
 
 
-                                $('#ck-button_04').empty()
-                                let cate_eventfestival = `<label>
+                            $('#ck-button_04').empty()
+                            let cate_eventfestival = `<label>
                         <input type="checkbox" name="interest-04" id="interest"
                                value="event/festival" onClick="myCategory()" checked><span>행사/축제</span>
                     </label>`
-                                $('#ck-button_04').append(cate_eventfestival)
-                            }
+                            $('#ck-button_04').append(cate_eventfestival)
+                        }
 
-                            if (cate.includes("class")) {
-                                let main_class = `<div id="menu-button_05" class="menu-button">
+                        if (cate.includes("class")) {
+                            let main_class = `<div id="menu-button_05" class="menu-button">
                                             <label>
                                                 <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
                                                        value="class"><span>클래스</span>
                                             </label>
                                         </div>`
-                                $('#left-mainmenu').append(main_class)
+                            $('#left-mainmenu').append(main_class)
 
 
-                                $('#ck-button_05').empty()
-                                let cate_class = `<label>
+                            $('#ck-button_05').empty()
+                            let cate_class = `<label>
                         <input type="checkbox" name="interest-05" id="interest"
                                value="class" onClick="myCategory()" checked><span>클래스</span>
                     </label>`
-                                $('#ck-button_05').append(cate_class)
-                            }
+                            $('#ck-button_05').append(cate_class)
+                        }
 
 
                     }
@@ -762,8 +776,6 @@
             }
 
         }
-
-
 
 
     </script>
@@ -809,7 +821,7 @@
                                                value="childs_experience" onclick="myCategory()"><span>아동체험전</span>
                                     </label>
                                 </div>
-                            </div>
+                            </div><br>
                             <div class="interest-ceter">
                                 <div id="ck-button_04" class="ck-button">
                                     <label>
@@ -828,7 +840,8 @@
 
                         <div class="modal-footer interest-ceter">
                             <div>
-                                <input class="interest-save-btn btn-radius" type="submit" value="다 했어요!" onclick="categorySave()">
+                                <input class="interest-save-btn btn-radius" type="submit" value="다 했어요!"
+                                       onclick="categorySave()">
                             </div>
                         </div>
                     </div>
@@ -902,7 +915,8 @@
                                     aria-label="Default select example"></select>
                         </div>
                         <div class="float-left">
-                            <button class="btn btn-white btn-radius map-search" type="text" placeholder="" onclick="mapSearch()">지도 검색
+                            <button class="btn btn-white btn-radius map-search" type="text" placeholder=""
+                                    onclick="mapSearch()">지도 검색
                             </button>
                         </div>
                         <div class="float-left">
@@ -927,7 +941,7 @@
                         <!-- 로그인 회원가입 끝 -->
                     </div>
                     <!-- 지도 부분 -->
-                    <div class="current-position-map" id="map">
+                    <div class="current-position-map" id="iframe-map">
                         <iframe allow="fullscreen" src="http://credical.shop/exhibi_map"
                                 allow="autoplay; encrypted-media" scrolling="no" align="center"
                                 class="iframebox"></iframe>
@@ -961,7 +975,9 @@
 
                 <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
                      aria-labelledby="offcanvasBottomLabel">
-                    
+                    <div class="offcanvas-header">
+
+                    </div>
                     <div id="detail-page" class="scrolledit">
                     </div>
                 </div>
