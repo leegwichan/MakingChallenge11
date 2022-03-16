@@ -19,11 +19,11 @@
     <script>
 
         $(document).ready(function () {
-
             all_listup();
             session_check();
             cateMainmenu();
         });
+
 
         // 지도 현재 위치(지도용 좌표 전달) 시작
         function geoFindMe() {
@@ -499,24 +499,37 @@
         }
         // 세션 확인 로그인 로그아웃 화면 노출 끝
 
+        // 지역 지도 검색 시작
+
         function mapSearch() {
 
+            let session_key = sessionStorage.getItem('session_key')
+            console.log(session_key)
 
             let sido = $("select[name=sido1]").val();
             let gugun = $("select[name=gugun1]").val();
 
-            console.log(sido,gugun)
+            if (sido == "시/도") {
+                alert("시/도를 선택해 주세요.");
+            } else if (gugun == "구/군") {
+                alert("구/군을 선택해 주세요.");
+            } else {
 
-            $.ajax({
-                type: "POST",
-                url: "/setposition",
-                data: {address1_give: sido, address2_give: gugun},
-                success: function (response) {
-                    alert(response['msg']);
+                console.log(sido, gugun)
 
-                }
-            })
+                $.ajax({
+                    type: "POST",
+                    url: "/setposition",
+                    data: {address1_give: sido, address2_give: gugun, key_give: session_key},
+                    success: function (response) {
+                        alert(response['msg']);
+                    }
+
+                })
+            }
         }
+
+        // 지역 지도 검색 시작 끝
 
         function myCategory() {
 
@@ -639,67 +652,7 @@
                     let select_cate = (response['user_categ']);
                     console.log(select_cate)
 
-
-
-                    for (let i = 0; i < select_cate.length; i++) {
-
-                        if (select_cate[i] == "exhibition") {
-
-                            $('#left-mainmenu').empty()
-
-                            let cate_exhibition = `<div id="menu-button_01" class="menu-button">
-                                                <label>
-                                                    <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
-                                                           value="exhibition"><span>전시</span>
-                                                </label>
-                                            </div>`
-                            $('#left-mainmenu').append(cate_exhibition)
-                        }
-
-                        if (select_cate[i] == "museum") {
-                            let cate_museum = `<div id="menu-button_02" class="menu-button">
-                                            <label>
-                                                <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
-                                                       value="museum"><span>뮤지엄</span>
-                                            </label>
-                                        </div>`
-                            $('#left-mainmenu').append(cate_museum)
-                        }
-
-                        if (select_cate[i] == "childs_experience") {
-                            let cate_childs_experience = `<div id="menu-button_03" class="menu-button">
-                                                    <label>
-                                                        <input type="radio" name="main_menu" id="main-menu"
-                                                               onclick="exhibition_listup()"
-                                                               value="childs_experience"><span>아동체험전</span>
-                                                    </label>
-                                                </div>`
-                            $('#left-mainmenu').append(cate_childs_experience)
-                        }
-
-                        if (select_cate[i] == "event/festival") {
-                            let cate_eventfestival = `<div id="menu-button_04" class="menu-button">
-                                                    <label>
-                                                        <input type="radio" name="main_menu" id="main-menu"
-                                                               onclick="exhibition_listup()"
-                                                               value="event/festival"><span>행사/축제</span>
-                                                    </label>
-                                                </div>`
-                            $('#left-mainmenu').append(cate_eventfestival)
-                        }
-
-                        if (select_cate[i] == "class") {
-                            let cate_class = `<div id="menu-button_05" class="menu-button">
-                                            <label>
-                                                <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
-                                                       value="class"><span>클래스</span>
-                                            </label>
-                                        </div>`
-                            $('#left-mainmenu').append(cate_class)
-                        }
-                    }
-                    // window.location.reload();
-
+                    location.href="/";
                 }
             })
         }
@@ -711,120 +664,119 @@
 
             console.log(session_key)
 
+            if (sessionStorage.getItem('session_key') != null) {
 
-            $.ajax({
-                type: "POST",
-                url: "/mycategory",
-                data: {key_give: session_key},
-                success: function (response) {
-                    console.log(response['selected_catgy']);
+                $.ajax({
+                    type: "POST",
+                    url: "/mycategory",
+                    data: {key_give: session_key},
+                    success: function (response) {
+                        console.log(response['selected_catgy']);
 
-                    let cate = response['selected_catgy'];
+                        let cate = response['selected_catgy'];
+
+                        $('#left-mainmenu').empty()
 
 
-                    for (let i = 0; i < cate.length; i++) {
+                            if (cate.includes("exhibition")) {
 
-                        if (cate[i] == "exhibition") {
 
-                            $('#left-mainmenu').empty()
-
-                            let main_exhibition = `<div id="menu-button_01" class="menu-button">
+                                let main_exhibition = `<div id="menu-button_01" class="menu-button">
                                                 <label>
                                                     <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
                                                            value="exhibition"><span>전시</span>
                                                 </label>
                                             </div>`
-                            $('#left-mainmenu').append(main_exhibition)
+                                $('#left-mainmenu').append(main_exhibition)
 
 
-                            $('#ck-button_01').empty()
-                            let cate_exhibition = `                    <label>
+                                $('#ck-button_01').empty()
+                                let cate_exhibition = `                    <label>
                         <input type="checkbox" name="interest-01" id="interest"
                                value="exhibition" onClick="myCategory()" checked><span>전시</span>
                     </label>
                 </div>`
-                            $('#ck-button_01').append(cate_exhibition)
+                                $('#ck-button_01').append(cate_exhibition)
+                            }
 
-
-                        }
-
-                        if (cate[i] == "museum") {
-                            let main_museum = `<div id="menu-button_02" class="menu-button">
+                            if (cate.includes("museum")) {
+                                let main_museum = `<div id="menu-button_02" class="menu-button">
                                             <label>
                                                 <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
                                                        value="museum"><span>뮤지엄</span>
                                             </label>
                                         </div>`
-                            $('#left-mainmenu').append(main_museum)
+                                $('#left-mainmenu').append(main_museum)
 
 
-                            $('#ck-button_02').empty()
-                            let cate_museum = ` <label>
+                                $('#ck-button_02').empty()
+                                let cate_museum = ` <label>
                         <input type="checkbox" name="interest-02" id="interest"
                                value="museum" onClick="myCategory()" checked><span>뮤지엄</span>
                     </label>`
-                            $('#ck-button_02').append(cate_museum)
-                        }
+                                $('#ck-button_02').append(cate_museum)
+                            }
 
-                        if (cate[i] == "childs_experience") {
-                            let main_childs_experience = `<div id="menu-button_03" class="menu-button">
+                            if (cate.includes("childs_experience")) {
+                                let main_childs_experience = `<div id="menu-button_03" class="menu-button">
                                                     <label>
                                                         <input type="radio" name="main_menu" id="main-menu"
                                                                onclick="exhibition_listup()"
                                                                value="childs_experience"><span>아동체험전</span>
                                                     </label>
                                                 </div>`
-                            $('#left-mainmenu').append(main_childs_experience)
+                                $('#left-mainmenu').append(main_childs_experience)
 
 
-                            $('#ck-button_03').empty()
-                            let cate_childs_experience = `<label>
+                                $('#ck-button_03').empty()
+                                let cate_childs_experience = `<label>
                         <input type="checkbox" name="interest-03" id="interest"
                                value="childs_experience" onClick="myCategory()" checked><span>아동체험전</span>
                     </label>`
-                            $('#ck-button_03').append(cate_childs_experience)
-                        }
+                                $('#ck-button_03').append(cate_childs_experience)
+                            }
 
-                        if (cate[i] == "event/festival") {
-                            let main_eventfestival = `<div id="menu-button_04" class="menu-button">
+                            if (cate.includes("event/festival")) {
+                                let main_eventfestival = `<div id="menu-button_04" class="menu-button">
                                                     <label>
                                                         <input type="radio" name="main_menu" id="main-menu"
                                                                onclick="exhibition_listup()"
                                                                value="event/festival"><span>행사/축제</span>
                                                     </label>
                                                 </div>`
-                            $('#left-mainmenu').append(main_eventfestival)
+                                $('#left-mainmenu').append(main_eventfestival)
 
 
-                            $('#ck-button_04').empty()
-                            let cate_eventfestival = `<label>
+                                $('#ck-button_04').empty()
+                                let cate_eventfestival = `<label>
                         <input type="checkbox" name="interest-04" id="interest"
                                value="event/festival" onClick="myCategory()" checked><span>행사/축제</span>
                     </label>`
-                            $('#ck-button_04').append(cate_eventfestival)
-                        }
+                                $('#ck-button_04').append(cate_eventfestival)
+                            }
 
-                        if (cate[i] == "class") {
-                            let main_class = `<div id="menu-button_05" class="menu-button">
+                            if (cate.includes("class")) {
+                                let main_class = `<div id="menu-button_05" class="menu-button">
                                             <label>
                                                 <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
                                                        value="class"><span>클래스</span>
                                             </label>
                                         </div>`
-                            $('#left-mainmenu').append(main_class)
+                                $('#left-mainmenu').append(main_class)
 
 
-                            $('#ck-button_05').empty()
-                            let cate_class = `<label>
+                                $('#ck-button_05').empty()
+                                let cate_class = `<label>
                         <input type="checkbox" name="interest-05" id="interest"
                                value="class" onClick="myCategory()" checked><span>클래스</span>
                     </label>`
-                            $('#ck-button_05').append(cate_class)
-                        }
-                    }
+                                $('#ck-button_05').append(cate_class)
+                            }
 
-                }
-            })
+
+                    }
+                })
+            }
 
         }
 

@@ -66,6 +66,8 @@
 					success: function (response) {
 						let member_list = JSON.parse(response['all_member_list'])
 
+                        let member_id_index = member_list.findIndex(v => v.ID === type_id);
+
                         if (member_id_index !== -1) {
                             let PASSWORD = member_list[member_id_index]['PASSWORD'];
                             if (PASSWORD === type_pw) {

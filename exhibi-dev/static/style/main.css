@@ -71,6 +71,11 @@ body {
     width: 100%;
 }
 
+.title_inner {
+    display: flex;
+    justify-content: space-between;
+}
+
 .map-search {
     position: relative;
     top: 0px;
@@ -375,6 +380,20 @@ dt.open + dd { /* 서브 메뉴 리스트 */
 .interest-cate-btn:hover {
     background-color: #004FFF;
     color: #FFFFFF;
+}
+
+.btn2{
+    background-color:white;
+    color: black;
+    border-color: white;
+    border-radius:35px;
+    padding: 10px 40px;
+    margin: 30px 15px 30px 0px;
+}
+
+.box2{
+    margin-top: 30px;
+    height:max-content;
 }
 
 .interest-ceter {
