@@ -1,26 +1,26 @@
-.top{
-    position:relative;
-    /*background-color: white;*/
+.topbutton{
+    background-color:rgb(255, 255, 255, 0.9);
     align-content: center;
-    /**width:fit-content;*/
-    /*padding:0 10px 10px 10px;*/
-    border-radius:0 0 10px 10px;
+    width:fit-content;
+    padding: 15px 10px 25px 10px;
+    border-radius: 0 0 20px 20px;
     justify-content: center;
     left:45%;
-    width: 100%;
-    padding-right: var(--bs-gutter-x,.75rem);
-    padding-left: var(--bs-gutter-x,.75rem);
-    margin-right: auto;
-    margin-left: auto;
+    margin-bottom: 50px;
+    position:fixed;
+    box-shadow: 5px 24px 68px rgb(102 102 102 / 21%);
 }
 .topbtn{
-    background-color: white;
+    background-color: rgb(255, 255, 255, 0);
+    font-size: 20px;
+    
 }
 .imgbox{
     float:left;
     margin-bottom:35px;
     background-color: white;
     border-radius: 15px 0 0 15px;
+    margin-top:145px;
 }
 .infoimg{
     width:390px;
@@ -35,6 +35,7 @@
     background-color: white;
     padding:10px 0 0 10px;
     border-radius: 0 15px 15px 0;
+    margin-top:145px;
 }
 .infotext{
     font-size: 20px;
@@ -55,8 +56,9 @@
 }
 .right-menu{
     background-color: white;
-    padding: 17px;
+    padding: 32px;
     border-radius: 15px;
+    margin-bottom: 20px;
 }
 #infoopen{
     background-color: white;
@@ -82,7 +84,8 @@
 }
 .igather{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin-top: 22px;
 }
 .circle{
     width: 2.5em;
@@ -100,7 +103,7 @@
 .button{
     margin-top: 10px;
     width: 420px;
-    padding:10px 0;
+    padding:17px 0;
 }
 .detailstxt{
     font-size:20px;
@@ -120,9 +123,11 @@
 .wrap2{
     width:420px !important;
     float: right;
+    margin-top:145px;
 }
 .scrolledit{
     overflow-y:scroll;
+    background-color: #F7F8FA;
 }
 .plus{
     padding:0;
@@ -145,4 +150,13 @@
 .modalcol{
     margin-right: 1%;
     flex: 0 0 0%;
+}
+.form-control[readonly]{
+    background-color: white;
+    border-radius: 2em;
+    padding: 13px;
+    border: 2px solid #ECEDF4;
+}
+.close{
+    margin:0px 30px;
 }
