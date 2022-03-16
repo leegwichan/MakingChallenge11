@@ -13,15 +13,19 @@
 <br/><br/>
 
 ## 👍실행 하는 법
+
 <br/>
+
 ### app.py (flask) 서버 실행
+
 <br/>
-  1. 패키지 설치  
-    - flask  
-    - pymongo  
-    - folium  
-    - request  
-    - geopy  
+
+    1. 패키지 설치  
+    - flask  <br/>
+    - pymongo  <br/>
+    - folium  <br/>
+    - request  <br/>
+    - geopy  <br/>
     
 <br/>
 
