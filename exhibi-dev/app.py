@@ -309,6 +309,9 @@ def get_exhibitionlist():
         [{"$match": {"class": class_receive}}, {"$sample": {"size": 20}}]))
     return jsonify({'show_list': dumps(selected_list)})
 
+#######메인 관련#########
+
+#######상세페이지#######
 
 # 상세페이지 전환
 @app.route('/show_detail', methods=['POST'])
@@ -320,7 +323,6 @@ def show_detail():
 
     # 조회수 +1
     now_viewnm = target_data['view_num']
-    print(now_viewnm)
     new_viewnm = now_viewnm + 1
     db.exhibition_info.update_one({'id': id_receive}, {
                                   '$set': {'view_num': new_viewnm}})
@@ -338,9 +340,22 @@ def show_detail():
 
     return jsonify({'target_show': target_data, 'bookmark_give': bookmark_data})
 
-#######메인 관련#########
 
-#######상세페이지#######
+@app.route('/show_detail/another_exhibit', methods=['POST'])
+def show_another_exhibit():
+    id_receive = request.form['id_give']
+    main_data = db.exhibition_info.find_one({'id':id_receive},{'_id':False})
+    standard_class1 = main_data['address_class1']
+    standard_class2 = main_data['address_class2']
+
+    ano_exhibit = list(db.exhibition_info.find({'address_class1':standard_class1,'address_class2':standard_class2},{'_id':False}))
+    if main_data in ano_exhibit:
+        ano_exhibit.remove(main_data)
+    if len(ano_exhibit) <= 4:
+        give_ano_exhibit = ano_exhibit
+    else:
+        give_ano_exhibit = ano_exhibit[0:3]
+    return jsonify(give_ano_exhibit)
 
 
 @app.route('/add_bookmark', methods=['POST'])
