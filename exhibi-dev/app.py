@@ -205,7 +205,7 @@ def set_position():
         popup_html = folium.Popup(summary_info, max_width=500)
 
 # 수정해야함
-        if(request.form['key_give'] is not None):
+        if(request.form['key_give'] != ''):
             key_receive = request.form['key_give']
             make_bmplace(key_receive)
 
@@ -258,14 +258,11 @@ def set_position():
 ## 지도 관련부분 버튼 끝 ##
 
 
-# 메인페이지 로그인한 상태에서 동작(오류 발생)
+# 메인페이지 로그인한 상태에서 동작
 @app.route('/mycategory', methods=['POST'])
 def login_category():
     user_key = request.form['key_give']
-    # print("33333333333333333333333")
-    # print(user_key)
-    user_data = db.login_info.find_one({'key': user_key})
-    # print(user_data)
+    user_data = db.login_info.find_one({'KEY': user_key})
     user_category = user_data['CATEGORY']
     return jsonify({"selected_catgy": user_category})
 
@@ -317,9 +314,9 @@ def get_exhibitionlist():
 @app.route('/show_detail', methods=['POST'])
 def show_detail():
     id_receive = request.form['id_give']
-    target_data = db.exhibition_info.find_one({'id': id_receive}, {'_id': False})
+    target_data = db.exhibition_info.find_one(
+        {'id': id_receive}, {'_id': False})
     userkey_receive = request.form['key_give']
-
 
     # 조회수 +1
     now_viewnm = target_data['view_num']
@@ -332,25 +329,28 @@ def show_detail():
     if userkey_receive == 'No_login':
         bookmark_data = 'No'
     else:
-        user_total_data = db.login_info.find_one({'KEY': userkey_receive}, {'_id': False})
+        user_total_data = db.login_info.find_one(
+            {'KEY': userkey_receive}, {'_id': False})
         if target_data['id'] in user_total_data['BOOKMARK']:
             bookmark_data = 'Yes'
         else:
             bookmark_data = 'No'
 
-    
-    return jsonify({'target_show':target_data, 'bookmark_give':bookmark_data})
+    return jsonify({'target_show': target_data, 'bookmark_give': bookmark_data})
 
 #######메인 관련#########
 
 #######상세페이지#######
 
+
 @app.route('/add_bookmark', methods=['POST'])
 def add_bookmark():
     userkey_receive = request.form['userkey_give']
     exhibitid_receive = request.form['exhibitid_give']
-    user_total_data = db.login_info.find_one({'KEY': userkey_receive}, {'_id': False})
-    exhibit_total_data = db.exhibition_info.find_one({'id': exhibitid_receive}, {'_id': False})
+    user_total_data = db.login_info.find_one(
+        {'KEY': userkey_receive}, {'_id': False})
+    exhibit_total_data = db.exhibition_info.find_one(
+        {'id': exhibitid_receive}, {'_id': False})
 
     if exhibit_total_data['id'] in user_total_data['BOOKMARK']:
         # 전시회 북마크값 -1
@@ -360,10 +360,12 @@ def add_bookmark():
         user_bookmark_list = user_total_data['BOOKMARK']
         user_bookmark_list.remove(exhibitid_receive)
         # DB에 업데이트
-        db.exhibition_info.update_one({'id': exhibit_total_data['id']}, {'$set': {'bookmark_total_num': new_bookmark_value}})
-        db.login_info.update_one({'KEY': userkey_receive}, {'$set': {'BOOKMARK': user_bookmark_list}})
+        db.exhibition_info.update_one({'id': exhibit_total_data['id']}, {
+                                      '$set': {'bookmark_total_num': new_bookmark_value}})
+        db.login_info.update_one({'KEY': userkey_receive}, {
+                                 '$set': {'BOOKMARK': user_bookmark_list}})
         # 값을 돌려줌
-        return jsonify({"Do" : "remove_complete"})
+        return jsonify({"Do": "remove_complete"})
     else:
         # 전시회 북마크값 +1
         bookmark_value = exhibit_total_data['bookmark_total_num']
@@ -372,10 +374,12 @@ def add_bookmark():
         user_bookmark_list = user_total_data['BOOKMARK']
         user_bookmark_list = user_bookmark_list + [exhibitid_receive]
         # DB에 업데이트
-        db.exhibition_info.update_one({'id': exhibit_total_data['id']}, {'$set': {'bookmark_total_num': new_bookmark_value}})
-        db.login_info.update_one({'KEY': userkey_receive}, {'$set': {'BOOKMARK': user_bookmark_list}})
+        db.exhibition_info.update_one({'id': exhibit_total_data['id']}, {
+                                      '$set': {'bookmark_total_num': new_bookmark_value}})
+        db.login_info.update_one({'KEY': userkey_receive}, {
+                                 '$set': {'BOOKMARK': user_bookmark_list}})
         # 값을 돌려줌
-        return jsonify({"Do" : "add_complete"})
+        return jsonify({"Do": "add_complete"})
 
 
 #######상세페이지#######
@@ -418,7 +422,7 @@ def sign_up_post():
 
     }
     db.login_info.insert_one(doc)
-    return jsonify({'msg': 'COMPLETE', 'key':session_key})
+    return jsonify({'msg': 'COMPLETE', 'key': session_key})
 
 
 # 중복 확인란
