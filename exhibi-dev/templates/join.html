@@ -160,7 +160,8 @@
                                 INTEREST_CATEGORY_give: INTEREST_CATEGORY
                             },
                             success: function (response) {
-                                window.alert('성공했습니다')
+                                window.alert('회원가입이 완료되었습니다.')
+                                sessionStorage.setItem('session_key',response['key'])
                                 window.location.href = '/';
                             }
                         });

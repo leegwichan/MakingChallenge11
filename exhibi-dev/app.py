@@ -418,7 +418,7 @@ def sign_up_post():
 
     }
     db.login_info.insert_one(doc)
-    return jsonify({'msg': 'COMPLETE'})
+    return jsonify({'msg': 'COMPLETE', 'key':session_key})
 
 
 # 중복 확인란
