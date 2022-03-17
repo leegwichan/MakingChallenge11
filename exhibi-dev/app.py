@@ -327,6 +327,7 @@ def set_position():
                                 </p>"""
                 popup_msg.append(target_info)
 
+
             popup_msg = ''.join(popup_msg)
             full_text = f"""<div class="map_inner">{popup_msg}
                             </div>"""
