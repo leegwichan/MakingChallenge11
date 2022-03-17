@@ -41,9 +41,9 @@ def map():
     # return render_template('exhibition_map.html')
 
 # html 받아오는 부분 # API 생성맵
-# @app.route('/position_map')
-# def map():
-#     return render_template('position_map.html')
+@app.route('/position_map')
+def map():
+    return render_template('position_map.html')
 
 # html 받아오는 부분 # 회원가입 부분
 
@@ -88,111 +88,133 @@ def p_tag(title,period,latitude,longitude, place):
                 <br>in <a href='https://www.google.co.kr/maps/search/{place.replace(" ","+")}/@{latitude},{longitude}' target='_blank'>{place}</a></p>"""
     return p_tag
 
-def div_tag(title,period,latitude,longitude, place):
+def div_tag(title,period,latitude,longitude,place):
     div_tag = f"""<div class="map_inner">
-                    {p_tag(title,period,latitude,longitude, place)}
+                    {p_tag(title,period,latitude,longitude,place)}
                 </div>"""
     return div_tag
 
-# 지도 관련 함수: 한 장소에 1종류 전시
-def make_markerinfo(total_data, overlap_coordinate):
-    for data in total_data:
-        if "latitude" in data:
-            if((data['latitude'], data['longitude']) not in overlap_coordinate):
-                target_title = data['title']
-                target_place = data['place']
-                target_period = data['start_date'] + " ~ " + data['end_date']
-                target_latitude = data['latitude']
-                target_longitude = data['longitude']
-
-                summary_info = folium.Html(f"""{div_tag(target_title,target_period,target_latitude,target_longitude,target_place)}""", script=True)
-                popup_html = folium.Popup(summary_info, max_width=500)
-    location_info = {
-        "latitude" : target_latitude,
-        "longitude" : target_longitude,
-        "popup" : popup_html,
-        "place" : target_place
-    }
-    return location_info
 
 
 
-
-# 현재 위치 검색(북마크 수정 필요!)
+# 현재 위치 검색
 @app.route('/myposition', methods=['POST'])
 def my_position():
     latitude_receive = request.form['latitude_give']
     longitude_receive = request.form['longitude_give']
 
+    map = make_map(latitude_receive, longitude_receive)
+
     total_data = list(db.exhibition_info.find({}, {'_id': False}))
 
-    # # 여러 전시 운영하는 장소의 좌표 리스트 : overlap_coordinate
-    # overlap_check = []
-    # for data in total_data:
-    #     if "latitude" in data and "longitude" in data:
-    #         overlap_data = (data['latitude'], data['longitude'])
-    #         overlap_check.append(overlap_data)
+    # 여러 전시 운영하는 장소의 좌표 리스트 생성 : overlap_coordinate
+    overlap_check = []
+    for data in total_data:
+        if "latitude" in data and "longitude" in data:
+            overlap_data = (data['latitude'], data['longitude'])
+            overlap_check.append(overlap_data)
 
-    # overlap_coordinate = []
-    # result = Counter(overlap_check)
-    # for key, value in result.items():
-    #     if value >= 2:
-    #         overlap_coordinate.append(key)
+    overlap_coordinate = []
+    result = Counter(overlap_check)
+    for key, value in result.items():
+        if value >= 2:
+            overlap_coordinate.append(key)
 
-    # # 한 장소에 1종류 전시
-    # for data in total_data:
-    #     if "latitude" in data:
-    #         if((data['latitude'], data['longitude']) not in overlap_coordinate):
-    #             target_title = data['title']
-    #             target_place = data['place']
-    #             target_period = data['start_date'] + " ~ " + data['end_date']
-    #             target_latitude = data['latitude']
-    #             target_longitude = data['longitude']
+    # 회원 마크 표시
+    if(request.form['key_give'] != ''):
+        key_receive = request.form['key_give']
+        userbm_coordinate = make_bmcoordinate(key_receive)
 
-    #             summary_info = folium.Html(f"""<div style = "text-align: center; ">
-    #                                                <p style="color:gray;">
-    #                                                <span style="font-weight:bold; color:#080808">{target_title}
-    #                                                <br>{target_period}</span>
-    #                                                <br>in {target_place}
-    #                                                </p>
-    #                                       </div>""", script=True)
-    #             popup_html = folium.Popup(summary_info, max_width=500)
-    #             folium.Marker(location=[target_latitude, target_longitude], popup=popup_html,
-    #                           tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
+        # 한 장소에 1종류 전시(회원 마크 표시)
+        for data in total_data:
+            if "latitude" in data:
+                if((data['latitude'], data['longitude']) not in overlap_coordinate):
+                    target_title = data['title']
+                    target_place = data['place']
+                    target_period = data['start_date'] + " ~ " + data['end_date']
+                    target_latitude = data['latitude']
+                    target_longitude = data['longitude']
 
-    # # 한 장소에 여러 종류 전시(구름아이콘)
-    # for coordinate in overlap_coordinate:
-    #     overlap_coordinate = list(db.exhibition_info.find(
-    #         {'latitude': coordinate[0], 'longitude': coordinate[1]}, {'_id': False}))
-    #     popup_msg = []
-    #     for overlap_one in overlap_coordinate:
-    #         target_latitude = overlap_one['latitude']
-    #         target_longitude = overlap_one['longitude']
-    #         target_title = overlap_one['title']
-    #         target_place = overlap_one['place']
-    #         target_period = overlap_one['start_date'] + \
-    #             " ~ " + overlap_one['end_date']
+                    summary_info = folium.Html(f"""{div_tag(target_title,target_period,target_latitude,target_longitude,target_place)}""", script=True)
+                    popup_html = folium.Popup(summary_info, max_width=500)
+   
+                    if((target_latitude,target_longitude) not in userbm_coordinate):
+                        folium.Marker(location=[target_latitude,target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
+                    else:
+                        folium.Marker(location=[target_latitude,target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='darkblue')).add_to(map)
 
-    #         target_info = f"""<p style="color:gray;">
-    #                              <span style="font-weight:bold; color:#080808">{target_title}<br>{target_period}</span>
-    #                             <br>in {target_place}
-    #                         </p>"""
-    #         popup_msg.append(target_info)
+        # 한 장소에 n종류 전시(회원 마크 표시)
+        for coordinate in overlap_coordinate:
+            overlap_datas = list(db.exhibition_info.find(
+                {'latitude': coordinate[0], 'longitude': coordinate[1]}, {'_id': False}))
+            popup_msg = []
+            for overlap_one in overlap_datas:
+                target_latitude = overlap_one['latitude']
+                target_longitude = overlap_one['longitude']
+                target_title = overlap_one['title']
+                target_place = overlap_one['place']
+                target_period = overlap_one['start_date'] + " ~ " + overlap_one['end_date']
 
-    #     popup_msg = ''.join(popup_msg)
-    #     full_text = f"""<div style = "text-align: center; ">{popup_msg}
-    #                     </div>"""
+                target_info = f"""{p_tag(target_title,target_period,target_latitude,target_longitude,target_place)}"""
+                popup_msg.append(target_info)
 
-    #     summary_info = folium.Html(f"""{full_text}""", script=True)
-    #     popup_html = folium.Popup(summary_info, max_width=500)
-    #     folium.Marker(location=[target_latitude, target_longitude], popup=popup_html,
-    #                   tooltip=target_place, icon=folium.Icon(color='blue', icon='cloud')).add_to(map)
+            popup_msg = ''.join(popup_msg)
+            full_text = f"""<div class="map_inner">{popup_msg}
+                            </div>"""
 
-    # map.save(
-    #     r'C:/Users/82104/Desktop/220308/test/map_test/map_api_test/templates/position_map.html')
-    # webbrowser.open_new_tab(
-    #     'C:/Users/82104/Desktop/220308/test/map_test/map_api_test/templates/position_map.html')
-    # # map.save(r'sftp://ubuntu@18.208.182.249/home/ubuntu/MakingChallenge11/exhibi-dev/templates/position_map.html')
+            summary_info = folium.Html(f"""{full_text}""", script=True)
+            popup_html = folium.Popup(summary_info, max_width=500)
+
+            if((target_latitude, target_longitude) not in userbm_coordinate):
+                folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(
+                            color='blue')).add_to(map)
+            else:
+                folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(
+                    color='darkblue', icon='bookmark')).add_to(map)
+
+    # 비회원 마크 표시
+    else:
+        # 한 장소에 1종류 전시(비회원 마크 표시)
+        for data in total_data:
+            if "latitude" in data:
+                if((data['latitude'], data['longitude']) not in overlap_coordinate):
+                    target_latitude = data['latitude']
+                    target_longitude = data['longitude']
+                    target_title = data['title']
+                    target_place = data['place']
+                    target_period = data['start_date'] + " ~ " + data['end_date']
+
+                    summary_info = folium.Html(f"""{div_tag(target_title,target_period,target_latitude,target_longitude,target_place)}""", script=True)
+                    popup_html = folium.Popup(summary_info, max_width=500)
+                   
+                    folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
+
+        # 한 장소에 n종류 전시(비회원 마크 표시)
+        for coordinate in overlap_coordinate:
+            overlap_datas = list(db.exhibition_info.find(
+                {'latitude': coordinate[0], 'longitude': coordinate[1]}, {'_id': False}))
+            popup_msg = []
+            for overlap_one in overlap_datas:
+                target_latitude = overlap_one['latitude']
+                target_longitude = overlap_one['longitude']
+                target_title = overlap_one['title']
+                target_place = overlap_one['place']
+                target_period = overlap_one['start_date'] + " ~ " + overlap_one['end_date']
+
+                target_info = f"""{p_tag(target_title,target_period,target_latitude,target_longitude,target_place)}"""
+                popup_msg.append(target_info)
+
+
+            popup_msg = ''.join(popup_msg)
+            full_text = f"""<div class="map_inner">{popup_msg}
+                            </div>"""
+
+            summary_info = folium.Html(f"""{full_text}""", script=True)
+            popup_html = folium.Popup(summary_info, max_width=500)
+
+            folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
+     
+    map.save(r'sftp://ubuntu@18.208.182.249/home/ubuntu/MakingChallenge11/exhibi-dev/templates/position_map.html')
     return jsonify({'result': 'success'})
 
 
@@ -227,31 +249,22 @@ def set_position():
         userbm_coordinate = make_bmcoordinate(key_receive)
 
         # 한 장소에 1종류 전시(회원 마크 표시)
-        single = make_markerinfo(total_data,overlap_coordinate)
-        # print(single)
-        # for data in total_data:
-        #     if "latitude" in data:
-        #         if((data['latitude'], data['longitude']) not in overlap_coordinate):
-        #             target_title = data['title']
-        #             target_place = data['place']
-        #             target_period = data['start_date'] + " ~ " + data['end_date']
-        #             target_latitude = data['latitude']
-        #             target_longitude = data['longitude']
+        for data in total_data:
+            if "latitude" in data:
+                if((data['latitude'], data['longitude']) not in overlap_coordinate):
+                    target_title = data['title']
+                    target_place = data['place']
+                    target_period = data['start_date'] + " ~ " + data['end_date']
+                    target_latitude = data['latitude']
+                    target_longitude = data['longitude']
 
-        #             summary_info = folium.Html(f"""<div class="map_inner">
-        #                                             <a class="item" href='https://www.google.co.kr/maps/search/{target_place.replace(" ","+")}/@{target_latitude},{target_longitude},17z' target='_blank'>
-        #                                             <span>{target_title}
-        #                                             <br>{target_period}</span>
-        #                                             <br>in {target_place}
-        #                                             </a>
-        #                                     </div>""", script=True)
-        #             popup_html = folium.Popup(summary_info, max_width=500)
-        # print((single['latitude'],single['longitude']))
-        # print(userbm_coordinate)
-        if((single['latitude'],single['longitude']) not in userbm_coordinate):
-            folium.Marker(location=[single['latitude'],single['longitude']], popup=single['popup'], tooltip=single['place'], icon=folium.Icon(color='blue')).add_to(map)
-        else:
-            folium.Marker(location=[single['latitude'],single['longitude']], popup=single['popup'], tooltip=single['place'], icon=folium.Icon(color='darkblue')).add_to(map)
+                    summary_info = folium.Html(f"""{div_tag(target_title,target_period,target_latitude,target_longitude,target_place)}""", script=True)
+                    popup_html = folium.Popup(summary_info, max_width=500)
+   
+                    if((target_latitude,target_longitude) not in userbm_coordinate):
+                        folium.Marker(location=[target_latitude,target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
+                    else:
+                        folium.Marker(location=[target_latitude,target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='darkblue')).add_to(map)
 
         # 한 장소에 n종류 전시(회원 마크 표시)
         for coordinate in overlap_coordinate:
@@ -265,12 +278,7 @@ def set_position():
                 target_place = overlap_one['place']
                 target_period = overlap_one['start_date'] + " ~ " + overlap_one['end_date']
 
-                target_info = f"""<p class="item">
-                                    <span>{target_title}<br>{target_period}</span>
-                                    <br>in 
-                                    <a href='https://www.google.co.kr/maps/search/{target_place.replace(" ","+")}/@{target_latitude},{target_longitude}' target='_blank'>
-                                    {target_place}</a>
-                                </p>"""
+                target_info = f"""{p_tag(target_title,target_period,target_latitude,target_longitude,target_place)}"""
                 popup_msg.append(target_info)
 
             popup_msg = ''.join(popup_msg)
@@ -299,14 +307,7 @@ def set_position():
                     target_place = data['place']
                     target_period = data['start_date'] + " ~ " + data['end_date']
 
-                    summary_info = folium.Html(f"""<div class="map_inner">
-                                                        <p class="item">
-                                                        <span>{target_title}<br>{target_period}</span>
-                                                        <br>in 
-                                                        <a href='https://www.google.co.kr/maps/search/{target_place.replace(" ","+")}/@{target_latitude},{target_longitude}' target='_blank'>
-                                                        {target_place}</a>
-                                                        </p>
-                                                    </div>""", script=True)
+                    summary_info = folium.Html(f"""{div_tag(target_title,target_period,target_latitude,target_longitude,target_place)}""", script=True)
                     popup_html = folium.Popup(summary_info, max_width=500)
                    
                     folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
@@ -323,12 +324,7 @@ def set_position():
                 target_place = overlap_one['place']
                 target_period = overlap_one['start_date'] + " ~ " + overlap_one['end_date']
 
-                target_info = f"""<p class="item">
-                                    <span>{target_title}<br>{target_period}</span>
-                                    <br>in 
-                                    <a href='https://www.google.co.kr/maps/search/{target_place.replace(" ","+")}/@{target_latitude},{target_longitude}' target='_blank'>
-                                    {target_place}</a>
-                                </p>"""
+                target_info = f"""{p_tag(target_title,target_period,target_latitude,target_longitude,target_place)}"""
                 popup_msg.append(target_info)
 
 
@@ -340,10 +336,8 @@ def set_position():
             popup_html = folium.Popup(summary_info, max_width=500)
 
             folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
-                
-    map.save(r'C:/Users/82104/Desktop/new_map.html')
-    webbrowser.open_new_tab('C:/Users/82104/Desktop/new_map.html')
-    # map.save(r'sftp://ubuntu@18.208.182.249/home/ubuntu/MakingChallenge11/exhibi-dev/templates/new_map.html')
+         
+    map.save(r'sftp://ubuntu@18.208.182.249/home/ubuntu/MakingChallenge11/exhibi-dev/templates/position_map.html')
     return jsonify({'result': 'success'})
 
 
