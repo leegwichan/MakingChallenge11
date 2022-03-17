@@ -349,6 +349,7 @@ dt.open + dd { /* 서브 메뉴 리스트 */
     text-align: center;
     font-size: 12px;
     margin-bottom: 20px;
+    margin-top: -30px;
 }
 
 .interest-save-btn {
