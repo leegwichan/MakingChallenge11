@@ -349,6 +349,7 @@ dt.open + dd { /* 서브 메뉴 리스트 */
     text-align: center;
     font-size: 12px;
     margin-bottom: 20px;
+    margin-top: -30px;
 }
 
 .interest-save-btn {
@@ -488,10 +489,6 @@ dt.open + dd { /* 서브 메뉴 리스트 */
     padding: 0;
     margin: 0;
     margin-top: 10px;
-}
-
-.btn-close {
-    box-sizing: unset;
 }
 
 /* 관심 카테고리 내용 설정 끝 */
