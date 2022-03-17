@@ -356,9 +356,13 @@ dt.open + dd { /* 서브 메뉴 리스트 */
     color: #FFFFFF;
     margin-left: 10px;
     width: 300px;
-    height: 35px;
+    height: 50px;
     font-size: 12px;
     border-radius: 2em;
+}
+
+.shadowbox {
+    box-shadow: 0 4px 12px rgb(0 0 0 / 40%);
 }
 
 .interest-save-btn:hover {
@@ -384,18 +388,18 @@ dt.open + dd { /* 서브 메뉴 리스트 */
     color: #FFFFFF;
 }
 
-.btn2{
-    background-color:white;
+.btn2 {
+    background-color: white;
     color: black;
     border-color: white;
-    border-radius:35px;
+    border-radius: 35px;
     padding: 10px 40px;
     margin: 30px 15px 30px 0px;
 }
 
-.box2{
+.box2 {
     margin-top: 30px;
-    height:max-content;
+    height: max-content;
 }
 
 .interest-ceter {
@@ -433,6 +437,7 @@ dt.open + dd { /* 서브 메뉴 리스트 */
     border-radius: 10px;
     width: 100px;
     height: 100px;
+    cursor: pointer;
 }
 
 .ck-button input[id="interest"] {
@@ -440,7 +445,7 @@ dt.open + dd { /* 서브 메뉴 리스트 */
 }
 
 .modal-header {
-   border-bottom: 0px;
+    border-bottom: 0px;
 }
 
 .modal-footer {
@@ -450,7 +455,8 @@ dt.open + dd { /* 서브 메뉴 리스트 */
 @media (min-width: 576px) {
     .modal-dialog {
         max-width: 600px;
-}}
+    }
+}
 
 /*.i-close {*/
 /*    position: absolute;*/
@@ -458,13 +464,35 @@ dt.open + dd { /* 서브 메뉴 리스트 */
 /*}*/
 
 .btn-close {
-   position: absolute;
-    top: 8px;
-    left: 565px;
+    position: absolute;
+    top: 5px;
+    left: 555px;
+    border-width: 10px;
+    border-color: #F2F3F7;
+    padding: 10px;
+    border-style: solid;
+}
+
+.modal-content {
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.i-close {
+    font-size: 7px;
 }
 
 
+.modal-header .btn-close {
+    font-size: 10px;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+}
 
+.btn-close {
+    box-sizing: unset;
+}
 
 /* 관심 카테고리 내용 설정 끝 */
 
