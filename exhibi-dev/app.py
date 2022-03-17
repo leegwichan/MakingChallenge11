@@ -84,14 +84,12 @@ def make_bmcoordinate(key):
 
 # 지도 관련 함수: pop 내부 html 태그
 def p_tag(title,period,latitude,longitude, place):
-    p_tag = f"""<p class="item"><span>{title}<br>{period}</span>
+    p_tag = f"""<p class="item"><span style="font-weight:bold; color:#080808">{title}<br>{period}</span>
                 <br>in <a href='https://www.google.co.kr/maps/search/{place.replace(" ","+")}/@{latitude},{longitude}' target='_blank'>{place}</a></p>"""
     return p_tag
 
 def div_tag(title,period,latitude,longitude,place):
-    div_tag = f"""  <style> 
-                        .map_inner{'color': 'red'} 
-                    </style>
+    div_tag = f"""  
                     <div class="map_inner">
                     {p_tag(title,period,latitude,longitude,place)}
                 </div>"""
@@ -162,9 +160,7 @@ def my_position():
                 popup_msg.append(target_info)
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""<style> 
-                                .map_inner{'color': 'red'} 
-                            </style>
+            full_text = f"""
                             <div class="map_inner">{popup_msg}
                             </div>"""
 
@@ -212,9 +208,7 @@ def my_position():
 
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""<style> 
-                                .map_inner{'color': 'red'} 
-                            </style>
+            full_text = f"""
                             <div class="map_inner">{popup_msg}
                             </div>"""
 
@@ -295,9 +289,7 @@ def set_position():
                 popup_msg.append(target_info)
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""<style> 
-                                .map_inner{'color': 'red'} 
-                            </style>
+            full_text = f"""
                             <div class="map_inner">{popup_msg}
                             </div>"""
 
@@ -347,9 +339,7 @@ def set_position():
 
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""<style> 
-                                .map_inner{'color: red'} 
-                            </style>
+            full_text = f"""
                             <div class="map_inner">
                                 {popup_msg}
                             </div>"""
