@@ -50,7 +50,7 @@
                                                     <div class="card shadow show-card" onclick="show_detail('${id}')">
                                                         <img class="card-img-top"
                                                             src="${image}"
-                                                            alt="Card image cap">
+                                                            alt="Card image cap" onerror="this.src='/static/imgs/noimage.png';">
                                                         <div class="card-body">
                                                             <h5 class="card-title weight_600">${title}</h5>
                                                             <p class="card-text">기간: ${start_date} ~ ${end_date}</p>
@@ -138,11 +138,11 @@
                         }
 
 
-                        let detail_temp_html = `<div class="container">
+                        let detail_temp_html = `<div class="container" style="min-width:1400px">
                                                     <!--헤드 버튼-->
-                                                    <div class="top">
+                                                    <div class="top topbutton">
                                                         <i class="i-shape_l btn btn-blue_F topbtn" onclick="show_detail(${pre_value})"></i>
-                                                        <i class="i-close btn btn-blue_F topbtn" data-bs-dismiss="offcanvas" aria-label="Close"></i>
+                                                        <i class="i-close btn btn-blue_F topbtn close" data-bs-dismiss="offcanvas" aria-label="Close"></i>
                                                         <i class="i-shape_r btn btn-blue_F topbtn" onclick="show_detail(${next_value})"></i>
                                                     </div>
                                                     <div class="middle">
@@ -150,7 +150,7 @@
                                                             <div>
                                                                 <!--왼쪽 박스-->
                                                                 <div class="imgbox">
-                                                                    <img src="${image_link}" class="infoimg" alt="..." align="left">
+                                                                    <img src="${image_link}" class="infoimg" alt="..." align="left" onerror="this.src='/static/imgs/noimage.png';">
                                                                 </div>
                                                                 <div class="infobox">
                                                                     <div class="infotext">
@@ -205,7 +205,6 @@
                                                 `
 
                         $('#detail-page').append(detail_temp_html)
-                        $('#detailimg').empty()
                         /*상세이미지 리스트*/
                         for(let i = 0; i < detail_link.length; i++){
                             let img_link = detail_link[i]

@@ -92,7 +92,7 @@
 
                 let temp_html = `<div type="button" class="col" data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                    <div class="card shadow show-card"  onclick="show_detail('${id}')">
+                                    <div class="card shadow show-card"  onclick="show_detail('${id}','main')">
                                         <img class="card-img-top"
                                             src="${image_link}" onerror="this.src='/static/imgs/noimage.png';"
                                             alt="Card image cap">
@@ -176,12 +176,16 @@
 
         // 전시회 상세 페이지 값 가져오기 시작
 
-        function show_detail(id) {
+        function show_detail(id ,check) {
             if (id == 'No_preview') {
                 alert('첫 페이지입니다.')
             } else if (id == 'No_next') {
                 alert('마지막 페이지입니다.')
+            } else if(check == 'detail'){
+
             } else {
+                console.log(id)
+                console.log(check)
 
                 var session_key = sessionStorage.getItem('session_key')
                 if (session_key == null) {
@@ -220,33 +224,47 @@
                         let detail_link = target_show['detail_link']
 
                         //버튼 만들기 작업
-                        let exhibit_id_list = sessionStorage.getItem('exhibit_id_list').split(',')
+                        if(check == 'detail_cards'){
 
-                        if (exhibit_id_list.indexOf(id) == 0) {
-                            var pre_value = "'No_preview'"
+                            // 상세 페이지에서 클릭했을 경우
+                            var input_check = "'detail'"
+                            var pre_value = 0
+                            var next_value = 0
+
                         } else {
-                            var pre_value = "'" + exhibit_id_list[exhibit_id_list.indexOf(id) - 1] + "'"
+
+                            // main 페이지에서 클릭했을 경우
+                            var input_check = "'main'"
+                            let exhibit_id_list = sessionStorage.getItem('exhibit_id_list').split(',')
+
+                            if (exhibit_id_list.indexOf(id) == 0) {
+                                var pre_value = "'No_preview'"
+                            } else {
+                                var pre_value = "'" + exhibit_id_list[exhibit_id_list.indexOf(id) - 1] + "'"
+                            }
+
+                            if (exhibit_id_list.indexOf(id) == exhibit_id_list.length - 1) {
+                                var next_value = "'No_next'"
+                            } else {
+                                var next_value = "'" + exhibit_id_list[exhibit_id_list.indexOf(id) + 1] + "'"
+                            }
+
                         }
 
-                        if (exhibit_id_list.indexOf(id) == exhibit_id_list.length - 1) {
-                            var next_value = "'No_next'"
-                        } else {
-                            var next_value = "'" + exhibit_id_list[exhibit_id_list.indexOf(id) + 1] + "'"
-                        }
 
-                        let detail_temp_html = `<div class="container">
+                        let detail_temp_html = `<div class="container" style="min-width:1400px">
                                                     <!--헤드 버튼-->
                                                     <div class="top topbutton">
-                                                        <i class="i-shape_l btn btn-blue_F topbtn" onclick="show_detail(${pre_value})"></i>
+                                                        <i class="i-shape_l btn btn-blue_F topbtn" onclick="show_detail(${pre_value},${input_check})"></i>
                                                         <i class="i-close btn btn-blue_F topbtn close" data-bs-dismiss="offcanvas" aria-label="Close"></i>
-                                                        <i class="i-shape_r btn btn-blue_F topbtn" onclick="show_detail(${next_value})"></i>
+                                                        <i class="i-shape_r btn btn-blue_F topbtn" onclick="show_detail(${next_value},${input_check})"></i>
                                                     </div>
                                                     <div class="middle">
                                                         <div class="middle-left">
                                                             <div>
                                                                 <!--왼쪽 박스-->
                                                                 <div class="imgbox">
-                                                                    <img src="${image_link}" class="infoimg" alt="..." align="left">
+                                                                    <img src="${image_link}" class="infoimg" alt="..." align="left" onerror="this.src='/static/imgs/noimage.png';">
                                                                 </div>
                                                                 <div class="infobox">
                                                                     <div class="infotext">
@@ -310,7 +328,6 @@
                         /*상세이미지 리스트*/
                         for (let i = 0; i < detail_link.length; i++) {
                             let img_link = detail_link[i]
-                            console.log(img_link)
                             let temp2_html = `<div><img src="${img_link}" id=detailimg class="details" alt="..."></div>`
                             $('#detailimg').append(temp2_html)
                         }
@@ -339,12 +356,13 @@
                         let address_class1 = response[i]['address_class1']
                         let address_class2 = response[i]['address_class2']
                         let place = response[i]['place']
+                        let id_detail = response[i]['id']
 
-                        let temp_html3 = `<div type="button" class="col modalcol" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                                <div class="card shadow show-card modalcard">
+                        let temp_html3 = `<div type="button" class="col modalcol">
+                                                <div class="card shadow show-card modalcard" onclick="show_detail('${id_detail}','detail_cards')">
                                                     <img class="card-img-top"
                                                             src="${image}"
-                                                            alt="Card image cap">
+                                                            alt="Card image cap" onerror="this.src='/static/imgs/noimage.png';">
                                                     <div class="card-body">
                                                         <h5 class="card-title weight_600">${title}</h5>
                                                         <p class="card-text">기간: ${start_date} ~ ${end_date}</p>

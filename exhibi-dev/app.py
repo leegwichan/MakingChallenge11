@@ -258,7 +258,9 @@ def set_position():
                     target_latitude = data['latitude']
                     target_longitude = data['longitude']
 
+
                     summary_info = folium.Html(f"""{div_tag(target_title,target_period,target_latitude,target_longitude,target_place)}""", script=True)
+
                     popup_html = folium.Popup(summary_info, max_width=500)
    
                     if((target_latitude,target_longitude) not in userbm_coordinate):
@@ -278,7 +280,9 @@ def set_position():
                 target_place = overlap_one['place']
                 target_period = overlap_one['start_date'] + " ~ " + overlap_one['end_date']
 
+
                 target_info = f"""{p_tag(target_title,target_period,target_latitude,target_longitude,target_place)}"""
+
                 popup_msg.append(target_info)
 
             popup_msg = ''.join(popup_msg)
@@ -308,6 +312,7 @@ def set_position():
                     target_period = data['start_date'] + " ~ " + data['end_date']
 
                     summary_info = folium.Html(f"""{div_tag(target_title,target_period,target_latitude,target_longitude,target_place)}""", script=True)
+
                     popup_html = folium.Popup(summary_info, max_width=500)
                    
                     folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
@@ -325,6 +330,7 @@ def set_position():
                 target_period = overlap_one['start_date'] + " ~ " + overlap_one['end_date']
 
                 target_info = f"""{p_tag(target_title,target_period,target_latitude,target_longitude,target_place)}"""
+
                 popup_msg.append(target_info)
 
 
@@ -419,7 +425,6 @@ def show_detail():
             bookmark_data = 'Yes'
         else:
             bookmark_data = 'No'
-
     return jsonify({'target_show': target_data, 'bookmark_give': bookmark_data})
 
 
