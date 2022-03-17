@@ -490,10 +490,6 @@ dt.open + dd { /* 서브 메뉴 리스트 */
     margin-top: 10px;
 }
 
-.btn-close {
-    box-sizing: unset;
-}
-
 /* 관심 카테고리 내용 설정 끝 */
 
 
