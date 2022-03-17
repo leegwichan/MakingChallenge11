@@ -47,7 +47,7 @@
 
 
                 console.log('success 실행합니다')
-                
+
                 console.log(latitude, longitude)
 
                 // status.textContent = '';
@@ -61,20 +61,22 @@
                     success: function (response) {
                         if (response['result'] == 'success') {
                             console.log("성공");
-                            window.location.reload();
+                            // window.location.reload();
                         }
                     }
                 })
             }
 
             function error() {
+                window.alert('Unable to retrieve your location');
                 // status.textContent = 'Unable to retrieve your location';
             }
 
             if (!navigator.geolocation) {
-                // status.textContent = 'Geolocation is not supported by your browser';
+                window.alert('Geolocation is not supported by your browser');
             } else {
                 // status.textContent = 'Locating…';
+                window.alert('Locating…');
                 navigator.geolocation.getCurrentPosition(success, error);
             }
 
