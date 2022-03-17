@@ -89,8 +89,9 @@ def p_tag(title,period,latitude,longitude, place):
     return p_tag
 
 def div_tag(title,period,latitude,longitude,place):
-    div_tag = f"""
-    
+    div_tag = f"""  <style> 
+                        .map_inner{'color': 'red'} 
+                    </style>
                     <div class="map_inner">
                     {p_tag(title,period,latitude,longitude,place)}
                 </div>"""
@@ -161,8 +162,9 @@ def my_position():
                 popup_msg.append(target_info)
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""
-            
+            full_text = f"""<style> 
+                                .map_inner{'color': 'red'} 
+                            </style>
                             <div class="map_inner">{popup_msg}
                             </div>"""
 
@@ -210,8 +212,9 @@ def my_position():
 
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""
-            
+            full_text = f"""<style> 
+                                .map_inner{'color': 'red'} 
+                            </style>
                             <div class="map_inner">{popup_msg}
                             </div>"""
 
@@ -292,8 +295,9 @@ def set_position():
                 popup_msg.append(target_info)
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""
-            
+            full_text = f"""<style> 
+                                .map_inner{'color': 'red'} 
+                            </style>
                             <div class="map_inner">{popup_msg}
                             </div>"""
 
@@ -344,7 +348,7 @@ def set_position():
 
             popup_msg = ''.join(popup_msg)
             full_text = f"""<style> 
-                                .map_inner{color: red} 
+                                .map_inner{'color: red'} 
                             </style>
                             <div class="map_inner">
                                 {popup_msg}
