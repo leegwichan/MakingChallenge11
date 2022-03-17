@@ -91,11 +91,12 @@ def div_tag(title,period,latitude,longitude,place):
 
 
 # 로그인 후 북마크 지도
-@app.route('/login_map')
+@app.route('/login_map', methods=['POST'])
 def BM_map():
     map_bm = make_map("37.5710057", "126.9747532")
 
     total_data = list(db.exhibition_info.find({}, {'_id': False}))
+    key_receive = request.form['key_give']
 
     # 여러 전시 운영하는 장소의 좌표 리스트 생성 : overlap_coordinate
     overlap_check = []
@@ -109,9 +110,8 @@ def BM_map():
     for key, value in result.items():
         if value >= 2:
             overlap_coordinate.append(key)
-    
-    if(request.form['key_give'] != ''):
-        key_receive = request.form['key_give']
+
+    if(key_receive != ''):
         userbm_coordinate = make_bmcoordinate(key_receive)
 
         # 한 장소에 1종류 전시(회원 마크 표시)
