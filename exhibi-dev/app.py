@@ -82,14 +82,20 @@ def make_bmcoordinate(key):
         bmark_location.append(bm_lat_long)
     return bmark_location
 
-#pop
+# 지도 관련 함수: pop 내부 html 태그
 def p_tag(title,period,latitude,longitude, place):
-    tag = f"""<p class="item"><span>{title}<br>{period}</span>
+    p_tag = f"""<p class="item"><span>{title}<br>{period}</span>
                 <br>in <a href='https://www.google.co.kr/maps/search/{place.replace(" ","+")}/@{latitude},{longitude}' target='_blank'>{place}</a></p>"""
-    return tag
+    return p_tag
 
-# 한 장소에 1종류 전시(회원 마크 표시)
-def single_exhibition(total_data, overlap_coordinate):
+def div_tag(title,period,latitude,longitude, place):
+    div_tag = f"""<div class="map_inner">
+                    {p_tag(title,period,latitude,longitude, place)}
+                </div>"""
+    return div_tag
+
+# 지도 관련 함수: 한 장소에 1종류 전시
+def make_markerinfo(total_data, overlap_coordinate):
     for data in total_data:
         if "latitude" in data:
             if((data['latitude'], data['longitude']) not in overlap_coordinate):
@@ -99,9 +105,7 @@ def single_exhibition(total_data, overlap_coordinate):
                 target_latitude = data['latitude']
                 target_longitude = data['longitude']
 
-                summary_info = folium.Html(f"""<div class="map_inner">
-                                                {p_tag(target_title,target_period,target_latitude,target_longitude,target_place)}
-                                                </div>""", script=True)
+                summary_info = folium.Html(f"""{div_tag(target_title,target_period,target_latitude,target_longitude,target_place)}""", script=True)
                 popup_html = folium.Popup(summary_info, max_width=500)
     location_info = {
         "latitude" : target_latitude,
@@ -223,7 +227,7 @@ def set_position():
         userbm_coordinate = make_bmcoordinate(key_receive)
 
         # 한 장소에 1종류 전시(회원 마크 표시)
-        single = single_exhibition(total_data,overlap_coordinate)
+        single = make_markerinfo(total_data,overlap_coordinate)
         # print(single)
         # for data in total_data:
         #     if "latitude" in data:
