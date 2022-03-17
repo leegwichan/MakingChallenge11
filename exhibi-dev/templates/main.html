@@ -550,11 +550,11 @@
                     data: {address1_give: sido, address2_give: gugun, key_give: session_key},
                     success: function (response) {
                         console.log(response['result']);
-                        console.log(response['position_map.html'])
-                        let iframe_map = response['position_map.html']
 
-                        if (iframe_map != '') {
-                            let iframe_temp = `<iframe allow="fullscreen" src="http://https://map.kakao.com/"
+                        let iframe_map = response['result']
+
+                        if (iframe_map == 'success') {
+                            let iframe_temp = `<iframe allow="fullscreen" src="https://credical.shop/templates/position_map.html"
                                                 allow="autoplay; encrypted-media" scrolling="no" align="center"
                                                 class="iframebox"></iframe>`
                             $('#iframe-map').empty()
@@ -982,7 +982,7 @@
                     </div>
                     <!-- 지도 부분 -->
                     <div class="current-position-map" id="iframe-map">
-                        <iframe allow="fullscreen" src="http://credical.shop/exhibi_map"
+                        <iframe allow="fullscreen" src="https://credical.shop/exhibi_map"
                                 allow="autoplay; encrypted-media" scrolling="no" align="center"
                                 class="iframebox"></iframe>
                     </div>
