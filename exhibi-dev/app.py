@@ -82,10 +82,11 @@ def make_bmcoordinate(key):
         bmark_location.append(bm_lat_long)
     return bmark_location
 
-# 일반북
-# def make_bluemaker():
-
-# 북마크마커
+#pop
+def p_tag(title,period,latitude,longitude, place):
+    tag = f"""<p class="item"><span>{title}<br>{period}</span>
+                <br>in <a href='https://www.google.co.kr/maps/search/{place.replace(" ","+")}/@{latitude},{longitude}' target='_blank'>{place}</a></p>"""
+    return tag
 
 # 한 장소에 1종류 전시(회원 마크 표시)
 def single_exhibition(total_data, overlap_coordinate):
@@ -98,12 +99,9 @@ def single_exhibition(total_data, overlap_coordinate):
                 target_latitude = data['latitude']
                 target_longitude = data['longitude']
 
-                summary_info = folium.Html(f"""<p class="item">
-                                                    <span>{target_title}<br>{target_period}</span>
-                                                    <br>in 
-                                                    <a href='https://www.google.co.kr/maps/search/{target_place.replace(" ","+")}/@{target_latitude},{target_longitude}' target='_blank'>
-                                                    {target_place}</a>
-                                                </p>""", script=True)
+                summary_info = folium.Html(f"""<div class="map_inner">
+                                                {p_tag(target_title,target_period,target_latitude,target_longitude,target_place)}
+                                                </div>""", script=True)
                 popup_html = folium.Popup(summary_info, max_width=500)
     location_info = {
         "latitude" : target_latitude,
@@ -297,12 +295,14 @@ def set_position():
                     target_place = data['place']
                     target_period = data['start_date'] + " ~ " + data['end_date']
 
-                    summary_info = folium.Html(f"""<p class="item">
-                                                    <span>{target_title}<br>{target_period}</span>
-                                                    <br>in 
-                                                    <a href='https://www.google.co.kr/maps/search/{target_place.replace(" ","+")}/@{target_latitude},{target_longitude}' target='_blank'>
-                                                    {target_place}</a>
-                                                </p>""", script=True)
+                    summary_info = folium.Html(f"""<div class="map_inner">
+                                                        <p class="item">
+                                                        <span>{target_title}<br>{target_period}</span>
+                                                        <br>in 
+                                                        <a href='https://www.google.co.kr/maps/search/{target_place.replace(" ","+")}/@{target_latitude},{target_longitude}' target='_blank'>
+                                                        {target_place}</a>
+                                                        </p>
+                                                    </div>""", script=True)
                     popup_html = folium.Popup(summary_info, max_width=500)
                    
                     folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
