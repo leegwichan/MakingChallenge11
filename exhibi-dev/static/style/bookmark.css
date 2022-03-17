@@ -2,9 +2,6 @@ body{
     background-color: #F7F8FA;
     overflow-x: hidden;
 }
-.container{
-    margin-top: 50px;
-}
 dl {
     margin: 0px auto 60px;
     width: 170px; /* 전체 메뉴 사이즈 */
