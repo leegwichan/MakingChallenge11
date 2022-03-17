@@ -103,7 +103,7 @@ def my_position():
     latitude_receive = request.form['latitude_give']
     longitude_receive = request.form['longitude_give']
 
-    map = make_map(latitude_receive, longitude_receive)
+    map_geo = make_map(latitude_receive, longitude_receive)
 
     total_data = list(db.exhibition_info.find({}, {'_id': False}))
 
@@ -139,9 +139,9 @@ def my_position():
                     popup_html = folium.Popup(summary_info, max_width=500)
    
                     if((target_latitude,target_longitude) not in userbm_coordinate):
-                        folium.Marker(location=[target_latitude,target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
+                        folium.Marker(location=[target_latitude,target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map_geo)
                     else:
-                        folium.Marker(location=[target_latitude,target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='darkblue')).add_to(map)
+                        folium.Marker(location=[target_latitude,target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='darkblue')).add_to(map_geo)
 
         # 한 장소에 n종류 전시(회원 마크 표시)
         for coordinate in overlap_coordinate:
@@ -167,10 +167,10 @@ def my_position():
 
             if((target_latitude, target_longitude) not in userbm_coordinate):
                 folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(
-                            color='blue')).add_to(map)
+                            color='blue')).add_to(map_geo)
             else:
                 folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(
-                    color='darkblue', icon='bookmark')).add_to(map)
+                    color='darkblue', icon='bookmark')).add_to(map_geo)
 
     # 비회원 마크 표시
     else:
@@ -187,7 +187,7 @@ def my_position():
                     summary_info = folium.Html(f"""{div_tag(target_title,target_period,target_latitude,target_longitude,target_place)}""", script=True)
                     popup_html = folium.Popup(summary_info, max_width=500)
                    
-                    folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
+                    folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map_geo)
 
         # 한 장소에 n종류 전시(비회원 마크 표시)
         for coordinate in overlap_coordinate:
@@ -212,9 +212,9 @@ def my_position():
             summary_info = folium.Html(f"""{full_text}""", script=True)
             popup_html = folium.Popup(summary_info, max_width=500)
 
-            folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map)
+            folium.Marker(location=[target_latitude, target_longitude], popup=popup_html, tooltip=target_place, icon=folium.Icon(color='blue')).add_to(map_geo)
      
-    map.save(r'sftp://ubuntu@18.208.182.249/home/ubuntu/MakingChallenge11/exhibi-dev/templates/position_map.html')
+    map_geo.save(r'sftp://ubuntu@18.208.182.249/home/ubuntu/MakingChallenge11/exhibi-dev/templates/position_map.html')
     return jsonify({'result': 'success'})
 
 
