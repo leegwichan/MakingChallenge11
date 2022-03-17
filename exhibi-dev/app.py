@@ -89,7 +89,9 @@ def p_tag(title,period,latitude,longitude, place):
     return p_tag
 
 def div_tag(title,period,latitude,longitude,place):
-    div_tag = f"""<div class="map_inner">
+    div_tag = f"""
+    
+                    <div class="map_inner">
                     {p_tag(title,period,latitude,longitude,place)}
                 </div>"""
     return div_tag
@@ -159,7 +161,9 @@ def my_position():
                 popup_msg.append(target_info)
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""<div class="map_inner">{popup_msg}
+            full_text = f"""
+            
+                            <div class="map_inner">{popup_msg}
                             </div>"""
 
             summary_info = folium.Html(f"""{full_text}""", script=True)
@@ -206,7 +210,9 @@ def my_position():
 
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""<div class="map_inner">{popup_msg}
+            full_text = f"""
+            
+                            <div class="map_inner">{popup_msg}
                             </div>"""
 
             summary_info = folium.Html(f"""{full_text}""", script=True)
@@ -286,7 +292,9 @@ def set_position():
                 popup_msg.append(target_info)
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""<div class="map_inner">{popup_msg}
+            full_text = f"""
+            
+                            <div class="map_inner">{popup_msg}
                             </div>"""
 
             summary_info = folium.Html(f"""{full_text}""", script=True)
@@ -335,7 +343,11 @@ def set_position():
 
 
             popup_msg = ''.join(popup_msg)
-            full_text = f"""<div class="map_inner">{popup_msg}
+            full_text = f"""<style> 
+                                .map_inner{color: red} 
+                            </style>
+                            <div class="map_inner">
+                                {popup_msg}
                             </div>"""
 
             summary_info = folium.Html(f"""{full_text}""", script=True)
