@@ -36,13 +36,13 @@ def home():
 
 # html 받아오는 부분 # 기본맵
 @app.route('/exhibi_map')
-def map():
+def def_map():
     return render_template('default_map.html')
     # return render_template('exhibition_map.html')
 
 # html 받아오는 부분 # API 생성맵
 @app.route('/position_map')
-def map():
+def set_map():
     return render_template('position_map.html')
 
 # html 받아오는 부분 # 회원가입 부분
