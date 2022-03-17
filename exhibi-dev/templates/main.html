@@ -32,26 +32,13 @@
             var session_key = sessionStorage.getItem('session_key')
 
 
-            const status = document.querySelector('#status');
-            const mapLink = document.querySelector('#map-link');
-
-            mapLink.href = '';
-            mapLink.textContent = '';
-
             function success(position) {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
 
-
-
                 console.log('success 실행합니다')
-
-
                 console.log(latitude, longitude)
 
-                status.textContent = '';
-                mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-                mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
 
                 $.ajax({
                     type: "POST",
