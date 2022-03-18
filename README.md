@@ -65,3 +65,9 @@
 
 ## ⛑업로드 서버
 - http://credical.shop  임시 도메인 주소 입니다.
+
+<br/>
+
+## 위키 주소 
+
+https://github.com/leegwichan/MakingChallenge11/wiki
