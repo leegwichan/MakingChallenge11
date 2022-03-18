@@ -26,9 +26,9 @@ body {
 }
 
 .cards-list-title {
-    margin-top: 550px;
+    margin-top: 560px;
     margin-bottom: 20px;
-
+    font-size: 20px;
 }
 
 .cards-list-box {
@@ -76,24 +76,30 @@ body {
 .title_inner {
     display: flex;
     justify-content: space-between;
+    align-items:center;
 }
 
 .map-search {
     position: relative;
     top: 0px;
-    left: 120px;
+    left: 170px;
 }
 
 .position-search {
     position: relative;
     top: 0px;
-    left: 130px;
+    left: 180px;
 }
 
 .seach-position {
     position: relative;
     top: -38px;
-    left: 113px;
+    left: 160px;
+}
+
+.form-select {
+    border-radius: 1rem;
+    border: 1px solid #CED4DA;
 }
 
 .sign-up {
@@ -104,7 +110,7 @@ body {
 
 .my-pro {
     position: relative;
-    left: 892px;
+    left: 866px;
     top: -1px;
 }
 
@@ -116,7 +122,7 @@ body {
 
 .log-out {
     position: relative;
-    left: 902px;
+    left: 877px;
     top: -1px;
 }
 
@@ -130,7 +136,7 @@ body {
 /*검색 박스 시작*/
 .search {
     position: relative;
-    width: 110px;
+    width: 150px;
 }
 
 .search-input {
@@ -358,17 +364,13 @@ dt.open + dd { /* 서브 메뉴 리스트 */
     margin-left: 10px;
     width: 300px;
     height: 50px;
-    font-size: 12px;
+    font-size: 18px;
+    font-weight: 600;
     border-radius: 2em;
 }
 
 .shadowbox {
     box-shadow: 0 4px 12px rgb(0 0 0 / 40%);
-}
-
-.interest-save-btn:hover {
-    background-color: #F2F3F7;
-    color: #000000;
 }
 
 .interest-cate-btn {
@@ -426,6 +428,9 @@ dt.open + dd { /* 서브 메뉴 리스트 */
     text-align: center;
     padding: 40px 10px;
     display: block;
+}
+.ck-button label span:hover {
+    cursor: pointer;
 }
 
 .ck-button label input {
