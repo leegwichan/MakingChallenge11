@@ -36,8 +36,8 @@
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
 
-                console.log('success 실행합니다')
-                console.log(latitude, longitude)
+                // console.log('success 실행합니다')
+                // console.log(latitude, longitude)
 
 
                 $.ajax({
@@ -46,7 +46,7 @@
                     data: {latitude_give: latitude, longitude_give: longitude, key_give: session_key},
                     success: function (response) {
                         if (response['result'] == 'success') {
-                            console.log("성공");
+                            // console.log("성공");
                             let iframe_map = response['result']
 
                             if (iframe_map == 'success') {
@@ -143,7 +143,7 @@
 
             let exhibition = $("input[name='main_menu']:checked").val();
 
-            console.log(exhibition)
+            // console.log(exhibition)
             $('#cards-list-title').empty()
 
             if (exhibition == "exhibition") {
@@ -190,8 +190,8 @@
             } else if(check == 'detail'){
 
             } else {
-                console.log(id)
-                console.log(check)
+                // console.log(id)
+                // console.log(check)
 
                 var session_key = sessionStorage.getItem('session_key')
                 if (session_key == null) {
@@ -537,7 +537,7 @@
         function mapSearch() {
 
             let session_key = sessionStorage.getItem('session_key')
-            console.log(session_key)
+            // console.log(session_key)
 
             let sido = $("select[name=sido1]").val();
             let gugun = $("select[name=gugun1]").val();
@@ -548,14 +548,14 @@
                 alert("구/군을 선택해 주세요.");
             } else {
 
-                console.log(sido, gugun)
+                // console.log(sido, gugun)
 
                 $.ajax({
                     type: "POST",
                     url: "/setposition",
                     data: {address1_give: sido, address2_give: gugun, key_give: session_key},
                     success: function (response) {
-                        console.log(response['result']);
+                        // console.log(response['result']);
 
                         let iframe_map = response['result']
 
@@ -579,14 +579,14 @@
         function loginMap() {
 
             let session_key = sessionStorage.getItem('session_key')
-            console.log(session_key)
+            // console.log(session_key)
 
                 $.ajax({
                     type: "POST",
                     url: "/login_map",
                     data: {key_give: session_key},
                     success: function (response) {
-                        console.log(response['result']);
+                        // console.log(response['result']);
 
                         let iframe_map = response['result']
 
@@ -607,7 +607,7 @@
         function myCategory() {
 
             var session_key = sessionStorage.getItem('session_key')
-            console.log(session_key)
+            // console.log(session_key)
 
             let cate_check1 = $('input:checkbox[name="interest-01"]:checked').val();
             let cate_check2 = $('input:checkbox[name="interest-02"]:checked').val();
@@ -615,11 +615,11 @@
             let cate_check4 = $('input:checkbox[name="interest-04"]:checked').val();
             let cate_check5 = $('input:checkbox[name="interest-05"]:checked').val();
 
-            console.log(cate_check1, cate_check2, cate_check3, cate_check4, cate_check5)
+            // console.log(cate_check1, cate_check2, cate_check3, cate_check4, cate_check5)
 
 
             if ($('input:checkbox[name="interest-01"]').is(":checked") == true) {
-                console.log(cate_check1)
+                // console.log(cate_check1)
                 let cate_exhibition = `<div id="menu-button_01" class="menu-button">
                             <label>
                                 <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
@@ -630,7 +630,7 @@
             }
 
             if ($('input:checkbox[name="interest-02"]').is(":checked") == true) {
-                console.log(cate_check2)
+                // console.log(cate_check2)
                 let cate_museum = `<div id="menu-button_02" class="menu-button">
                             <label>
                                 <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
@@ -641,7 +641,7 @@
             }
 
             if ($('input:checkbox[name="interest-03"]').is(":checked") == true) {
-                console.log(cate_check3)
+                // console.log(cate_check3)
                 let cate_childs_experience = `<div id="menu-button_03" class="menu-button">
                             <label>
                                 <input type="radio" name="main_menu" id="main-menu"
@@ -653,7 +653,7 @@
             }
 
             if ($('input:checkbox[name="interest-04"]').is(":checked") == true) {
-                console.log(cate_check4)
+                // console.log(cate_check4)
                 let cate_eventfestival = `<div id="menu-button_04" class="menu-button">
                             <label>
                                 <input type="radio" name="main_menu" id="main-menu"
@@ -665,7 +665,7 @@
             }
 
             if ($('input:checkbox[name="interest-05"]').is(":checked") == true) {
-                console.log(cate_check5)
+                // console.log(cate_check5)
                 let cate_class = `<div id="menu-button_05" class="menu-button">
                             <label>
                                 <input type="radio" name="main_menu" id="main-menu" onclick="exhibition_listup()"
@@ -689,7 +689,7 @@
             } else {
                 session_key = sessionStorage.getItem('session_key')
 
-                console.log(session_key)
+                // console.log(session_key)
 
                 let cate_check1 = $('input:checkbox[name="interest-01"]:checked').val();
                 if (cate_check1 != undefined) {
@@ -711,9 +711,9 @@
                 if (cate_check5 != undefined) {
                     cate.push(cate_check5)
                 }
-                console.log(cate)
+                // console.log(cate)
                 cate_string = cate.toString();
-                console.log(cate_string)
+                // console.log(cate_string)
             }
 
             $.ajax({
@@ -723,7 +723,7 @@
                 success: function (response) {
                     alert(response['msg']);
                     let select_cate = (response['user_categ']);
-                    console.log(select_cate)
+                    // console.log(select_cate)
 
                     location.href = "/";
                 }
@@ -735,7 +735,7 @@
 
             let session_key = sessionStorage.getItem('session_key')
 
-            console.log(session_key)
+            // console.log(session_key)
 
             if (sessionStorage.getItem('session_key') != null) {
 
@@ -744,7 +744,7 @@
                     url: "/mycategory",
                     data: {key_give: session_key},
                     success: function (response) {
-                        console.log(response['selected_catgy']);
+                        // console.log(response['selected_catgy']);
 
                         let cate = response['selected_catgy'];
 

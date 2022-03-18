@@ -149,7 +149,7 @@
 
                     //        넣는 부분
                     if ((overlap_id.length === 0 && overlap_Phone.length === 0) && typeof PASSWORD === 'string') {
-                        console.log(' 들어왔습니다')
+                        // console.log(' 들어왔습니다')
                         $.ajax({
                             type: "POST",
                             url: "/sign_up",
@@ -169,7 +169,7 @@
                     } else {
 
                         if(overlap_id.length !== 0 && overlap_Phone.length === 0){
-                            console.log('못 들어왔습니다');
+                            // console.log('못 들어왔습니다');
                             $('.form-floating:eq(0)').append(`<p style="color:red; font-size:14px; margin-top:10px">이메일이 중복됩니다.</p>`);
                         } else if (overlap_id.length === 0 && overlap_Phone.length !== 0)
                         {
