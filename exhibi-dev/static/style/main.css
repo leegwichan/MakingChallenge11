@@ -4,7 +4,7 @@ body {
 }
 
 .body-center {
-    min-width: 2045px;
+    min-width: 1995px;
     max-width: 2028px;
     width: 100%;
     margin: 0 auto;
@@ -61,7 +61,7 @@ body {
 .show-card {
     max-width: 332px;
     max-height: 570px;
-    width: 332px;
+    width: 325px;
     height: 570px;
     margin-bottom: 20px;
     margin-left: 2px;
@@ -104,25 +104,25 @@ body {
 
 .sign-up {
     position: relative;
-    left: 932px;
+    left: 862px;
     top: -1px;
 }
 
 .my-pro {
     position: relative;
-    left: 866px;
+    left: 826px;
     top: -1px;
 }
 
 .log-in {
     position: relative;
-    left: 922px;
+    left: 850px;
     top: -1px;
 }
 
 .log-out {
     position: relative;
-    left: 877px;
+    left: 837px;
     top: -1px;
 }
 
