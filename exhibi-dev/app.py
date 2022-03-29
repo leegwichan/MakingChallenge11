@@ -243,7 +243,7 @@ def set_position():
         mark_onexhibit(map_sp, total_data, overlap_coordSP)
         mark_multiexhibit(map_sp, overlap_coordSP)
 
-    map.save(r'/home/ubuntu/MakingChallenge11/exhibi-dev/templates/position_map.html')
+    map_sp.save(r'/home/ubuntu/MakingChallenge11/exhibi-dev/templates/position_map.html')
     return jsonify({'result': 'success'})
 
 
