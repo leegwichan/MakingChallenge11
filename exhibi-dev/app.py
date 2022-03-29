@@ -116,7 +116,7 @@ def p_tag(title,period,latitude,longitude,place):
                 <br>in <a href='https://www.google.co.kr/maps/search/{place.replace(" ","+")}/@{latitude},{longitude}' target='_blank'>{place}</a></p>"""
     return p_tag
 
-# 전시 폴리움 마커 인자 생성(1종류 전시/ n종류 전시)
+# 전시 폴리움 마커(1종류 전시)
 def mark_onexhibit(map, total_data,overlap_coords, userbm_coordinate = []):
     for data in total_data:
         if "latitude" in data:
@@ -133,6 +133,7 @@ def mark_onexhibit(map, total_data,overlap_coords, userbm_coordinate = []):
                 else:
                     folium.Marker(location=[get_markdata['lt'], get_markdata['lg']], popup=popup_html, tooltip=get_markdata['p'], icon=folium.Icon(color='blue')).add_to(map)
 
+# 전시 폴리움 마커(n종류 전시)
 def mark_multiexhibit(map, overlap_coords, userbm_coordinate = []):
     for coordinate in overlap_coords:
         overlap_datas = list(db.exhibition_info.find(
