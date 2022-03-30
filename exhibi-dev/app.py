@@ -117,7 +117,10 @@ def p_tag(title,period,latitude,longitude,place):
     return p_tag
 
 # 전시 폴리움 마커(1종류 전시)
-def mark_onexhibit(map, total_data,overlap_coords, userbm_coordinate = []):
+def mark_onexhibit(map, total_data,overlap_coords, userbm_coordinate = None):
+    if userbm_coordinate is None:
+            userbm_coordinate = []
+
     for data in total_data:
         if "latitude" in data:
             if((data['latitude'], data['longitude']) not in overlap_coords):
@@ -134,7 +137,10 @@ def mark_onexhibit(map, total_data,overlap_coords, userbm_coordinate = []):
                     folium.Marker(location=[get_markdata['lt'], get_markdata['lg']], popup=popup_html, tooltip=get_markdata['p'], icon=folium.Icon(color='blue')).add_to(map)
 
 # 전시 폴리움 마커(n종류 전시)
-def mark_multiexhibit(map, overlap_coords, userbm_coordinate = []):
+def mark_multiexhibit(map, overlap_coords, userbm_coordinate = None):
+    if userbm_coordinate is None:
+        userbm_coordinate = []
+
     for coordinate in overlap_coords:
         overlap_datas = list(db.exhibition_info.find(
                     {'latitude': coordinate[0], 'longitude': coordinate[1]}, {'_id': False}))
